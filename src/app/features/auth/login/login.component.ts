@@ -4,6 +4,7 @@ import { Component } from '@angular/core';
   selector: 'app-login',
   imports: [],
   templateUrl: './login.component.html',
+  standalone: true,
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
