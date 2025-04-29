@@ -12,7 +12,7 @@ export class LoginFormService {
   }
 
   createLoginForm() : FormGroup{
-    return this.fb.group<FormGroup>({
+    return this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
     });
