@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {LoginRequest} from '@app/features/auth/models/login-request.model';
+import {LoginRequest} from '@app/domain/auth/models/login-request.model';
 import {Observable} from 'rxjs';
-import {LoginResponse} from '@app/features/auth/models/login-response.model';
-import {RegisterRequest} from '@app/features/auth/models/register-request.model';
+import {LoginResponse} from '@app/domain/auth/models/login-response.model';
 
 @Injectable({
   providedIn: 'root'
@@ -17,9 +16,9 @@ export class AuthService {
     return this.http.post<LoginResponse>(`${this.API_URL}/login`, credentials);
   }
 
-  register(data: RegisterRequest): Observable<any> {
-    return this.http.post<any>(`${this.API_URL}/register`, data);
-  }
+  // register(): Observable<any> {
+  //   return this.http.post<any>(`${this.API_URL}/register`, data);
+  // }
 
   logout(): void {
     // Token aus localStorage entfernen
