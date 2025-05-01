@@ -4,9 +4,12 @@ import {routes} from './app.routes';
 import {providePrimeNG} from 'primeng/config';
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
 import Aura from '@primeng/themes/aura';
+import {AuthApi} from '@app/domain/auth/services/auth-api.abstract';
+import {AuthApiService} from '@app/infrustructure/auth-api.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    { provide: AuthApi, useClass: AuthApiService },
     provideZoneChangeDetection({eventCoalescing: true}),
     provideRouter(routes),
     provideAnimationsAsync(),
