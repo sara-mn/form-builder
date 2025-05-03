@@ -5,9 +5,9 @@ import {providePrimeNG} from 'primeng/config';
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
 import Aura from '@primeng/themes/aura';
 import {AuthApi} from '@app/domain/auth/abstracts/auth-api.abstract';
-import {AuthApiService} from '@app/infrustructure/auth-api.service';
+import {AuthApiService} from '@app/infrustructure/api/auth-api.service';
 import {UserApi} from '@app/domain/user/abstracts/user-api.abstract';
-import {UserApiService} from '@app/infrustructure/user-api.service';
+import {UserApiService} from '@app/infrustructure/api/user-api.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
