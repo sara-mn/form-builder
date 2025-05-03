@@ -1,22 +1,50 @@
-import { Injectable } from '@angular/core';
-import {AuthApi} from '@app/domain/auth/services/auth-api.abstract';
+import {Injectable} from '@angular/core';
+import {AuthApi} from '@app/domain/auth/abstracts/auth-api.abstract';
 import {LoginRequest} from '@app/domain/auth/models/login-request.model';
-import {Observable} from 'rxjs';
+import {BehaviorSubject, Observable, tap} from 'rxjs';
 import {LoginResponse} from '@app/domain/auth/models/login-response.model';
 import {HttpClient} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthApiService implements AuthApi{
+export class AuthApiService implements AuthApi {
 
-  constructor(private http: HttpClient) {}
-
-  login(payload: LoginRequest): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>('/api/login', payload);
+  constructor(private http: HttpClient) {
   }
 
-  logout(): void {
-    localStorage.removeItem('token');
+  private authUrl = '/api/auth';
+  private tokenSubject = new BehaviorSubject<string | null>(null);
+
+  login(payload: LoginRequest): Observable<LoginResponse> {
+    return this.http.post<LoginResponse>(`${this.authUrl}/login`, payload).pipe(
+      tap((res: LoginResponse) => {
+        this.setToken(res.accessToken);
+        // Optional: refreshToken can be set in cookie
+      })
+    );
+  }
+
+  logout() {
+    this.clearToken();
+    // Optional: Call logout endpoint to invalidate refresh token
+  }
+
+  private setToken(token: string) {
+    this.tokenSubject.next(token);
+    localStorage.setItem('accessToken', token); // or memory only
+  }
+
+  private clearToken() {
+    this.tokenSubject.next(null);
+    localStorage.removeItem('accessToken');
+  }
+
+  get token(): string | null {
+    return this.tokenSubject.value || localStorage.getItem('accessToken');
+  }
+
+  isAuthenticated(): boolean {
+    return !!this.token;
   }
 }

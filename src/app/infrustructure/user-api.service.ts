@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {UserApi} from '@app/domain/user/services/user-api.abstract';
+import {UserApi} from '@app/domain/user/abstracts/user-api.abstract';
 import {HttpClient} from '@angular/common/http';
 import {RegisterRequest} from '@app/domain/user/models/register-request.model';
 import {Observable} from 'rxjs';
