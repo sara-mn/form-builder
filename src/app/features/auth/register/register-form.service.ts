@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {RegisterRequest} from '@app/features/auth/models/register-request.model';
 
 @Injectable({
   providedIn: 'root'
