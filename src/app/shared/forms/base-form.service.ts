@@ -1,10 +1,10 @@
-import { FormBuilder, FormGroup } from '@angular/forms';
+import {FormBuilder, FormGroup} from '@angular/forms';
 import { Injectable } from '@angular/core';
 import {FormControls, FormControlValues} from '@shared/forms/form.type';
 
 @Injectable()
-export abstract class BaseFormService<T> {
-  protected constructor(protected fb: FormBuilder) {}
+export abstract class BaseFormService<T extends Record<string, any>> {
+  protected constructor(protected formBuilder: FormBuilder ) {}
 
   abstract createForm(): FormGroup<FormControls<T>>;
 
