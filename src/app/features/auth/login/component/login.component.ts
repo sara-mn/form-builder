@@ -5,6 +5,7 @@ import {LoginFormModel} from '@features/auth/login/login-form.model';
 import {FormControls} from '@shared/forms/form.type';
 import {LoginFormAdapter} from '@features/auth/login/login-form.adapter';
 import {LoginUseCase} from '@application/login.use.case';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,8 @@ import {LoginUseCase} from '@application/login.use.case';
 export class LoginComponent implements OnInit {
   form!: FormGroup<FormControls<LoginFormModel>>
   constructor(private loginFormService: LoginFormService,
-              private loginUseCase: LoginUseCase) {
+              private loginUseCase: LoginUseCase,
+              private router:Router) {
   }
 
   ngOnInit(): void {
@@ -29,7 +31,11 @@ export class LoginComponent implements OnInit {
     const raw = this.loginFormService.getRawValue(this.form);
     const data = LoginFormAdapter.toDomain(raw);
 
-    this.loginUseCase.login(data).subscribe();
+    this.loginUseCase.login(data).subscribe({
+      next:() => {
+        this.router.navigate(['/dashboard']).then();
+      }
+    });
   }
 
 

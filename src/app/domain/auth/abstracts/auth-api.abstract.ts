@@ -7,4 +7,5 @@ export abstract class AuthApi {
   abstract logout(): void;
   abstract token: string | null;
   abstract isAuthenticated(): boolean;
+  abstract refreshToken(): void;
 }

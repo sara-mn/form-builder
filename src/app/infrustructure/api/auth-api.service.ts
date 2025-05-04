@@ -19,23 +19,23 @@ export class AuthApiService implements AuthApi {
   login(payload: LoginRequest): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(`${this.authUrl}/login`, payload).pipe(
       tap((res: LoginResponse) => {
-        this.setToken(res.accessToken);
+        this.setAccessToken(res.accessToken);
         // Optional: refreshToken can be set in cookie
       })
     );
   }
 
   logout() {
-    this.clearToken();
+    this.clearAccessToken();
     // Optional: Call logout endpoint to invalidate refresh token
   }
 
-  private setToken(token: string) {
+  private setAccessToken(token: string) {
     this.tokenSubject.next(token);
     localStorage.setItem('accessToken', token); // or memory only
   }
 
-  private clearToken() {
+  private clearAccessToken() {
     this.tokenSubject.next(null);
     localStorage.removeItem('accessToken');
   }
@@ -46,5 +46,13 @@ export class AuthApiService implements AuthApi {
 
   isAuthenticated(): boolean {
     return !!this.token;
+  }
+
+  refreshToken() {
+    this.http.post('/auth/refresh', {}).pipe(
+      tap((res: any) => {
+        this.setAccessToken(res.accessToken);
+      })
+    );
   }
 }
