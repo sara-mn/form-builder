@@ -1,20 +1,25 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {LoginRequest} from '@app/domain/auth/models/login-request.model';
+import {BaseFormService} from '@shared/forms/base-form.service';
+import {LoginFormModel} from '@features/auth/login/login-form.model';
+import {FormControls} from '@shared/forms/form.type';
 
 @Injectable({
   providedIn: 'root'
 })
-export class LoginFormService {
+export class LoginFormService extends BaseFormService<LoginFormModel> {
+  private fb: any;
 
-  constructor(private fb:FormBuilder) {
-
+  protected constructor(protected override formBuilder: FormBuilder) {
+    super(formBuilder);
+    this.fb = formBuilder
   }
 
-  createLoginForm() : FormGroup{
+  createForm(): FormGroup<FormControls<LoginFormModel>> {
     return this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
+      email: this.fb.control('', {validators: [Validators.required, Validators.email]}),
+      password: this.fb.control('', {validators: [Validators.required]}),
     });
   }
+
 }
