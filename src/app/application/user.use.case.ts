@@ -2,7 +2,7 @@ import {UserApi} from '@domain/user/abstracts/user-api.abstract';
 import {RegisterRequest} from '@app/domain';
 import {map, Observable} from 'rxjs';
 
-export class RegisterUseCase {
+export class UserUseCase {
   constructor(private userApi: UserApi) {
   }
 

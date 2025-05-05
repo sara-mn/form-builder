@@ -4,7 +4,7 @@ import {LoginFormService} from '@features/auth/login/login-form.service';
 import {LoginFormModel} from '@features/auth/login/login-form.model';
 import {FormControls} from '@shared/forms/form.type';
 import {LoginFormAdapter} from '@features/auth/login/login-form.adapter';
-import {LoginUseCase} from '@application/login.use.case';
+import {AuthUseCase} from '@application/auth.use.case';
 import {Router} from '@angular/router';
 
 @Component({
@@ -17,7 +17,7 @@ import {Router} from '@angular/router';
 export class LoginComponent implements OnInit {
   form!: FormGroup<FormControls<LoginFormModel>>
   constructor(private loginFormService: LoginFormService,
-              private loginUseCase: LoginUseCase,
+              private loginUseCase: AuthUseCase,
               private router:Router) {
   }
 

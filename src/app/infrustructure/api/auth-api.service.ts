@@ -1,16 +1,18 @@
 import {Injectable} from '@angular/core';
-import {AuthApi} from '@app/domain/auth/abstracts/auth-api.abstract';
+import {IAuthApi} from '@app/domain/auth/abstracts/auth-api.abstract';
 import {LoginRequest} from '@app/domain/auth/models/login-request.model';
 import {BehaviorSubject, Observable, tap} from 'rxjs';
 import {LoginResponse} from '@app/domain/auth/models/login-response.model';
 import {HttpClient} from '@angular/common/http';
+import {StorageService} from '@app/infrustructure/storage/storage.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthApiService implements AuthApi {
+export class AuthApiService implements IAuthApi {
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+              private storageService: StorageService) {
   }
 
   private authUrl = '/api/auth';

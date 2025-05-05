@@ -4,7 +4,7 @@ import {FormControls} from '@shared/forms/form.type';
 import {RegisterFormService} from '@features/auth/register/register-form.service';
 import {RegisterFormModel} from '@features/auth/register/register-form.model';
 import {RegisterFormAdapter} from '@features/auth/register/register-form.adapter';
-import {RegisterUseCase} from '@application/register.use.case';
+import {UserUseCase} from '@application/user.use.case';
 import {Router} from '@angular/router';
 
 @Component({
@@ -18,7 +18,7 @@ export class RegisterComponent implements OnInit {
   form!: FormGroup<FormControls<RegisterFormModel>>
 
   constructor(private registerFormService: RegisterFormService,
-              private registerUseCase: RegisterUseCase,
+              private registerUseCase: UserUseCase,
               private router: Router) {
   }
 
