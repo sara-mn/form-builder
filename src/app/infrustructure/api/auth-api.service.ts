@@ -50,8 +50,8 @@ export class AuthApiService implements IAuthApi {
     return !!this.token;
   }
 
-  refreshToken() {
-    this.http.post('/auth/refresh', {}).pipe(
+  refreshToken(): Observable<LoginResponse>  {
+    return this.http.post('/auth/refresh', {}).pipe(
       tap((res: any) => {
         this.setAccessToken(res.accessToken);
       })

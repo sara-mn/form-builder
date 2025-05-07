@@ -20,12 +20,13 @@
     "paths": {
       "@app/*":["./src/app/*"],
 
-      "@domain/*": ["src/app/domain/*"],
-      "@infrastructure/*": ["src/app/infrastructure/*"],
-      "@application/*": ["src/app/application/*"],
-      "@features/*": ["src/app/features/*"],
-      "@core/*":["./src/app/core/*"],
-      "@shared/*":["./src/app/shared/*"],
+      "@domain/*": ["./src/app/domain/*"],
+      "@infrastructure/*": ["./src/app/infrastructure/*"],
+      "@application/*": ["./src/app/application/*"],
+      "@presentation/*": ["./src/app/presentation/*"],
+      "@features/*": ["./src/app/presentation/features/*"],
+      "@core/*":["./src/app/presentation/core/*"],
+      "@shared/*":["./src/app/presentation/shared/*"],
 
       "@env/*":["./src/environments/*"],
       "@assets/*":["./src/assets/*"]

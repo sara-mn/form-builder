@@ -12,7 +12,7 @@
     "svg": "svg-generator"
   },
   "svgGenerator": {
-    "outputPath": "./src/app/shared/modules/custom-icons/icons",
+    "outputPath": "./src/app//presentation/shared/modules/custom-icons/icons",
     "srcPath": "./src/assets/svg",
     "svgoConfig": {
       "plugins": [
