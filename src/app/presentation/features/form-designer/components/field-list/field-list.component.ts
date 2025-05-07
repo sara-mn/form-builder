@@ -4,6 +4,7 @@ import { Component } from '@angular/core';
   selector: 'app-field-list',
   imports: [],
   templateUrl: './field-list.component.html',
+  standalone: true,
   styleUrl: './field-list.component.scss'
 })
 export class FieldListComponent {
