@@ -5,7 +5,7 @@ import {UserApiService} from '@app/infrustructure/api/user-api.service';
 import {StorageService} from '@app/infrustructure/storage/storage.service';
 import {IStorage} from '@domain/storage.abstract';
 
-export const Providers = [
+export const infrastructureProviders = [
   { provide: IAuthApi, useClass: AuthApiService },
   { provide: UserApi, useClass: UserApiService },
   { provide: IStorage, useClass: StorageService },

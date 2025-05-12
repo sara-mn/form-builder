@@ -1,1 +1,7 @@
-<p>dynamic-form works!</p>
+<form [formGroup]="form">
+  @for (item of formJson.fields; track item.name) {
+    <app-dynamic-field [field]="item" [form-control]="form.controls[item.name]"></app-dynamic-field>
+  } @empty {
+    <span>There are no field.</span>
+  }
+</form>

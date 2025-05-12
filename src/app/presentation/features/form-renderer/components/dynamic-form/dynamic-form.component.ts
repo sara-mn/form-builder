@@ -1,14 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { FormSchemaModel } from '@app/domain';
 import { FormCreatorService } from '@features/form-renderer/form-creator.service';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-dynamic-form',
   templateUrl: './dynamic-form.component.html',
-  styleUrl: './dynamic-form.component.scss'
+  styleUrl: './dynamic-form.component.scss',
+  standalone: false
 })
-export class DynamicFormComponent implements OnInit{
-  form: FormSchemaModel = {
+export class DynamicFormComponent implements OnInit {
+  formJson: FormSchemaModel = {
     fields: [
       {
         name: 'firstName',
@@ -27,11 +29,11 @@ export class DynamicFormComponent implements OnInit{
         name: 'gender',
         label: 'جنسیت',
         type: 'select',
-        options:[
+        options: [
           {
             key: 'male',
             value: 'مرد'
-          },{
+          }, {
             key: 'female',
             value: 'زن'
           }
@@ -40,12 +42,14 @@ export class DynamicFormComponent implements OnInit{
     ],
     id: '1',
     title: 'initial form'
+  };
+  form!: FormGroup;
+
+  constructor(private formCreatorService: FormCreatorService) {
   }
 
-  constructor(private formCreatorService : FormCreatorService) {
+  ngOnInit() {
+    this.form = this.formCreatorService.createForm(this.formJson.fields);
   }
-   ngOnInit() {
-    this.formCreatorService.createForm(this.form.fields);
-   }
 
 }

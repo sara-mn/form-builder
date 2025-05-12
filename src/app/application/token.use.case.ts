@@ -1,5 +1,7 @@
-import {IStorage} from '@domain/storage.abstract';
+import { IStorage } from '@domain/storage.abstract';
+import { Injectable } from '@angular/core';
 
+@Injectable()
 export class TokenUseCase {
   private key = 'accessToken';
 
