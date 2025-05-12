@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {RouterOutlet} from '@angular/router';
+import { RouterLink, RouterOutlet } from '@angular/router';
 import {PrimeNG} from 'primeng/config';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, RouterLink],
   templateUrl: './app.component.html',
   standalone: true,
   styleUrl: './app.component.scss'

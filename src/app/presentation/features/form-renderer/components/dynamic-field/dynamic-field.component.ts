@@ -1,11 +1,31 @@
-import { Component } from '@angular/core';
+import { Component, input, InputSignal, OnInit } from '@angular/core';
+import { FieldConfigModel } from '@app/domain';
+import { AbstractControl, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-dynamic-field',
-  imports: [],
   templateUrl: './dynamic-field.component.html',
-  styleUrl: './dynamic-field.component.scss'
+  styleUrl: './dynamic-field.component.scss',
+  standalone: false
 })
-export class DynamicFieldComponent {
+export class DynamicFieldComponent implements OnInit {
+  initialConfig: FieldConfigModel = {
+    name: 'name',
+    label: 'label',
+    type: 'text'
+  };
+
+  fieldInput: InputSignal<FieldConfigModel> = input<FieldConfigModel>(this.initialConfig, { alias: 'field' });    // ===>>>  @Input('field-data') config: FieldConfigModel;
+  formControlInput: InputSignal<AbstractControl> = input<AbstractControl>(new FormControl(''), { alias: 'form-control' });
+  field!: FieldConfigModel;
+  formControl!: FormControl;
+
+  constructor() {
+  }
+
+  ngOnInit() {
+    this.field = this.fieldInput();
+    this.formControl = this.formControlInput() as FormControl;
+  }
 
 }

@@ -1,16 +1,17 @@
 import {ApplicationConfig, provideZoneChangeDetection} from '@angular/core';
-import {provideRouter} from '@angular/router';
+import { provideRouter, withComponentInputBinding } from '@angular/router';
 import {routes} from './app.routes';
-import {providePrimeNG} from 'primeng/config';
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
 import Aura from '@primeng/themes/aura';
-import {Providers as infrastructure_providers} from '@app/infrustructure';
+import { providePrimeNG } from 'primeng/config';
+import { infrastructureProviders } from '@app/infrustructure';
+import { applicationProviders } from '@app/application';
+import { provideHttpClient } from '@angular/common/http';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    ...infrastructure_providers,
     provideZoneChangeDetection({eventCoalescing: true}),
-    provideRouter(routes),
+    provideRouter(routes, withComponentInputBinding()),
     provideAnimationsAsync(),
     providePrimeNG({
       theme: {
@@ -42,6 +43,9 @@ export const appConfig: ApplicationConfig = {
       //   numeric: [FilterMatchMode.EQUALS, FilterMatchMode.NOT_EQUALS, FilterMatchMode.LESS_THAN, FilterMatchMode.LESS_THAN_OR_EQUAL_TO, FilterMatchMode.GREATER_THAN, FilterMatchMode.GREATER_THAN_OR_EQUAL_TO],
       //   date: [FilterMatchMode.DATE_IS, FilterMatchMode.DATE_IS_NOT, FilterMatchMode.DATE_BEFORE, FilterMatchMode.DATE_AFTER]
       // }
-    })
+    }),
+    provideHttpClient(),
+    ...infrastructureProviders,
+    ...applicationProviders
   ]
 };

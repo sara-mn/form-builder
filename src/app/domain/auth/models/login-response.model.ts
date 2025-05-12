@@ -1,12 +1,12 @@
 export interface LoginResponse {
   accessToken: string;
-  refreshToken?: string;
-  expiresIn?: number;
-  user?: {
+  refreshToken: string;
+  expiresIn: number;
+  user: {
     id: string;
     email: string;
-    firstName?: string;
-    lastName?: string;
-    roles?: string[];
+    firstName: string;
+    lastName: string;
+    roles: string[];
   };
 }
