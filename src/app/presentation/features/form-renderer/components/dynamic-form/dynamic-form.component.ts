@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FieldTypeEnum, FormSchemaModel } from '@app/domain';
-import { FormCreatorService } from '@features/form-renderer/form-creator.service';
+import { FormCreatorService } from '@features/form-renderer/services/form-creator.service';
 import { FormGroup } from '@angular/forms';
 
 @Component({
