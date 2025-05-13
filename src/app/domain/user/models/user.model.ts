@@ -1,4 +1,4 @@
-import {UserRoleEnum} from '@app/domain/user/enums/user.role.enum';
+import {UserRoleEnum} from '@domain/user/enums/user-role.enum';
 import {UserProfile} from '@app/domain/user/models/user-profile.model';
 
 export interface User {

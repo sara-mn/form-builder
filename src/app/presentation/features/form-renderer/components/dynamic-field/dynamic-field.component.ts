@@ -1,5 +1,5 @@
 import { Component, input, InputSignal, OnInit } from '@angular/core';
-import { FieldConfigModel } from '@app/domain';
+import { FieldConfigModel, FieldTypeEnum } from '@app/domain';
 import { AbstractControl, FormControl } from '@angular/forms';
 
 @Component({
@@ -12,8 +12,10 @@ export class DynamicFieldComponent implements OnInit {
   initialConfig: FieldConfigModel = {
     name: 'name',
     label: 'label',
-    type: 'text'
+    type: FieldTypeEnum.Text
   };
+
+  fieldTypeEnum = FieldTypeEnum;
 
   fieldInput: InputSignal<FieldConfigModel> = input<FieldConfigModel>(this.initialConfig, { alias: 'field' });    // ===>>>  @Input('field-data') config: FieldConfigModel;
   formControlInput: InputSignal<AbstractControl> = input<AbstractControl>(new FormControl(''), { alias: 'form-control' });

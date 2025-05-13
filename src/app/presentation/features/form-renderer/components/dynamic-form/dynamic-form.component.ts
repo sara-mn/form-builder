@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormSchemaModel } from '@app/domain';
+import { FieldTypeEnum, FormSchemaModel } from '@app/domain';
 import { FormCreatorService } from '@features/form-renderer/form-creator.service';
 import { FormGroup } from '@angular/forms';
 
@@ -15,20 +15,20 @@ export class DynamicFormComponent implements OnInit {
       {
         name: 'firstName',
         label: 'نام',
-        type: 'text'
+        type: FieldTypeEnum.Text
       }, {
         name: 'lastName',
         label: 'نام خانوادگی',
-        type: 'text'
+        type: FieldTypeEnum.Text
       }, {
         name: 'nationalCode',
         label: 'کد ملی',
-        type: 'number'
+        type: FieldTypeEnum.Number
       },
       {
         name: 'gender',
         label: 'جنسیت',
-        type: 'select',
+        type: FieldTypeEnum.Select,
         options: [
           {
             key: 'male',

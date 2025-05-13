@@ -1,17 +1,17 @@
 import { ValidatorConfigModel } from '@domain/form/models/validator-config.model';
-import { AccessConfigModel } from '@domain/form/models/access-config.model';
+import { FieldTypeEnum } from '@domain/form/enums/field-type.enum';
 
 export type FieldType =
-  | 'text'
-  | 'number'
-  | 'select';
+  | FieldTypeEnum.Text
+  | FieldTypeEnum.Number
+  | FieldTypeEnum.Select;
 
-// | 'textarea'
-// | 'radio'
-// | 'checkbox'
-// | 'date'
-// | 'date-range'
-// | 'html';
+// | FieldTypeEnum.Textarea'
+// | FieldTypeEnum.Radio'
+// | FieldTypeEnum.Checkbox'
+// | FieldTypeEnum.Date'
+// | FieldTypeEnum.DateRange'
+// | FieldTypeEnum.Html';
 
 export interface FieldConfigModel {
   name: string;                  // نام فیلد در دیتا

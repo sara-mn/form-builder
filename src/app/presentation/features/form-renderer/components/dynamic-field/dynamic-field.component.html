@@ -1,3 +1,62 @@
-<label for="{{field.name}}">{{ field.label }}: </label>
-<input id="{{field.name}}" type="{{field.type}}" [formControl]="formControl" />
-
+@switch (field.type) {
+  @case (fieldTypeEnum.Text) {
+    <div>
+      <label for="{{field.name}}">{{ field.label }}: </label>
+      <input id="{{field.name}}" type="{{field.type}}" [formControl]="formControl" />
+    </div>
+  }
+  @case (fieldTypeEnum.Number) {
+    <div>
+      <label for="{{field.name}}">{{ field.label }}: </label>
+      <input id="{{field.name}}" type="{{field.type}}" [formControl]="formControl" />
+    </div>
+  }
+  @case (fieldTypeEnum.Select) {
+    <div>
+      <label for="{{field.name}}">{{ field.label }}: </label>
+      <input id="{{field.name}}" type="{{field.type}}" [formControl]="formControl" />
+    </div>
+  }
+  @case (fieldTypeEnum.Textarea) {
+    <div>
+      <label for="{{field.name}}">{{ field.label }}: </label>
+      <input id="{{field.name}}" type="{{field.type}}" [formControl]="formControl" />
+    </div>
+  }
+  @case (fieldTypeEnum.Checkbox) {
+    <div>
+      <label for="{{field.name}}">{{ field.label }}: </label>
+      <input id="{{field.name}}" type="{{field.type}}" [formControl]="formControl" />
+    </div>
+  }
+  @case (fieldTypeEnum.Radio) {
+    <div>
+      <label for="{{field.name}}">{{ field.label }}: </label>
+      <input id="{{field.name}}" type="{{field.type}}" [formControl]="formControl" />
+    </div>
+  }
+  @case (fieldTypeEnum.Date) {
+    <div>
+      <label for="{{field.name}}">{{ field.label }}: </label>
+      <input id="{{field.name}}" type="{{field.type}}" [formControl]="formControl" />
+    </div>
+  }
+  @case (fieldTypeEnum.DateRange) {
+    <div>
+      <label for="{{field.name}}">{{ field.label }}: </label>
+      <input id="{{field.name}}" type="{{field.type}}" [formControl]="formControl" />
+    </div>
+  }
+  @case (fieldTypeEnum.Html) {
+    <div>
+      <label for="{{field.name}}">{{ field.label }}: </label>
+      <input id="{{field.name}}" type="{{field.type}}" [formControl]="formControl" />
+    </div>
+  }
+  @default {
+    <div>
+      <label for="{{field.name}}">{{ field.label }}: </label>
+      <input id="{{field.name}}" type="{{field.type}}" [formControl]="formControl" />
+    </div>
+  }
+}
