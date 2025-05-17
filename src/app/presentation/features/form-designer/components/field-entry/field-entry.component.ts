@@ -1,12 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, model, OnInit, output } from '@angular/core';
 import { FieldConfigFormService } from '@features/form-designer/services/field-config-form.service';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { InputText } from 'primeng/inputtext';
 import { Checkbox } from 'primeng/checkbox';
 import { Select } from 'primeng/select';
-import { FieldTypeEnum } from '@app/domain';
+import { FieldConfigModel, FieldTypeEnum } from '@app/domain';
 import { Button } from 'primeng/button';
 import { MultiSelect } from 'primeng/multiselect';
+import { FieldTypeLabel } from '@shared/enum-records/field-type.label';
 
 @Component({
   selector: 'app-field-entry',
@@ -24,24 +25,29 @@ import { MultiSelect } from 'primeng/multiselect';
 })
 export class FieldEntryComponent implements OnInit {
   form!: FormGroup;
-  fieldTypes!: FieldTypeEnum[];
+  fieldTypes: { label: string; value: FieldTypeEnum }[] = [];
+  fieldTypeEnums = Object.keys(FieldTypeLabel);
+  field = output<FieldConfigModel>();
 
   constructor(private fieldConfigFormService: FieldConfigFormService) {
   }
 
   ngOnInit() {
     this.form = this.fieldConfigFormService.createForm();
-    this.fieldTypes = [
-      FieldTypeEnum.Text,
-      FieldTypeEnum.Number,
-      FieldTypeEnum.Select
-    ];
+    this.fieldTypes = this.fieldTypeEnums.map((item) => {
+      return {
+        label: FieldTypeLabel[item as FieldTypeEnum].en,
+        value: item as FieldTypeEnum
+      };
+    });
   }
 
   onSubmit() {
     if (this.form.invalid) return;
 
     const raw = this.fieldConfigFormService.getRawValue(this.form);
+    this.field.emit(raw);
   }
 
+  protected readonly FieldTypeEnum = FieldTypeEnum;
 }

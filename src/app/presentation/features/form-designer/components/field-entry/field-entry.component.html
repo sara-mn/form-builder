@@ -17,12 +17,12 @@
 
   <div class="flex items-center">
     <label for="type" class="ml-2">Type: </label>
-    <p-select [options]="fieldTypes" inputId="type" id="type" formControlName="type"  placeholder="Select a Type"  optionLabel="type" class="w-full md:w-56" />
-
+    <p-select [options]="fieldTypes" optionLabel="label" optionValue="value" inputId="type" id="type" formControlName="type"
+              placeholder="Select a Type" class="w-full md:w-56" />
   </div>
 
-  @if (true){
-<!--    <p-button label="Search" icon="pi pi-check" (onClick)="addNewOption()" />-->
+  @if (true) {
+    <!--    <p-button label="Search" icon="pi pi-check" (onClick)="addNewOption()" />-->
 
     <div class="flex items-center">
       <input type="text" pInputText formControlName="options" />
@@ -30,8 +30,13 @@
   }
 
   <div class="flex items-center">
-    <label for="validators" class="ml-2">Is Required?: </label>
-    <p-multiselect [options]="" formControlName="validators" id="validators" optionLabel="validators" placeholder="Select validators" [maxSelectedLabels]="5" styleClass="w-full md:w-80"></p-multiselect>
+    <label for="validators" class="ml-2">Validators: </label>
+    <p-multiselect [options]="" formControlName="validators" id="validators" optionLabel="validators"
+                   placeholder="Select validators" [maxSelectedLabels]="5" styleClass="w-full md:w-80"></p-multiselect>
+  </div>
+
+  <div class="flex items-center">
+    <p-button label="Add Field" (click)="onSubmit()" />
   </div>
 
 </form>

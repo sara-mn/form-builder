@@ -1,7 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { FormEntryComponent } from '@features/form-designer/components/form-entry/form-entry.component';
 
-const routes: Routes = [];
+const routes: Routes = [
+  { path: '', component: FormEntryComponent },
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
