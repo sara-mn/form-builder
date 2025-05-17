@@ -10,7 +10,7 @@ export class FormSchemaService {
   constructor() {
   }
 
-  createForm() {
+  getForm() {
     return this.formSchema;
   }
 

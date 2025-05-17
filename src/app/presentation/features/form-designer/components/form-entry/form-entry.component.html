@@ -1,1 +1,28 @@
-<p>form-entry works!</p>
+<div>
+  <div class="flex items-center">
+    <label for="title">Form Title: </label>
+    <input id="title" type="text" pInputText [(ngModel)]="formTitle" />
+  </div>
+  <div class="flex items-center">
+    <p-button label="Add Field" (click)="addNewField()" />
+  </div>
+  <hr>
+  <ul>
+    @for (field of fields; track field.name) {
+      <li>
+        {{ field.label }} ({{ field.type }})
+      </li>
+    }
+  </ul>
+  <hr>
+  @if (addedNewField) {
+    <app-field-entry (field)="addField($event)"></app-field-entry>
+  }
+  <div class="flex items-center">
+    <p-button label="Add Form" (click)="createForm()" />
+  </div>
+</div>
+
+
+
+
