@@ -43,6 +43,10 @@ export class AuthFacadeService {
     this.clearAccessToken();
   }
 
+  getAccessToken(){
+    return this.tokenUseCase.getAccessToken();
+  }
+
   private setAccessToken(token: string) {
     this.tokenUseCase.setAccessToken(token);
     this.accessToken$.next(token);
