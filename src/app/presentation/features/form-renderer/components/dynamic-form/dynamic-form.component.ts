@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FieldTypeEnum, FormSchemaModel } from '@app/domain';
+import { FieldTypeEnum, FormSchemaModel, UserRoleEnum, ValidationConfigModel } from '@app/domain';
 import { FormCreatorService } from '@features/form-renderer/services/form-creator.service';
 import { FormGroup } from '@angular/forms';
 
@@ -15,20 +15,32 @@ export class DynamicFormComponent implements OnInit {
       {
         name: 'firstName',
         label: 'نام',
-        type: FieldTypeEnum.Text
+        type: FieldTypeEnum.Text,
+        required: true,
+        validations: [],
+        access: []
       }, {
         name: 'lastName',
         label: 'نام خانوادگی',
-        type: FieldTypeEnum.Text
+        type: FieldTypeEnum.Text,
+        required: true,
+        validations: [],
+        access: []
       }, {
         name: 'nationalCode',
         label: 'کد ملی',
-        type: FieldTypeEnum.Number
+        type: FieldTypeEnum.Number,
+        required: true,
+        validations: [],
+        access: []
       },
       {
         name: 'gender',
         label: 'جنسیت',
         type: FieldTypeEnum.Select,
+        required: true,
+        validations: [],
+        access: [],
         options: [
           {
             key: 'male',

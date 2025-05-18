@@ -1,26 +1,40 @@
-import {HttpErrorResponse, HttpInterceptorFn} from '@angular/common/http';
-import {inject} from '@angular/core';
-import {TokenUseCase} from '@application/token.use.case';
-import {catchError, finalize, throwError} from 'rxjs';
-import {ErrorHandlerService} from '@core/services/error-handler.service';
+import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
+import { inject } from '@angular/core';
+import { catchError, finalize, switchMap, throwError } from 'rxjs';
+import { ErrorHandlerService } from '@core/services/error-handler.service';
+import { AuthFacadeService } from '@features/auth/services/auth-facade.service';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
-  const tokenUseCase = inject(TokenUseCase),
+  const authFacade = inject(AuthFacadeService),
     errorHandler = inject(ErrorHandlerService),
-    accessToken = tokenUseCase.getAccessToken();
+    accessToken = authFacade.getAccessToken();
 
-  if (!accessToken) {
-    return next(req);
+  if (accessToken) {
+    req = req.clone({
+      headers: req.headers.set('Authorization', `Bearer ${accessToken}`)
+    });
   }
 
-  const authReq = req.clone({
-    headers: req.headers.set('Authorization', `Bearer ${accessToken}`)
-  });
 
-  return next(authReq).pipe(
+  return next(req).pipe(
     catchError((error: HttpErrorResponse) => {
-      errorHandler.handleError(authReq.url, error);
-      return throwError(error);
+      if (error.status === 401) {
+        authFacade.refreshToken().pipe(
+          switchMap(() => {
+            const newToken = authFacade.getAccessToken();
+            const cloned = req.clone({
+              setHeaders: { Authorization: `Bearer ${newToken}` }
+            });
+            return next(cloned);
+          }),
+          catchError(() => {
+            authFacade.logout();
+            return throwError(() => error);
+          })
+        );
+      }
+      errorHandler.handleError(req.url, error);
+      return throwError(() => error);
     }),
     finalize(() => {
     })
