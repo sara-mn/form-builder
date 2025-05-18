@@ -10,7 +10,7 @@
   <ul>
     @for (field of fields; track field.name) {
       <li>
-        {{ field.label }} ({{ field.type }})
+        {{ field | json }}
       </li>
     }
   </ul>

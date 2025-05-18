@@ -16,7 +16,7 @@ export * from './user/models/register-request.model';
 export * from './form/models/form-schema.model'
 export * from './form/models/field-config.model'
 export * from './form/models/access-config.model'
-export * from './form/models/validator-config.model'
+export * from './form/models/validation-config.model'
 
 
 //abstracts
