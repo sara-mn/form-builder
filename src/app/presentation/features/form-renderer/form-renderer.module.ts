@@ -6,6 +6,7 @@ import { DynamicFormComponent } from '@features/form-renderer/components/dynamic
 import { DynamicFieldComponent } from '@features/form-renderer/components/dynamic-field/dynamic-field.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormCreatorService } from '@features/form-renderer/services/form-creator.service';
+import { Button } from "primeng/button";
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { FormCreatorService } from '@features/form-renderer/services/form-creato
     CommonModule,
     FormRendererRoutingModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    Button
   ],
   providers:[
     FormCreatorService

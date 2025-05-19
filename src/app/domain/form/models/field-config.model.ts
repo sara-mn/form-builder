@@ -19,7 +19,7 @@ export interface FieldConfigModel {
   type: FieldType;
   required?: boolean;
   options?: string[] | { key: string; value: string }[];
-  validations?: ValidationConfigModel[];
+  validation?: ValidationConfigModel;
   access?: UserRoleEnum[];
   // order?: number;
   // description?: string;

@@ -5,6 +5,7 @@ import { FieldConfigModel, FormSchemaModel } from '@app/domain';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputText } from 'primeng/inputtext';
 import { FieldEntryComponent } from '@features/form-designer/components/field-entry/field-entry.component';
+import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-form-entry',
@@ -13,7 +14,8 @@ import { FieldEntryComponent } from '@features/form-designer/components/field-en
     FormsModule,
     InputText,
     ReactiveFormsModule,
-    FieldEntryComponent
+    FieldEntryComponent,
+    JsonPipe
   ],
   templateUrl: './form-entry.component.html',
   standalone: true,

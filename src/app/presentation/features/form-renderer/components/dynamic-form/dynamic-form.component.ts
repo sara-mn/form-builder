@@ -17,30 +17,42 @@ export class DynamicFormComponent implements OnInit {
         label: 'نام',
         type: FieldTypeEnum.Text,
         required: true,
-        validations: [],
-        access: []
+        validation: {
+          'minLength': 3,
+          'maxLength': 15,
+          'required': true
+        },
+        access: [UserRoleEnum.Guest, UserRoleEnum.User]
       }, {
         name: 'lastName',
         label: 'نام خانوادگی',
         type: FieldTypeEnum.Text,
         required: true,
-        validations: [],
-        access: []
+        validation: {
+          'minLength': 3,
+          'maxLength': 15,
+          'required': true
+        },
+        access: [UserRoleEnum.Guest, UserRoleEnum.User]
       }, {
         name: 'nationalCode',
         label: 'کد ملی',
         type: FieldTypeEnum.Number,
         required: true,
-        validations: [],
-        access: []
+        validation: {
+          'required': true
+        },
+        access: [UserRoleEnum.Guest, UserRoleEnum.User]
       },
       {
         name: 'gender',
         label: 'جنسیت',
         type: FieldTypeEnum.Select,
         required: true,
-        validations: [],
-        access: [],
+        validation: {
+          'required': false
+        },
+        access: [UserRoleEnum.Guest, UserRoleEnum.User],
         options: [
           {
             key: 'male',
@@ -64,4 +76,8 @@ export class DynamicFormComponent implements OnInit {
     this.form = this.formCreatorService.createForm(this.formJson.fields);
   }
 
+  onSubmit() {
+    if (this.form.invalid) return;
+
+  }
 }
