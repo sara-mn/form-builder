@@ -12,18 +12,26 @@ export const routes: Routes = [
     children: [
       { path: '', component: Dashboard },
       {
+        path: 'form-list',
+        data: {},
+        canActivate: [authGuard],
+        loadChildren: () =>
+          import('./presentation/features/form-list/form-list.module').then((module) => module.FormListModule)
+      },
+      {
         path: 'dynamic-form',
         data: {},
         canActivate: [authGuard],
         loadChildren: () =>
-          import('./presentation/features/form-renderer/form-renderer.module').then(( module ) => module.FormRendererModule),
-      }, {
+          import('./presentation/features/form-renderer/form-renderer.module').then((module) => module.FormRendererModule)
+      },
+      {
         path: 'create-form',
         data: {},
         canActivate: [authGuard],
         loadChildren: () =>
-          import('./presentation/features/form-designer/form-designer.module').then(( module ) => module.FormDesignerModule),
-      },
+          import('./presentation/features/form-designer/form-designer.module').then((module) => module.FormDesignerModule)
+      }
     ]
   },
   { path: 'landing', component: Landing },

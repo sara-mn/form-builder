@@ -27,18 +27,20 @@ export class AppMenu {
       },
       {
         label: 'Form Designer',
+        // routerLink: ['/create-form'],
         items: [
-          { label: 'Form Schema', icon: 'pi pi-fw pi-id-card', routerLink: ['/create-form'] },
-          { label: 'Field List', icon: 'pi pi-fw pi-check-square', routerLink: ['/'] },
+          { label: 'Form List', icon: 'pi pi-fw pi-circle text-xs', routerLink: ['/form-list'] },
+          // { label: 'Field List', icon: 'pi pi-fw pi-circle text-xs', routerLink: ['#'] },
         ]
       },
       {
         label: 'Form Renderer',
-        items: [
-          { label: 'Form Preview', icon: 'pi pi-fw pi-id-card', routerLink: ['/dynamic-form'] },
-          { label: 'item1', icon: 'pi pi-fw pi-check-square', routerLink: ['/'] },
-          { label: 'item2', icon: 'pi pi-fw pi-mobile', class: 'rotated-icon', routerLink: ['/'] }
-        ]
+        routerLink: ['/dynamic-form'],
+        // items: [
+        //   { label: 'Form Preview', icon: 'pi pi-fw pi-circle', routerLink: ['/dynamic-form'] },
+        //   { label: 'item1', icon: 'pi pi-fw pi-circle', routerLink: ['#'] },
+        //   { label: 'item2', icon: 'pi pi-fw pi-circle', class: 'rotated-icon', routerLink: ['#'] }
+        // ]
       }
     ];
   }
