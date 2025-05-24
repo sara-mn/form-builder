@@ -26,7 +26,7 @@ export const routes: Routes = [
           import('./presentation/features/form-renderer/form-renderer.module').then((module) => module.FormRendererModule)
       },
       {
-        path: 'create-form',
+        path: '',
         data: {},
         canActivate: [authGuard],
         loadChildren: () =>

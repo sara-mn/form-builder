@@ -1,11 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { Button } from 'primeng/button';
-import { FormSchemaService } from '@features/form-designer/services/form-schema.service';
-import { FieldConfigModel, FormSchemaModel } from '@app/domain';
+import { FieldConfigModel, FieldTypeEnum, FormSchemaModel } from '@app/domain';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputText } from 'primeng/inputtext';
 import { FieldEntryComponent } from '@features/form-designer/components/field-entry/field-entry.component';
 import { JsonPipe } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
+import { FormDesignerFacadeService } from '@features/form-designer/services/form-designer-facade.service';
+
+enum FieldEntryModeEnum {
+  add,
+  edit,
+  noMode
+}
 
 @Component({
   selector: 'app-form-entry',
@@ -22,29 +29,63 @@ import { JsonPipe } from '@angular/common';
   styleUrl: './form-entry.component.scss'
 })
 export class FormEntryComponent implements OnInit {
-  formTitle: string = '';
-  addedNewField: boolean = false;
+  private initialField = { name: '', label: '', type: FieldTypeEnum.Text };
+  private editedFieldIndex = -1;
+
   fields: FieldConfigModel[] = [];
+  form: FormSchemaModel = { title: '', fields: [] };
+  field: FieldConfigModel = this.initialField;
+  fieldEntryMode: FieldEntryModeEnum = FieldEntryModeEnum.noMode;
 
-  newForm!: FormSchemaModel;
 
-  constructor(private formSchemaService: FormSchemaService) {
+  constructor(private activatedRoute: ActivatedRoute,
+              private formDesignerFacade: FormDesignerFacadeService) {
   }
 
   ngOnInit(): void {
+    const formId = this.activatedRoute.snapshot.paramMap.get('id');
+    if (formId) {
+      this.formDesignerFacade.getFormById(formId).subscribe({
+        next: (form) => {
+          this.form = form;
+        }
+      });
+    }
   }
 
-  addNewField() {
-    this.addedNewField = true;
+  enterField(event: FieldConfigModel) {
+    switch (this.fieldEntryMode){
+      case FieldEntryModeEnum.add:
+        this.form.fields.push(event);
+        break;
+      case FieldEntryModeEnum.edit:
+        this.form.fields[this.editedFieldIndex] = event;
+        break;
+      default:
+        break;
+    }
+
+    this.fieldEntryMode = FieldEntryModeEnum.noMode;
   }
 
-  addField(event: FieldConfigModel) {
-    this.formSchemaService.addField(event);
-    this.fields.push(event);
-    this.addedNewField = false;
+  addField(){
+    this.field = this.initialField;
+    this.fieldEntryMode = FieldEntryModeEnum.add;
+  }
+
+  updateField(index: number, field: FieldConfigModel) {
+    this.field = field;
+    this.fieldEntryMode = FieldEntryModeEnum.edit;
+    this.editedFieldIndex = index;
+  }
+
+  deleteField(index: number) {
+    this.form.fields.splice(index, 1);
   }
 
   createForm() {
-    this.newForm = this.formSchemaService.getForm();
+
   }
+
+  protected readonly FieldEntryModeEnum = FieldEntryModeEnum;
 }

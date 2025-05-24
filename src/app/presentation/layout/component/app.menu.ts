@@ -22,25 +22,11 @@ export class AppMenu {
   ngOnInit() {
     this.model = [
       {
-        label: 'Home',
-        items: [{ label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/'] }]
-      },
-      {
-        label: 'Form Designer',
-        // routerLink: ['/create-form'],
+        label: '',
         items: [
-          { label: 'Form List', icon: 'pi pi-fw pi-circle text-xs', routerLink: ['/form-list'] },
-          // { label: 'Field List', icon: 'pi pi-fw pi-circle text-xs', routerLink: ['#'] },
+          { label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/'] },
+          { label: 'Form List', icon: 'pi pi-fw pi-list', routerLink: ['/form-list'] },
         ]
-      },
-      {
-        label: 'Form Renderer',
-        routerLink: ['/dynamic-form'],
-        // items: [
-        //   { label: 'Form Preview', icon: 'pi pi-fw pi-circle', routerLink: ['/dynamic-form'] },
-        //   { label: 'item1', icon: 'pi pi-fw pi-circle', routerLink: ['#'] },
-        //   { label: 'item2', icon: 'pi pi-fw pi-circle', class: 'rotated-icon', routerLink: ['#'] }
-        // ]
       }
     ];
   }
