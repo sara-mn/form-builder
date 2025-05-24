@@ -1,24 +1,29 @@
-
-
 <div>
   <div class="flex items-center">
     <label for="title">Form Title: </label>
-    <input id="title" type="text" pInputText [(ngModel)]="formTitle" />
+    <input id="title" type="text" pInputText [(ngModel)]="form.title" />
   </div>
   <div class="flex items-center">
-    <p-button label="Add Field" (click)="addNewField()" />
+    <p-button label="Add Field" (click)="addField()" />
   </div>
   <hr>
   <ul>
-    @for (field of fields; track field.name) {
+    @for (field of fields; track $index) {
       <li>
         {{ field | json }}
       </li>
+      <li>
+        <p-button label="delete Field" (click)="deleteField($index)" />
+      </li>
+      <li>
+        <p-button label="edit Field" (click)="updateField($index,field)" />
+      </li>
+      <hr />
     }
   </ul>
   <hr>
-  @if (addedNewField) {
-    <app-field-entry (field)="addField($event)"></app-field-entry>
+  @if (fieldEntryMode !== FieldEntryModeEnum.noMode) {
+    <app-field-entry (enterField)="enterField($event)" [field]="field"></app-field-entry>
   }
   <div class="flex items-center">
     <p-button label="Add Form" (click)="createForm()" />

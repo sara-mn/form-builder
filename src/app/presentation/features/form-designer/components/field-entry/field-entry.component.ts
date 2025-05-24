@@ -1,4 +1,4 @@
-import { Component, model, OnInit, output } from '@angular/core';
+import { Component, input, model, OnInit, output } from '@angular/core';
 import { FieldConfigFormService } from '@features/form-designer/services/field-config-form.service';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { InputText } from 'primeng/inputtext';
@@ -27,13 +27,16 @@ export class FieldEntryComponent implements OnInit {
   form!: FormGroup;
   fieldTypes: { label: string; value: FieldTypeEnum }[] = [];
   fieldTypeEnums = Object.keys(FieldTypeLabel);
-  field = output<FieldConfigModel>();
+  enterField = output<FieldConfigModel>();
+  field = input<FieldConfigModel>();
 
   constructor(private fieldConfigFormService: FieldConfigFormService) {
   }
 
   ngOnInit() {
     this.form = this.fieldConfigFormService.createForm();
+    if (this.field !== undefined)
+      this.form.patchValue(this.field);
     this.fieldTypes = this.fieldTypeEnums.map((item) => {
       return {
         label: FieldTypeLabel[item as FieldTypeEnum].en,
@@ -46,7 +49,7 @@ export class FieldEntryComponent implements OnInit {
     if (this.form.invalid) return;
 
     const raw = this.fieldConfigFormService.getRawValue(this.form);
-    this.field.emit(raw);
+    this.enterField.emit(raw);
   }
 
   protected readonly FieldTypeEnum = FieldTypeEnum;
