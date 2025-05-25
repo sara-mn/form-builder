@@ -8,7 +8,7 @@
   </div>
   <hr>
   <ul>
-    @for (field of fields; track $index) {
+    @for (field of form.fields; track $index) {
       <li>
         {{ field | json }}
       </li>
@@ -22,7 +22,9 @@
     }
   </ul>
   <hr>
-  @if (fieldEntryMode !== FieldEntryModeEnum.noMode) {
+  @if (fieldEntryMode == FieldEntryModeEnum.add) {
+    <app-field-entry (enterField)="enterField($event)"></app-field-entry>
+  } @else if (fieldEntryMode === FieldEntryModeEnum.edit){
     <app-field-entry (enterField)="enterField($event)" [field]="field"></app-field-entry>
   }
   <div class="flex items-center">

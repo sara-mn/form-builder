@@ -10,29 +10,55 @@
   </div>
 
   <div class="flex items-center">
-    <label for="required" class="ml-2">Is Required?: </label>
-    <p-checkbox inputId="required" id="required" name="required" value="Is Required?" [binary]="true"
-                formControlName="required" />
-  </div>
-
-  <div class="flex items-center">
     <label for="type" class="ml-2">Type: </label>
     <p-select [options]="fieldTypes" optionLabel="label" optionValue="value" inputId="type" id="type" formControlName="type"
               placeholder="Select a Type" class="w-full md:w-56" />
   </div>
 
-  @if (true) {
-    <!--    <p-button label="Search" icon="pi pi-check" (onClick)="addNewOption()" />-->
+<!--  @if (true) {-->
+<!--    &lt;!&ndash;    <p-button label="Search" icon="pi pi-check" (onClick)="addNewOption()" />&ndash;&gt;-->
 
+<!--    <div class="flex items-center">-->
+<!--      <input type="text" pInputText formControlName="options" />-->
+<!--    </div>-->
+<!--  }-->
+
+  <div formGroupName="validation">
     <div class="flex items-center">
-      <input type="text" pInputText formControlName="options" />
+      <label for="required" class="ml-2">Is Required?: </label>
+      <p-checkbox inputId="required" id="required" name="required" value="Is Required?" [binary]="true"
+                  formControlName="required" />
     </div>
-  }
-
-  <div class="flex items-center">
-    <label for="validations" class="ml-2">Validations: </label>
-    <p-multiselect [options]="" formControlName="validations" id="validations" optionLabel="validations"
-                   placeholder="Select validators" [maxSelectedLabels]="5" styleClass="w-full md:w-80"></p-multiselect>
+    <div class="flex items-center">
+      <label for="minLength" class="ml-2">minLength: </label>
+      <p-checkbox inputId="minLength" id="minLength" name="minLength" value="" [binary]="true"
+                  formControlName="minLength" />
+    </div>
+    <div class="flex items-center">
+      <label for="maxLength" class="ml-2">maxLength: </label>
+      <p-checkbox inputId="maxLength" id="maxLength" name="maxLength" value="" [binary]="true"
+                  formControlName="maxLength" />
+    </div>
+    <div class="flex items-center">
+      <label for="min" class="ml-2">min: </label>
+      <p-checkbox inputId="min" id="min" name="min" value="" [binary]="true"
+                  formControlName="min" />
+    </div>
+    <div class="flex items-center">
+      <label for="max" class="ml-2">max: </label>
+      <p-checkbox inputId="max" id="max" name="max" value="" [binary]="true"
+                  formControlName="max" />
+    </div>
+    <div class="flex items-center">
+      <label for="email" class="ml-2">email: </label>
+      <p-checkbox inputId="email" id="email" name="email" value="" [binary]="true"
+                  formControlName="email" />
+    </div>
+    <div class="flex items-center">
+      <label for="pattern" class="ml-2">pattern: </label>
+      <p-checkbox inputId="pattern" id="pattern" name="pattern" value="" [binary]="true"
+                  formControlName="pattern" />
+    </div>
   </div>
 
   <div class="flex items-center">

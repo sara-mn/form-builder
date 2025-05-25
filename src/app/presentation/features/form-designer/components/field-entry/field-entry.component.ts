@@ -35,8 +35,9 @@ export class FieldEntryComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.fieldConfigFormService.createForm();
-    if (this.field !== undefined)
-      this.form.patchValue(this.field);
+    const field = this.field();
+    if (field !== undefined)
+      this.form.patchValue(field);
     this.fieldTypes = this.fieldTypeEnums.map((item) => {
       return {
         label: FieldTypeLabel[item as FieldTypeEnum].en,
