@@ -8,6 +8,7 @@ import { FieldConfigModel, FieldTypeEnum } from '@app/domain';
 import { Button } from 'primeng/button';
 import { MultiSelect } from 'primeng/multiselect';
 import { FieldTypeLabel } from '@shared/enum-records/field-type.label';
+import { Fieldset } from 'primeng/fieldset';
 
 @Component({
   selector: 'app-field-entry',
@@ -17,13 +18,14 @@ import { FieldTypeLabel } from '@shared/enum-records/field-type.label';
     Checkbox,
     Select,
     Button,
-    MultiSelect
+    Fieldset
   ],
   templateUrl: './field-entry.component.html',
   standalone: true,
   styleUrl: './field-entry.component.scss'
 })
 export class FieldEntryComponent implements OnInit {
+  fieldsetTitle: string = 'New Field';
   form!: FormGroup;
   fieldTypes: { label: string; value: FieldTypeEnum }[] = [];
   fieldTypeEnums = Object.keys(FieldTypeLabel);
@@ -36,8 +38,10 @@ export class FieldEntryComponent implements OnInit {
   ngOnInit() {
     this.form = this.fieldConfigFormService.createForm();
     const field = this.field();
-    if (field !== undefined)
+    if (field !== undefined) {
+      this.fieldsetTitle = 'Update Field'
       this.form.patchValue(field);
+    }
     this.fieldTypes = this.fieldTypeEnums.map((item) => {
       return {
         label: FieldTypeLabel[item as FieldTypeEnum].en,

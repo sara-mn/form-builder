@@ -7,6 +7,7 @@ import { FieldEntryComponent } from '@features/form-designer/components/field-en
 import { JsonPipe } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { FormDesignerFacadeService } from '@features/form-designer/services/form-designer-facade.service';
+import { FieldListComponent } from '@features/form-designer/components/field-list/field-list.component';
 
 enum FieldEntryModeEnum {
   add,
@@ -22,7 +23,8 @@ enum FieldEntryModeEnum {
     InputText,
     ReactiveFormsModule,
     FieldEntryComponent,
-    JsonPipe
+    JsonPipe,
+    FieldListComponent
   ],
   templateUrl: './form-entry.component.html',
   standalone: true,
@@ -73,14 +75,17 @@ export class FormEntryComponent implements OnInit {
     this.fieldEntryMode = FieldEntryModeEnum.add;
   }
 
-  updateField(index: number, field: FieldConfigModel) {
-    this.field = field;
+  updateField(event: {index: number, field: FieldConfigModel}) {
+    this.field = event.field;
     this.fieldEntryMode = FieldEntryModeEnum.edit;
-    this.editedFieldIndex = index;
+    this.editedFieldIndex = event.index;
   }
 
   deleteField(index: number) {
     this.form.fields.splice(index, 1);
+  }
+
+  previewField(field: FieldConfigModel) {
   }
 
   createForm() {
