@@ -1,1 +1,44 @@
-<p>field-list works!</p>
+<div class="p-4 md:p-8 relative overflow-x-auto shadow-md sm:rounded-lg bg-white">
+  <table class="w-full text-sm rtl:text-right text-gray-500 dark:text-gray-400">
+    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+    <tr>
+      <th scope="col" class="px-6 py-3 text-left">
+        Field Name
+      </th>
+      <th scope="col" class="px-6 py-3 text-left">
+        Label
+      </th>
+      <th scope="col" class="px-6 py-3 text-center">
+        IS Required?
+      </th>
+      <th scope="col" class="px-6 py-3 text-center">
+        Actions
+      </th>
+    </tr>
+    </thead>
+    <tbody>
+      @for (field of list; track $index){
+        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
+          <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-left">
+            {{ field.name }}
+          </th>
+          <td class="px-6 py-4 text-left">
+            {{ field.label }}
+          </td>
+          <td class="px-6 py-4 text-center">
+            @if(field.validation?.required){
+              <i class="pi pi-check text-green-600"></i>
+            }
+          </td>
+          <td class="px-6 py-4 text-center">
+            <span class="font-medium text-blue-600 dark:text-blue-500 hover:underline px-4" (click)="updateField($index,field)">Edit</span>
+            |
+            <span class="font-medium text-blue-600 dark:text-blue-500 hover:underline px-4" (click)="deleteField($index)" >Delete</span>
+            |
+            <span class="font-medium text-blue-600 dark:text-blue-500 hover:underline px-4" (click)="previewField(field)">preview</span>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>
