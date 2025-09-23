@@ -4,7 +4,6 @@ import { FieldConfigModel, FieldTypeEnum, FormSchemaModel } from '@app/domain';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputText } from 'primeng/inputtext';
 import { FieldEntryComponent } from '@features/form-designer/components/field-entry/field-entry.component';
-import { JsonPipe } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { FormDesignerFacadeService } from '@features/form-designer/services/form-designer-facade.service';
 import { FieldListComponent } from '@features/form-designer/components/field-list/field-list.component';
@@ -23,7 +22,6 @@ enum FieldEntryModeEnum {
     InputText,
     ReactiveFormsModule,
     FieldEntryComponent,
-    JsonPipe,
     FieldListComponent
   ],
   templateUrl: './form-entry.component.html',

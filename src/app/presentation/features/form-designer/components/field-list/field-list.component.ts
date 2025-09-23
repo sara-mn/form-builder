@@ -1,12 +1,8 @@
 import { Component, input, OnInit, output } from '@angular/core';
 import { FieldConfigModel } from '@app/domain';
-import { Button } from 'primeng/button';
 
 @Component({
   selector: 'app-field-list',
-  imports: [
-    Button
-  ],
   templateUrl: './field-list.component.html',
   standalone: true,
   styleUrl: './field-list.component.scss'
