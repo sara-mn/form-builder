@@ -1,0 +1,1 @@
+var t=(r=>(r.Text="text",r.Number="number",r.Select="select",r.Textarea="textarea",r.Radio="radio",r.Checkbox="checkbox",r.Date="date",r.DateRange="date-range",r.Html="html",r))(t||{});export{t as a};
