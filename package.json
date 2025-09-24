@@ -5,13 +5,14 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "build-prod": "ng build --configuration production --base-href https://sara-mn.github.io/form-builder/",
+    "build-prod": "ng build --configuration production --base-href /form-builder/",
     "watch": "ng build --watch --configuration development",
     "format": "prettier --write \"**/*.{js,mjs,ts,mts,d.ts,html}\" --cache",
     "test": "ng test",
     "prestart": "npm run svg",
     "prebuild": "npm run svg",
-    "svg": "svg-generator"
+    "svg": "svg-generator",
+    "deploy-gh": "npx angular-cli-ghpages --dir=dist/form-builder/browser"
   },
   "svgGenerator": {
     "outputPath": "./src/app//presentation/shared/modules/custom-icons/icons",

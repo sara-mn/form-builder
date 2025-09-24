@@ -1,59 +1,93 @@
-# FormBuilder
+# 📝 Angular Form Builder
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.7.
+A **modular Form Builder project** developed with **Angular** following **Domain-Driven Design (DDD)** principles.  
+This project allows creating, editing, and managing dynamic forms, providing better maintainability, scalability, and testability by separating different layers of the application.
 
-## Development server
+---
+## 🌐 Demo
 
-To start a local development server, run:
+You can view the live demo of the Form Builder hosted on GitHub Pages: [View Demo](https://sara-mn.github.io/form-builder/)
+
+---
+
+## ✨ Features
+- 📌 Create dynamic forms with various field types (text, select, checkbox, etc.)
+- 🔀 Drag & Drop to reorder fields
+- ✅ Flexible validation for form fields
+- 💾 Save and load forms
+- 👀 Live preview of the form
+- 📤 Export forms as JSON
+
+---
+
+## 📂 Project Structure
+```plaintext
+src/
+┣ app/
+┃ ┣ application/         # Application layer (Use Cases)
+┃ ┣ domain/              # Domain entities and models
+┃ ┣ infrastructure/      # Infrastructure layer
+┃ ┃ ┣ api/               # API communication
+┃ ┃ ┗ storage/           # Local or cloud storage
+┃ ┣ presentation/        # Presentation layer (UI)
+┃ ┃ ┣ core/              # Core modules
+┃ ┃ ┃ ┣ guards/          # Route guards
+┃ ┃ ┃ ┣ interceptors/    # HTTP interceptors
+┃ ┃ ┃ ┗ services/        # General services
+┃ ┃ ┣ features/          # Feature modules
+┃ ┃ ┣ layout/            # Layouts and UI structure
+┃ ┃ ┗ shared/            # Shared modules and components
+┃ ┣ app.module.ts        # Main application module
+┃ ┣ app.config.ts        # Global configuration
+┃ ┗ app.route.ts         # Route definitions
+┣ assets/                # Static files (CSS, images, etc.)
+┗ environments/          # Environment settings (dev/prod)
+```
+
+## 🚀 Getting Started Prerequisites
+
+- [Node.js](https://nodejs.org/) (Recommended LTS version)
+- [Angular CLI](https://github.com/angular/angular-cli) (version 19.2.7)
+
+```bash
+git clone https://github.com/sara-mn/form-builder.git
+cd form-builder
+npm install
+```
+Running the Application
 
 ```bash
 ng serve
 ```
+The application will be available at 👉 http://localhost:4200/.
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+Build for Production
 
 ```bash
-ng generate component component-name
+ng build --configuration production
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## 🛠️ Technologies & Tools
 
-```bash
-ng generate --help
-```
+- ⚡ Angular
+- 🔄 RxJS
+- 🎨 Angular Material
+- 🏗️ Domain-Driven Design (DDD) architecture
+- 📦 Optional: NgRx for state management
 
-## Building
 
-To build the project run:
+## ✅ Testing
 
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+Run tests with:
 
 ```bash
 ng test
 ```
 
-## Running end-to-end tests
+## 📄 License
 
-For end-to-end (e2e) testing, run:
+This project is licensed under the MIT License.
 
-```bash
-ng e2e
-```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
 
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+ 
