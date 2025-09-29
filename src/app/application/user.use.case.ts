@@ -3,7 +3,7 @@ import { RegisterRequest } from '@app/domain';
 import { map, Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 
-@Injectable()
+// @Injectable()
 export class UserUseCase {
   constructor(private userApi: UserApi) {
   }
