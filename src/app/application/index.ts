@@ -1,9 +1,13 @@
-import { AuthUseCase } from '@application/auth.use.case';
-import { TokenUseCase } from '@application/token.use.case';
-import { UserUseCase } from '@application/user.use.case';
+import { LoginUseCase } from '@application/login.use.case';
+import { AuthService } from '@app/domain';
+import { StorageService } from '@domain/storage-service.abstract';
 
 export const applicationProviders = [
-  AuthUseCase,
-  TokenUseCase,
-  UserUseCase
+  {
+    provide: LoginUseCase,
+    useFactory: (auth: AuthService, ts: StorageService) =>
+      new LoginUseCase(auth, ts),
+    deps: [AuthService, StorageService],
+  },
+
 ];

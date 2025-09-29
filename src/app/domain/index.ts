@@ -20,8 +20,8 @@ export * from './form/models/validation-config.model'
 
 
 //abstracts
-export * from './auth/abstracts/auth-api.abstract';
+export * from './auth/abstracts/auth-service.abstract';
 
-export * from './user/abstracts/user-api.abstract';
+export * from './user/abstracts/user-service.abstract';
 
 // export * from '';

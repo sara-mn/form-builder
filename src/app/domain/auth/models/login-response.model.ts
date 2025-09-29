@@ -1,12 +1,8 @@
+import { User } from '@app/domain';
+
 export interface LoginResponse {
   accessToken: string;
   refreshToken: string;
   expiresIn: number;
-  user: {
-    id: string;
-    email: string;
-    firstName: string;
-    lastName: string;
-    roles: string[];
-  };
+  user: User
 }

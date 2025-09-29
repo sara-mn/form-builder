@@ -1,10 +1,10 @@
-import {Injectable} from '@angular/core';
-import {IStorage} from '@domain/storage.abstract';
+import { Injectable } from '@angular/core';
+import { StorageService } from '@domain/storage-service.abstract';
 
 @Injectable({
   providedIn: 'root'
 })
-export class StorageService implements IStorage {
+export class TokenStorageService implements StorageService {
 
   constructor() {
   }
