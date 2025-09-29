@@ -7,6 +7,7 @@ export interface FieldTypeLabelEntry {
 
 export const FieldTypeLabel: Record<FieldTypeEnum, FieldTypeLabelEntry> = {
   [FieldTypeEnum.Text]: { en: 'Text', fa: 'متن' },
+  [FieldTypeEnum.Password]: { en: 'Password', fa: 'پسورد' },
   [FieldTypeEnum.Number]: { en: 'Number', fa: 'عدد' },
   [FieldTypeEnum.Select]: { en: 'Select', fa: 'انتخاب' },
   [FieldTypeEnum.Textarea]: { en: 'Textarea', fa: '' },

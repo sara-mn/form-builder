@@ -1,5 +1,6 @@
 export enum FieldTypeEnum {
   Text = 'text',
+  Password = 'password',
   Number = 'number',
   Select = 'select',
   Textarea = 'textarea',

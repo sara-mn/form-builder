@@ -4,9 +4,19 @@ A **modular Form Builder project** developed with **Angular** following **Domain
 This project allows creating, editing, and managing dynamic forms, providing better maintainability, scalability, and testability by separating different layers of the application.
 
 ---
+
+## 🔬 Project Context
+
+This project is not only a dynamic Form Builder, but also a **research and learning challenge** on applying **Clean Architecture** and **Domain-Driven Design (DDD)** in frontend development.
+
+The goal is to design the project so that the **DOMAIN** and **APPLICATION** layers are independent and reusable, enabling the core business logic to be used with other JavaScript frameworks in the future.
+
+---
+
 ## 🌐 Demo
 
-You can view the live demo of the Form Builder hosted on GitHub Pages: [View Demo](https://sara-mn.github.io/form-builder/)
+You can view the live demo of the Form Builder hosted on GitHub Pages:  
+[🔗 View Demo](https://sara-mn.github.io/form-builder/)
 
 ---
 
@@ -25,7 +35,8 @@ You can view the live demo of the Form Builder hosted on GitHub Pages: [View Dem
 src/
 ┣ app/
 ┃ ┣ application/         # Application layer (Use Cases)
-┃ ┣ domain/              # Domain entities and models
+┃ ┣ domain/              # Domain entities, models, and abstracts
+┃ ┃                       # abstracts: define interfaces and base classes
 ┃ ┣ infrastructure/      # Infrastructure layer
 ┃ ┃ ┣ api/               # API communication
 ┃ ┃ ┗ storage/           # Local or cloud storage
@@ -34,7 +45,8 @@ src/
 ┃ ┃ ┃ ┣ guards/          # Route guards
 ┃ ┃ ┃ ┣ interceptors/    # HTTP interceptors
 ┃ ┃ ┃ ┗ services/        # General services
-┃ ┃ ┣ features/          # Feature modules
+┃ ┃ ┣ features/          # Feature modules and FacadeServices
+┃ ┃ ┃                       # FacadeServices: simplify access to Application layer
 ┃ ┃ ┣ layout/            # Layouts and UI structure
 ┃ ┃ ┗ shared/            # Shared modules and components
 ┃ ┣ app.module.ts        # Main application module
@@ -43,6 +55,7 @@ src/
 ┣ assets/                # Static files (CSS, images, etc.)
 ┗ environments/          # Environment settings (dev/prod)
 ```
+---
 
 ## 🚀 Getting Started Prerequisites
 
@@ -66,7 +79,7 @@ Build for Production
 ```bash
 ng build --configuration production
 ```
-
+---
 ## 🛠️ Technologies & Tools
 
 - ⚡ Angular
@@ -75,7 +88,7 @@ ng build --configuration production
 - 🏗️ Domain-Driven Design (DDD) architecture
 - 📦 Optional: NgRx for state management
 
-
+---
 ## ✅ Testing
 
 Run tests with:
@@ -83,7 +96,7 @@ Run tests with:
 ```bash
 ng test
 ```
-
+---
 ## 📄 License
 
 This project is licensed under the MIT License.
