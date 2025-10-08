@@ -7,6 +7,7 @@ export class LogoutUseCase {
   }
 
   async execute(): Promise<void> {
-
+    this.authService.logout();
+    this.tokenStorage.clear();
   }
 }

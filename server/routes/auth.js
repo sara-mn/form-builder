@@ -64,6 +64,12 @@ router.post('/refresh', (req, res) => {
   }
 });
 
+// Logout route
+router.post('/logout', (req, res) => {
+  req.clearCookie('refreshToken', { httpOnly: true, sameSite: 'strict' });
+});
+
+
 // Protected route
 const authenticate = (req, res, next) => {
   const accessToken = req.headers['authorization'];
