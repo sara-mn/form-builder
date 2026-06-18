@@ -63,7 +63,6 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^19.2.8",
-    "@angular/cli": "^19.2.8",
     "@angular/compiler-cli": "^19.2.8",
     "@ngneat/svg-generator": "^7.0.3",
     "@types/jasmine": "~5.1.0",
