@@ -22,4 +22,7 @@ export class AuthApiService implements AuthService {
     const $res: Observable<LoginResponse> = this.http.post<LoginResponse>('/auth/refresh', {});
     return lastValueFrom($res);
   }
+
+  logout(): void {
+  }
 }
