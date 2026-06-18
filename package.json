@@ -66,7 +66,7 @@
     "@angular/compiler-cli": "^19.2.8",
     "@ngneat/svg-generator": "^7.0.3",
     "@types/jasmine": "~5.1.0",
-    "angular-cli-ghpages": "^2.0.3",
+    "angular-cli-ghpages": "^3.1.0",
     "jasmine-core": "~5.6.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
@@ -75,6 +75,6 @@
     "karma-jasmine-html-reporter": "~2.1.0",
     "prettier": "^3.5.3",
     "prettier-plugin-tailwindcss": "^0.6.11",
-    "typescript": "~5.7.2"
+    "typescript": "^6.0.3"
   }
 }
