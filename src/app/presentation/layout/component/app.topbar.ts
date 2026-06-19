@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { RouterModule } from '@angular/router';
-import { CommonModule, NgOptimizedImage } from '@angular/common';
+import { NgOptimizedImage } from '@angular/common';
 import { StyleClassModule } from 'primeng/styleclass';
 import { LayoutService } from '../service/layout.service';
 
 @Component({
     selector: 'app-topbar',
     standalone: true,
-  imports: [RouterModule, CommonModule, StyleClassModule, NgOptimizedImage],
+  imports: [RouterModule, StyleClassModule, NgOptimizedImage],
     template: `
       <div class="layout-topbar">
         <div class="layout-topbar-logo-container">
