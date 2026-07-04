@@ -1,12 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
-  selector: 'app-form-preview',
-  imports: [],
-  templateUrl: './form-preview.component.html',
-  standalone: true,
-  styleUrl: './form-preview.component.scss'
+    selector: 'app-form-preview',
+    imports: [],
+    templateUrl: './form-preview.component.html',
+    standalone: true,
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrl: './form-preview.component.scss'
 })
-export class FormPreviewComponent {
-
-}
+export class FormPreviewComponent {}

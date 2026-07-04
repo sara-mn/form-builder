@@ -1,4 +1,4 @@
-import { Component, HostBinding, Input } from '@angular/core';
+import { Component, HostBinding, Input, ChangeDetectionStrategy } from '@angular/core';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Subscription } from 'rxjs';
@@ -9,78 +9,78 @@ import { MenuItem } from 'primeng/api';
 import { LayoutService } from '../service/layout.service';
 
 @Component({
-  // eslint-disable-next-line @angular-eslint/component-selector
-  selector: '[app-menuitem]',
-  imports: [CommonModule, RouterModule, RippleModule],
-  template: `
-    <ng-container>
-      @if (root && item.visible !== false) {
-        <div class="layout-menuitem-root-text">{{ item.label }}</div>
-      }
-      @if ((!item.routerLink || item.items) && item.visible !== false) {
-        <a [attr.href]="item.url"
-          (click)="itemClick($event)" [ngClass]="item.styleClass" [attr.target]="item.target" tabindex="0" pRipple>
-          <i [ngClass]="item.icon" class="layout-menuitem-icon"></i>
-          <span class="layout-menuitem-text">{{ item.label }}</span>
-          @if (item.items) {
-            <i class="pi pi-fw pi-angle-down layout-submenu-toggler"></i>
-          }
-        </a>
-      }
-      @if (item.routerLink && !item.items && item.visible !== false) {
-        <a
-          (click)="itemClick($event)"
-          [ngClass]="item.styleClass"
-          [routerLink]="item.routerLink"
-          routerLinkActive="active-route"
-          [routerLinkActiveOptions]="item.routerLinkActiveOptions || { paths: 'exact', queryParams: 'ignored', matrixParams: 'ignored', fragment: 'ignored' }"
-          [fragment]="item.fragment"
-          [queryParamsHandling]="item.queryParamsHandling"
-          [preserveFragment]="item.preserveFragment"
-          [skipLocationChange]="item.skipLocationChange"
-          [replaceUrl]="item.replaceUrl"
-          [state]="item.state"
-          [queryParams]="item.queryParams"
-          [attr.target]="item.target"
-          tabindex="0"
-          pRipple
-          >
-          <i [ngClass]="item.icon" class="layout-menuitem-icon"></i>
-          <span class="layout-menuitem-text">{{ item.label }}</span>
-          @if (item.items) {
-            <i class="pi pi-fw pi-angle-down layout-submenu-toggler"></i>
-          }
-        </a>
-      }
-    
-      @if (item.items && item.visible !== false) {
-        <ul [@children]="submenuAnimation">
-          @for (child of item.items; track child; let i = $index) {
-            <li app-menuitem [item]="child" [index]="i" [parentKey]="key" [class]="child['badgeClass']"></li>
-          }
-        </ul>
-      }
-    </ng-container>
+    // eslint-disable-next-line @angular-eslint/component-selector
+    selector: '[app-menuitem]',
+    imports: [CommonModule, RouterModule, RippleModule],
+    template: `
+        <ng-container>
+            @if (root && item.visible !== false) {
+                <div class="layout-menuitem-root-text">{{ item.label }}</div>
+            }
+            @if ((!item.routerLink || item.items) && item.visible !== false) {
+                <a [attr.href]="item.url" (click)="itemClick($event)" [ngClass]="item.styleClass" [attr.target]="item.target" tabindex="0" pRipple>
+                    <i [ngClass]="item.icon" class="layout-menuitem-icon"></i>
+                    <span class="layout-menuitem-text">{{ item.label }}</span>
+                    @if (item.items) {
+                        <i class="pi pi-fw pi-angle-down layout-submenu-toggler"></i>
+                    }
+                </a>
+            }
+            @if (item.routerLink && !item.items && item.visible !== false) {
+                <a
+                    (click)="itemClick($event)"
+                    [ngClass]="item.styleClass"
+                    [routerLink]="item.routerLink"
+                    routerLinkActive="active-route"
+                    [routerLinkActiveOptions]="item.routerLinkActiveOptions || { paths: 'exact', queryParams: 'ignored', matrixParams: 'ignored', fragment: 'ignored' }"
+                    [fragment]="item.fragment"
+                    [queryParamsHandling]="item.queryParamsHandling"
+                    [preserveFragment]="item.preserveFragment"
+                    [skipLocationChange]="item.skipLocationChange"
+                    [replaceUrl]="item.replaceUrl"
+                    [state]="item.state"
+                    [queryParams]="item.queryParams"
+                    [attr.target]="item.target"
+                    tabindex="0"
+                    pRipple
+                >
+                    <i [ngClass]="item.icon" class="layout-menuitem-icon"></i>
+                    <span class="layout-menuitem-text">{{ item.label }}</span>
+                    @if (item.items) {
+                        <i class="pi pi-fw pi-angle-down layout-submenu-toggler"></i>
+                    }
+                </a>
+            }
+
+            @if (item.items && item.visible !== false) {
+                <ul [@children]="submenuAnimation">
+                    @for (child of item.items; track child; let i = $index) {
+                        <li app-menuitem [item]="child" [index]="i" [parentKey]="key" [class]="child['badgeClass']"></li>
+                    }
+                </ul>
+            }
+        </ng-container>
     `,
-  animations: [
-    trigger('children', [
-      state(
-        'collapsed',
-        style({
-          height: '0'
-        })
-      ),
-      state(
-        'expanded',
-        style({
-          height: '*'
-        })
-      ),
-      transition('collapsed <=> expanded', animate('400ms cubic-bezier(0.86, 0, 0.07, 1)'))
-    ])
-  ],
-  standalone: true,
-  providers: [LayoutService]
+    animations: [
+        trigger('children', [
+            state(
+                'collapsed',
+                style({
+                    height: '0'
+                })
+            ),
+            state(
+                'expanded',
+                style({
+                    height: '*'
+                })
+            ),
+            transition('collapsed <=> expanded', animate('400ms cubic-bezier(0.86, 0, 0.07, 1)'))
+        ])
+    ],
+    standalone: true,
+    changeDetection: ChangeDetectionStrategy.Eager,
+    providers: [LayoutService]
 })
 export class AppMenuitem {
     @Input() item!: MenuItem;

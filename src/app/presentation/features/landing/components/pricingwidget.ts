@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { DividerModule } from 'primeng/divider';
 import { RippleModule } from 'primeng/ripple';
@@ -6,6 +6,7 @@ import { RippleModule } from 'primeng/ripple';
 @Component({
     selector: 'pricing-widget',
     imports: [DividerModule, ButtonModule, RippleModule],
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: `
         <div id="pricing" class="py-6 px-6 lg:px-20 my-2 md:my-6">
             <div class="text-center mb-6">

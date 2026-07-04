@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Button } from 'primeng/button';
 import { FieldConfigModel, FieldTypeEnum, FormSchemaModel } from '@app/domain';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -9,86 +9,77 @@ import { FormDesignerFacadeService } from '@features/form-designer/services/form
 import { FieldListComponent } from '@features/form-designer/components/field-list/field-list.component';
 
 enum FieldEntryModeEnum {
-  add,
-  edit,
-  noMode
+    add,
+    edit,
+    noMode
 }
 
 @Component({
-  selector: 'app-form-entry',
-  imports: [
-    Button,
-    FormsModule,
-    InputText,
-    ReactiveFormsModule,
-    FieldEntryComponent,
-    FieldListComponent
-  ],
-  templateUrl: './form-entry.component.html',
-  standalone: true,
-  styleUrl: './form-entry.component.scss'
+    selector: 'app-form-entry',
+    imports: [Button, FormsModule, InputText, ReactiveFormsModule, FieldEntryComponent, FieldListComponent],
+    templateUrl: './form-entry.component.html',
+    standalone: true,
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrl: './form-entry.component.scss'
 })
 export class FormEntryComponent implements OnInit {
-  private initialField = { name: '', label: '', type: FieldTypeEnum.Text };
-  private editedFieldIndex = -1;
+    private initialField = { name: '', label: '', type: FieldTypeEnum.Text };
+    private editedFieldIndex = -1;
 
-  fields: FieldConfigModel[] = [];
-  form: FormSchemaModel = { title: '', fields: [] };
-  field: FieldConfigModel = this.initialField;
-  fieldEntryMode: FieldEntryModeEnum = FieldEntryModeEnum.noMode;
+    fields: FieldConfigModel[] = [];
+    form: FormSchemaModel = { title: '', fields: [] };
+    field: FieldConfigModel = this.initialField;
+    fieldEntryMode: FieldEntryModeEnum = FieldEntryModeEnum.noMode;
 
+    constructor(
+        private activatedRoute: ActivatedRoute,
+        private formDesignerFacade: FormDesignerFacadeService
+    ) {}
 
-  constructor(private activatedRoute: ActivatedRoute,
-              private formDesignerFacade: FormDesignerFacadeService) {
-  }
-
-  ngOnInit(): void {
-    const formId = this.activatedRoute.snapshot.paramMap.get('id');
-    if (formId) {
-      this.formDesignerFacade.getFormById(formId).subscribe({
-        next: (form) => {
-          this.form = form;
+    ngOnInit(): void {
+        const formId = this.activatedRoute.snapshot.paramMap.get('id');
+        if (formId) {
+            this.formDesignerFacade.getFormById(formId).subscribe({
+                next: (form) => {
+                    this.form = form;
+                }
+            });
         }
-      });
-    }
-  }
-
-  enterField(event: FieldConfigModel) {
-    switch (this.fieldEntryMode){
-      case FieldEntryModeEnum.add:
-        this.form.fields.push(event);
-        break;
-      case FieldEntryModeEnum.edit:
-        this.form.fields[this.editedFieldIndex] = event;
-        break;
-      default:
-        break;
     }
 
-    this.fieldEntryMode = FieldEntryModeEnum.noMode;
-  }
+    enterField(event: FieldConfigModel) {
+        switch (this.fieldEntryMode) {
+            case FieldEntryModeEnum.add:
+                this.form.fields.push(event);
+                break;
+            case FieldEntryModeEnum.edit:
+                this.form.fields[this.editedFieldIndex] = event;
+                break;
+            default:
+                break;
+        }
 
-  addField(){
-    this.field = this.initialField;
-    this.fieldEntryMode = FieldEntryModeEnum.add;
-  }
+        this.fieldEntryMode = FieldEntryModeEnum.noMode;
+    }
 
-  updateField(event: {index: number, field: FieldConfigModel}) {
-    this.field = event.field;
-    this.fieldEntryMode = FieldEntryModeEnum.edit;
-    this.editedFieldIndex = event.index;
-  }
+    addField() {
+        this.field = this.initialField;
+        this.fieldEntryMode = FieldEntryModeEnum.add;
+    }
 
-  deleteField(index: number) {
-    this.form.fields.splice(index, 1);
-  }
+    updateField(event: { index: number; field: FieldConfigModel }) {
+        this.field = event.field;
+        this.fieldEntryMode = FieldEntryModeEnum.edit;
+        this.editedFieldIndex = event.index;
+    }
 
-  previewField(field: FieldConfigModel) {
-  }
+    deleteField(index: number) {
+        this.form.fields.splice(index, 1);
+    }
 
-  createForm() {
+    previewField(field: FieldConfigModel) {}
 
-  }
+    createForm() {}
 
-  protected readonly FieldEntryModeEnum = FieldEntryModeEnum;
+    protected readonly FieldEntryModeEnum = FieldEntryModeEnum;
 }
