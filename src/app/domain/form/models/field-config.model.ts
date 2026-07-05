@@ -1,6 +1,6 @@
 import { ValidationConfigModel } from '@domain/form/models/validation-config.model';
 import { FieldTypeEnum } from '@domain/form/enums/field-type.enum';
-import { UserRoleEnum } from '@app/domain';
+import { UserRoleEnum } from '@domain/user/enums/user-role.enum';
 
 // export type FieldType =
 //   | FieldTypeEnum.Text
