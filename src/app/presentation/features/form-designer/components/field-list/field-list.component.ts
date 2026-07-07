@@ -1,4 +1,4 @@
-import { Component, input, OnInit, output, ChangeDetectionStrategy } from '@angular/core';
+import { Component, computed, input, output, ChangeDetectionStrategy } from '@angular/core';
 import { FieldConfigModel } from '@app/domain';
 
 @Component({
@@ -8,18 +8,12 @@ import { FieldConfigModel } from '@app/domain';
     changeDetection: ChangeDetectionStrategy.Eager,
     styleUrl: './field-list.component.scss'
 })
-export class FieldListComponent implements OnInit {
-    list: FieldConfigModel[] = [];
+export class FieldListComponent {
     fields = input<FieldConfigModel[]>();
+    list = computed(() => this.fields() ?? []);
     update = output<{ index: number; field: FieldConfigModel }>();
     delete = output<number>();
     preview = output<FieldConfigModel>();
-
-    constructor() {}
-
-    ngOnInit(): void {
-        this.list = this.fields() || [];
-    }
 
     updateField(index: number, field: FieldConfigModel) {
         this.update.emit({ index, field });

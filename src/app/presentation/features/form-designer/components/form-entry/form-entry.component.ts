@@ -39,10 +39,8 @@ export class FormEntryComponent implements OnInit {
     ngOnInit(): void {
         const formId = this.activatedRoute.snapshot.paramMap.get('id');
         if (formId) {
-            this.formDesignerFacade.getFormById(formId).subscribe({
-                next: (form) => {
-                    this.form = form;
-                }
+            this.formDesignerFacade.getFormById(formId).then((form) => {
+                this.form = form;
             });
         }
     }

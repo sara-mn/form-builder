@@ -24,4 +24,6 @@ export * from './auth/abstracts/auth-service.abstract';
 
 export * from './user/abstracts/user-service.abstract';
 
+export * from './form/abstracts/form-service.abstract';
+
 // export * from '';
