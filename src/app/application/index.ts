@@ -1,13 +1,13 @@
 import { LoginUseCase } from '@application/auth/login.use.case';
-import { AuthService } from '@app/domain';
+import { AuthService, UserService } from '@app/domain';
 import { StorageService } from '@domain/storage-service.abstract';
 import { LogoutUseCase } from '@application/auth/logout.use.case';
-import { RegisterUseCase } from '@application/auth/register.use.case';
-import { UpdateProfileUseCase } from '@application/auth/update-profile.use.case';
-import { ResetPasswordUseCase } from '@application/auth/reset-password.use.case';
-import { ResetPasswordConfirmUseCase } from '@application/auth/reset-password-confirm.use.case';
+import { UpdateProfileUseCase } from '@app/application/auth/update-profile.use.case';
+import { ResetPasswordUseCase } from '@app/application/auth/reset-password.use.case';
+import { ResetPasswordConfirmUseCase } from '@app/application/auth/reset-password-confirm.use.case';
 import { RefreshTokenUseCase } from '@application/auth/refresh-token.use.case';
-import { ChangePasswordUseCase } from '@application/auth/change-password.use.case';
+import { ChangePasswordUseCase } from '@app/application/auth/change-password.use.case';
+import { RegisterUseCase as UserRegisterUseCase } from '@application/user/register.use.case';
 
 export const applicationProviders = [
   {
@@ -20,12 +20,6 @@ export const applicationProviders = [
     provide: LogoutUseCase,
     useFactory: (auth: AuthService, ts: StorageService) =>
       new LogoutUseCase(auth, ts),
-    deps: [AuthService, StorageService],
-  },
-  {
-    provide: RegisterUseCase,
-    useFactory: (auth: AuthService, ts: StorageService) =>
-      new RegisterUseCase(auth, ts),
     deps: [AuthService, StorageService],
   },
   {
@@ -57,5 +51,11 @@ export const applicationProviders = [
     useFactory: (auth: AuthService, ts: StorageService) =>
       new ChangePasswordUseCase(auth, ts),
     deps: [AuthService, StorageService],
+  },
+  {
+    provide: UserRegisterUseCase,
+    useFactory: (userService: UserService) =>
+      new UserRegisterUseCase(userService),
+    deps: [UserService],
   }
 ];

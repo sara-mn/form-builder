@@ -1,17 +1,16 @@
 import { Injectable } from '@angular/core';
-import { UserUseCase } from '@application/user.use.case';
+import { RegisterUseCase } from '@application/user/register.use.case';
 import { RegisterRequest } from '@app/domain';
-import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserFacadeService {
 
-  constructor(private registerUseCase: UserUseCase) {
+  constructor(private registerUseCase: RegisterUseCase) {
   }
 
-  register(data: RegisterRequest): Observable<boolean> {
-    return this.registerUseCase.register(data);
+  register(data: RegisterRequest): Promise<boolean> {
+    return this.registerUseCase.execute(data);
   }
 }

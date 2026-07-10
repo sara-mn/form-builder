@@ -34,10 +34,8 @@ export class RegisterComponent implements OnInit {
         const raw = this.registerFormService.getRawValue(this.form);
         const data = RegisterFormAdapter.toDomain(raw);
 
-        this.userFacadeService.register(data).subscribe({
-            next: () => {
-                this.router.navigate(['/login']).then();
-            }
+        this.userFacadeService.register(data).then(() => {
+            this.router.navigate(['/login']).then();
         });
     }
 }
