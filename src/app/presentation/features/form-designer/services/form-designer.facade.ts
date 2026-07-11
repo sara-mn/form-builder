@@ -5,7 +5,7 @@ import { FormService } from '@domain/form/abstracts/form-service.abstract';
 @Injectable({
   providedIn: 'root'
 })
-export class FormDesignerFacadeService {
+export class FormDesignerFacade {
 
   constructor(private formService: FormService) {
   }

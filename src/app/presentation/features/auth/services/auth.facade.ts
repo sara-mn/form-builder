@@ -5,7 +5,7 @@ import { LoginUseCase } from '@application/auth/login.use.case';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthFacadeService {
+export class AuthFacade {
 
   constructor(private loginUseCase: LoginUseCase) {
   }

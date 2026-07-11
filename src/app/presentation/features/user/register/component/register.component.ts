@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { RegisterFormModel } from '@features/user/register/register-form.model';
 import { RegisterFormService } from '@features/user/register/register-form.service';
 import { RegisterFormAdapter } from '@features/user/register/register-form.adapter';
-import { UserFacadeService } from '@features/user/services/user-facade.service';
+import { UserFacade } from '@features/user/services/user.facade';
 
 @Component({
     selector: 'app-register',
@@ -20,7 +20,7 @@ export class RegisterComponent implements OnInit {
 
     constructor(
         private registerFormService: RegisterFormService,
-        private userFacadeService: UserFacadeService,
+        private userFacadeService: UserFacade,
         private router: Router
     ) {}
 

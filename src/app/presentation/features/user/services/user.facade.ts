@@ -5,7 +5,7 @@ import { RegisterRequest } from '@app/domain';
 @Injectable({
   providedIn: 'root'
 })
-export class UserFacadeService {
+export class UserFacade {
 
   constructor(private registerUseCase: RegisterUseCase) {
   }
