@@ -5,7 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputText } from 'primeng/inputtext';
 import { FieldEntryComponent } from '@features/form-designer/components/field-entry/field-entry.component';
 import { ActivatedRoute } from '@angular/router';
-import { FormDesignerFacadeService } from '@features/form-designer/services/form-designer-facade.service';
+import { FormDesignerFacade } from '@features/form-designer/services/form-designer.facade';
 import { FieldListComponent } from '@features/form-designer/components/field-list/field-list.component';
 
 enum FieldEntryModeEnum {
@@ -33,7 +33,7 @@ export class FormEntryComponent implements OnInit {
 
     constructor(
         private activatedRoute: ActivatedRoute,
-        private formDesignerFacade: FormDesignerFacadeService
+        private formDesignerFacade: FormDesignerFacade
     ) {}
 
     ngOnInit(): void {
