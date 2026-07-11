@@ -31,7 +31,7 @@ const MOCK_CREDENTIALS: Record<string, { password: string; user: User }> = {
 // Angular-side mock — no backend involved yet. json-server has no real auth story,
 // so login/logout/refresh are simulated entirely in the client for now.
 @Injectable()
-export class AuthApiService implements AuthService {
+export class AuthApiAdapter implements AuthService {
 
   private currentUser: User | null = null;
 

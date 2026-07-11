@@ -8,7 +8,7 @@ import { environment } from '@env/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class FormApiService implements FormService {
+export class FormApiAdapter implements FormService {
 
   private formsUrl = `${environment.apiUrl}/forms`;
 

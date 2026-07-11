@@ -1,15 +1,15 @@
 import { AuthService } from '@domain/auth/abstracts/auth-service.abstract';
-import { AuthApiService } from '@app/infrastructure/api/auth-api.service';
+import { AuthApiAdapter } from '@app/infrastructure/api/auth-api.adapter';
 import { UserService } from '@domain/user/abstracts/user-service.abstract';
-import { UserApiService } from '@app/infrastructure/api/user-api.service';
+import { UserApiAdapter } from '@app/infrastructure/api/user-api.adapter';
 import { TokenStorageService } from '@app/infrastructure/storage/token-storage.service';
 import { StorageService } from '@domain/storage-service.abstract';
 import { FormService } from '@domain/form/abstracts/form-service.abstract';
-import { FormApiService } from '@app/infrastructure/api/form-api.service';
+import { FormApiAdapter } from '@app/infrastructure/api/form-api.adapter';
 
 export const infrastructureProviders = [
-  { provide: AuthService, useClass: AuthApiService },
-  { provide: UserService, useClass: UserApiService },
+  { provide: AuthService, useClass: AuthApiAdapter },
+  { provide: UserService, useClass: UserApiAdapter },
   { provide: StorageService, useClass: TokenStorageService },
-  { provide: FormService, useClass: FormApiService }
+  { provide: FormService, useClass: FormApiAdapter }
 ];
