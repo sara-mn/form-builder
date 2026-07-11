@@ -1,10 +1,10 @@
 import { TestBed } from '@angular/core/testing';
 
-import { FormDesignerFacadeService } from './form-designer-facade.service';
+import { FormDesignerFacade } from './form-designer.facade';
 import { FormService } from '@domain/form/abstracts/form-service.abstract';
 
-describe('FormDesignerFacadeService', () => {
-  let service: FormDesignerFacadeService;
+describe('FormDesignerFacade', () => {
+  let service: FormDesignerFacade;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -12,7 +12,7 @@ describe('FormDesignerFacadeService', () => {
         { provide: FormService, useValue: { getFormById: () => Promise.resolve() } }
       ]
     });
-    service = TestBed.inject(FormDesignerFacadeService);
+    service = TestBed.inject(FormDesignerFacade);
   });
 
   it('should be created', () => {

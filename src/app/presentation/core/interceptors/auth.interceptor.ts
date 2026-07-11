@@ -2,10 +2,10 @@ import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { catchError, finalize, switchMap, throwError } from 'rxjs';
 import { ErrorHandlerService } from '@core/services/error-handler.service';
-import { AuthFacadeService } from '@features/auth/services/auth-facade.service';
+import { AuthFacade } from '@features/auth/services/auth.facade';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
-  // const authFacade = inject(AuthFacadeService),
+  // const authFacade = inject(AuthFacade),
   //   errorHandler = inject(ErrorHandlerService),
     // accessToken = authFacade.getAccessToken();
 
