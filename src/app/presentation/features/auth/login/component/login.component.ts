@@ -1,15 +1,19 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { FormControls } from '@shared/forms/form.type';
-import { AuthUseCase } from '@application/auth.use.case';
+import { AuthFacade } from '@features/auth/services/auth.facade';
 import { Router } from '@angular/router';
 import { LoginFormModel } from '@features/auth/login/login-form.model';
 import { LoginFormService } from '@features/auth/login/login-form.service';
 import { LoginFormAdapter } from '@features/auth/login/login-form.adapter';
+import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
+import { PasswordModule } from 'primeng/password';
+import { FieldsetModule } from 'primeng/fieldset';
 
 @Component({
     selector: 'app-login',
-    imports: [FormControl, ReactiveFormsModule],
+    imports: [ReactiveFormsModule, ButtonModule, InputTextModule, PasswordModule, FieldsetModule],
     templateUrl: './login.component.html',
     standalone: true,
     changeDetection: ChangeDetectionStrategy.Eager,
@@ -19,7 +23,7 @@ export class LoginComponent implements OnInit {
     form!: FormGroup<FormControls<LoginFormModel>>;
     constructor(
         private loginFormService: LoginFormService,
-        private loginUseCase: AuthUseCase,
+        private authFacade: AuthFacade,
         private router: Router
     ) {}
 
@@ -33,10 +37,8 @@ export class LoginComponent implements OnInit {
         const raw = this.loginFormService.getRawValue(this.form);
         const data = LoginFormAdapter.toDomain(raw);
 
-        this.loginUseCase.login(data).subscribe({
-            next: () => {
-                this.router.navigate(['/dashboard']).then();
-            }
+        this.authFacade.login(data).then(() => {
+            this.router.navigate(['/dashboard']).then();
         });
     }
 }

@@ -13,8 +13,5 @@ export class AuthFacade {
   login(data: LoginRequest): Promise<User> {
     return this.loginUseCase.execute(data);
   }
-  //
-  // get isAuthenticated(){
-  //   return this.
-  // }
+ 
 }
