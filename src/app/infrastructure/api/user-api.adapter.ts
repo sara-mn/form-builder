@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { UserService } from '@domain/user/abstracts/user-service.abstract';
+import { UserRepository } from '@domain/user/abstracts/user.repository.abstract';
 import { HttpClient } from '@angular/common/http';
 import { RegisterRequest } from '@app/domain/user/models/register-request.model';
 import { lastValueFrom, map, Observable } from 'rxjs';
@@ -10,7 +10,7 @@ import { environment } from '@env/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class UserApiAdapter implements UserService {
+export class UserApiAdapter implements UserRepository {
 
   private usersUrl = `${environment.apiUrl}/users`;
 

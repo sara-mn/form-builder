@@ -1,7 +1,7 @@
-import { UserService, RegisterRequest } from '@app/domain';
+import { UserRepository, RegisterRequest } from '@app/domain';
 
 export class RegisterUseCase {
-  constructor(private userService: UserService) {
+  constructor(private userService: UserRepository) {
   }
 
   async execute(data: RegisterRequest): Promise<boolean> {

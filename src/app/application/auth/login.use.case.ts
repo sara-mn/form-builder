@@ -1,9 +1,9 @@
-import { AuthService, LoginRequest, LoginResponse, User } from '@app/domain';
-import { StorageService } from '@domain/storage-service.abstract';
+import { AuthGateway, LoginRequest, LoginResponse, User } from '@app/domain';
+import { StorageGateway } from '@domain/storage.gateway.abstract';
 
 export class LoginUseCase {
-  constructor(private authService: AuthService,
-              private tokenStorage: StorageService) {
+  constructor(private authService: AuthGateway,
+              private tokenStorage: StorageGateway) {
   }
   // isAuthenticated$: Observable<boolean> = this.accessToken$.pipe(map(token => !!token));
 

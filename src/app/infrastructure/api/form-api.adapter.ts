@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { lastValueFrom, Observable } from 'rxjs';
-import { FormService } from '@domain/form/abstracts/form-service.abstract';
+import { FormRepository } from '@domain/form/abstracts/form.repository.abstract';
 import { FormSchemaModel } from '@domain/form/models/form-schema.model';
 import { environment } from '@env/environment';
 
 @Injectable({
   providedIn: 'root'
 })
-export class FormApiAdapter implements FormService {
+export class FormApiAdapter implements FormRepository {
 
   private formsUrl = `${environment.apiUrl}/forms`;
 
