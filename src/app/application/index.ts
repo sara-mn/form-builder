@@ -1,6 +1,6 @@
 import { LoginUseCase } from '@application/auth/login.use.case';
-import { AuthService, UserService } from '@app/domain';
-import { StorageService } from '@domain/storage-service.abstract';
+import { AuthGateway, UserRepository } from '@app/domain';
+import { StorageGateway } from '@domain/storage.gateway.abstract';
 import { LogoutUseCase } from '@application/auth/logout.use.case';
 import { UpdateProfileUseCase } from '@app/application/auth/update-profile.use.case';
 import { ResetPasswordUseCase } from '@app/application/auth/reset-password.use.case';
@@ -12,50 +12,50 @@ import { RegisterUseCase as UserRegisterUseCase } from '@application/user/regist
 export const applicationProviders = [
   {
     provide: LoginUseCase,
-    useFactory: (auth: AuthService, ts: StorageService) =>
+    useFactory: (auth: AuthGateway, ts: StorageGateway) =>
       new LoginUseCase(auth, ts),
-    deps: [AuthService, StorageService],
+    deps: [AuthGateway, StorageGateway],
   },
   {
     provide: LogoutUseCase,
-    useFactory: (auth: AuthService, ts: StorageService) =>
+    useFactory: (auth: AuthGateway, ts: StorageGateway) =>
       new LogoutUseCase(auth, ts),
-    deps: [AuthService, StorageService],
+    deps: [AuthGateway, StorageGateway],
   },
   {
     provide: UpdateProfileUseCase,
-    useFactory: (auth: AuthService, ts: StorageService) =>
+    useFactory: (auth: AuthGateway, ts: StorageGateway) =>
       new UpdateProfileUseCase(auth, ts),
-    deps: [AuthService, StorageService],
+    deps: [AuthGateway, StorageGateway],
   },
   {
     provide: ResetPasswordUseCase,
-    useFactory: (auth: AuthService, ts: StorageService) =>
+    useFactory: (auth: AuthGateway, ts: StorageGateway) =>
       new ResetPasswordUseCase(auth, ts),
-    deps: [AuthService, StorageService],
+    deps: [AuthGateway, StorageGateway],
   },
   {
     provide: ResetPasswordConfirmUseCase,
-    useFactory: (auth: AuthService, ts: StorageService) =>
+    useFactory: (auth: AuthGateway, ts: StorageGateway) =>
       new ResetPasswordConfirmUseCase(auth, ts),
-    deps: [AuthService, StorageService],
+    deps: [AuthGateway, StorageGateway],
   },
   {
     provide: RefreshTokenUseCase,
-    useFactory: (auth: AuthService, ts: StorageService) =>
+    useFactory: (auth: AuthGateway, ts: StorageGateway) =>
       new RefreshTokenUseCase(auth, ts),
-    deps: [AuthService, StorageService],
+    deps: [AuthGateway, StorageGateway],
   },
   {
     provide: ChangePasswordUseCase,
-    useFactory: (auth: AuthService, ts: StorageService) =>
+    useFactory: (auth: AuthGateway, ts: StorageGateway) =>
       new ChangePasswordUseCase(auth, ts),
-    deps: [AuthService, StorageService],
+    deps: [AuthGateway, StorageGateway],
   },
   {
     provide: UserRegisterUseCase,
-    useFactory: (userService: UserService) =>
+    useFactory: (userService: UserRepository) =>
       new UserRegisterUseCase(userService),
-    deps: [UserService],
+    deps: [UserRepository],
   }
 ];
