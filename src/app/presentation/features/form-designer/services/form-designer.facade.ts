@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { FormSchemaModel } from '@app/domain';
-import { FormService } from '@domain/form/abstracts/form-service.abstract';
+import { FormRepository } from '@domain/form/abstracts/form.repository.abstract';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FormDesignerFacade {
 
-  constructor(private formService: FormService) {
+  constructor(private formService: FormRepository) {
   }
 
   getFormById(formId: string): Promise<FormSchemaModel> {

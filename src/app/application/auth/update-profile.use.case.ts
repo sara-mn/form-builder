@@ -1,9 +1,9 @@
-import { AuthService } from '@app/domain';
-import { StorageService } from '@domain/storage-service.abstract';
+import { AuthGateway } from '@app/domain';
+import { StorageGateway } from '@domain/storage.gateway.abstract';
 
 export class UpdateProfileUseCase {
-  constructor(private authService: AuthService,
-              private tokenStorage: StorageService) {
+  constructor(private authService: AuthGateway,
+              private tokenStorage: StorageGateway) {
   }
 
   async execute(): Promise<void> {

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AuthService } from '@domain/auth/abstracts/auth-service.abstract';
+import { AuthGateway } from '@domain/auth/abstracts/auth.gateway.abstract';
 import { LoginRequest } from '@app/domain/auth/models/login-request.model';
 import { LoginResponse } from '@app/domain/auth/models/login-response.model';
 import { User } from '@app/domain/user/models/user.model';
@@ -31,7 +31,7 @@ const MOCK_CREDENTIALS: Record<string, { password: string; user: User }> = {
 // Angular-side mock — no backend involved yet. json-server has no real auth story,
 // so login/logout/refresh are simulated entirely in the client for now.
 @Injectable()
-export class AuthApiAdapter implements AuthService {
+export class AuthApiAdapter implements AuthGateway {
 
   private currentUser: User | null = null;
 
