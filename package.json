@@ -1,6 +1,7 @@
 {
   "name": "form-builder",
   "version": "0.0.0",
+  "type": "module",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -12,7 +13,7 @@
     "prestart": "npm run svg",
     "prebuild": "npm run svg",
     "svg": "svg-generator",
-    "mock-server": "json-server --watch db.json --port 3000",
+    "mock-server": "node server/index.js",
     "deploy-gh": "npx angular-cli-ghpages --dir=dist/form-builder/browser"
   },
   "svgGenerator": {
@@ -61,8 +62,15 @@
     "@ngneat/svg-generator": "^7.0.3",
     "@types/jasmine": "~5.1.0",
     "angular-cli-ghpages": "^3.1.0",
+    "bcryptjs": "^3.0.3",
+    "body-parser": "^2.3.0",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
     "jasmine-core": "~5.6.0",
     "json-server": "^0.17.4",
+    "jsonwebtoken": "^9.0.3",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
     "karma-coverage": "~2.2.0",
