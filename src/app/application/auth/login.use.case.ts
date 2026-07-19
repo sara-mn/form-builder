@@ -5,17 +5,6 @@ export class LoginUseCase {
   constructor(private authService: AuthGateway,
               private tokenStorage: StorageGateway) {
   }
-  // isAuthenticated$: Observable<boolean> = this.accessToken$.pipe(map(token => !!token));
-
-  // initFromStorage() {
-  //   const token = this.tokenUseCase.getAccessToken();
-  //   this.accessToken$.next(token);
-  // }
-
-  // getAccessToken(){
-  //   return this.tokenUseCase.getAccessToken();
-  // }
-
   async execute(loginPayload: LoginRequest): Promise<User> {
 
     if (!loginPayload.username || !loginPayload.password) {

@@ -1,18 +1,32 @@
 {
   "users": [
     {
-      "id": "1",
+      "id": "1784454563753",
       "email": "admin@example.com",
+      "password": "$2b$10$z6BXlJ/AxALo0HerbTmsUu9xZzFN6oGFLI2D7T8bUur4kcnUN9IQC",
       "name": "Admin User",
-      "roles": ["admin"],
-      "profile": { "avatarUrl": "", "bio": "System administrator", "phone": "" }
+      "roles": [
+        "admin"
+      ],
+      "profile": {
+        "avatarUrl": "",
+        "bio": "",
+        "phone": ""
+      }
     },
     {
-      "id": "2",
+      "id": "1784454571688",
       "email": "user@example.com",
+      "password": "$2b$10$nw2YKUrfjn1vdv/79wnUIeka0/l8xiw/zc4Sq2Z1/QvXUtUvvhNoS",
       "name": "Regular User",
-      "roles": ["user"],
-      "profile": { "avatarUrl": "", "bio": "Standard user account", "phone": "" }
+      "roles": [
+        "viewer"
+      ],
+      "profile": {
+        "avatarUrl": "",
+        "bio": "",
+        "phone": ""
+      }
     }
   ],
   "forms": [
@@ -25,35 +39,65 @@
           "label": "نام",
           "type": "text",
           "required": true,
-          "validation": { "minLength": 3, "maxLength": 15, "required": true },
-          "access": ["guest", "user"]
+          "validation": {
+            "minLength": 3,
+            "maxLength": 15,
+            "required": true
+          },
+          "access": [
+            "guest",
+            "user"
+          ]
         },
         {
           "name": "lastName",
           "label": "نام خانوادگی",
           "type": "text",
           "required": true,
-          "validation": { "minLength": 3, "maxLength": 15, "required": true },
-          "access": ["guest", "user"]
+          "validation": {
+            "minLength": 3,
+            "maxLength": 15,
+            "required": true
+          },
+          "access": [
+            "guest",
+            "user"
+          ]
         },
         {
           "name": "nationalCode",
           "label": "کد ملی",
           "type": "number",
           "required": true,
-          "validation": { "required": true },
-          "access": ["guest", "user"]
+          "validation": {
+            "required": true
+          },
+          "access": [
+            "guest",
+            "user"
+          ]
         },
         {
           "name": "gender",
           "label": "جنسیت",
           "type": "select",
           "required": true,
-          "validation": { "required": false },
-          "access": ["guest", "user"],
+          "validation": {
+            "required": false
+          },
+          "access": [
+            "guest",
+            "user"
+          ],
           "options": [
-            { "key": "male", "value": "مرد" },
-            { "key": "female", "value": "زن" }
+            {
+              "key": "male",
+              "value": "مرد"
+            },
+            {
+              "key": "female",
+              "value": "زن"
+            }
           ]
         }
       ]
@@ -67,16 +111,27 @@
           "label": "Email",
           "type": "text",
           "required": true,
-          "validation": { "required": true, "email": true },
-          "access": ["guest", "user"]
+          "validation": {
+            "required": true,
+            "email": true
+          },
+          "access": [
+            "guest",
+            "user"
+          ]
         },
         {
           "name": "message",
           "label": "Message",
           "type": "textarea",
           "required": false,
-          "validation": { "maxLength": 500 },
-          "access": ["guest", "user"]
+          "validation": {
+            "maxLength": 500
+          },
+          "access": [
+            "guest",
+            "user"
+          ]
         }
       ]
     }
