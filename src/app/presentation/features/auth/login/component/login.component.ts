@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
         const data = LoginFormAdapter.toDomain(raw);
 
         this.authFacade.login(data).then(() => {
-            this.router.navigate(['/dashboard']).then();
+            this.router.navigate(['/']).then();
         });
     }
 }

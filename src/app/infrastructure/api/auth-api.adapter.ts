@@ -14,7 +14,7 @@ interface AuthServerResponse {
 
 @Injectable()
 export class AuthApiAdapter implements AuthGateway {
-    private authUrl = environment.apiUrl + '/auth';
+    private authUrl = environment.apiUrl + '/api/auth';
 
     constructor(private httpClient: HttpClient) {}
 
