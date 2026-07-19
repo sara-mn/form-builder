@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { RefreshTokenUseCase } from '@app/application/auth/refresh-token.use.case';
 import { LoginRequest, User } from '@app/domain';
+import { StorageGateway } from '@app/domain/storage.gateway.abstract';
 import { AuthState } from '@app/presentation/core/services/auth-state';
 import { LoginUseCase } from '@application/auth/login.use.case';
 import { LogoutUseCase } from '@application/auth/logout.use.case';
@@ -13,7 +14,8 @@ export class AuthFacade {
         private loginUseCase: LoginUseCase,
         private logoutUseCase: LogoutUseCase,
         private refreshTokenUseCase: RefreshTokenUseCase,
-        private authState: AuthState
+        private authState: AuthState,
+        private tokenStorage: StorageGateway
     ) {}
 
     login(data: LoginRequest): Promise<User> {
@@ -34,5 +36,19 @@ export class AuthFacade {
         return this.logoutUseCase.execute().then(() => {
             this.authState.clearUser();
         });
+    }
+
+    getAccessToken(): string | null {
+        return this.tokenStorage.getItem('token');
+    }
+
+    async refreshAccessToken(): Promise<string | null> {
+        const user = await this.refreshTokenUseCase.execute();
+        if (!user) {
+            this.authState.clearUser();
+            return null;
+        }
+        this.authState.setUser(user);
+        return this.tokenStorage.getItem('token');
     }
 }

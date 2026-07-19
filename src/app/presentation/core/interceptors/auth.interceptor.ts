@@ -1,43 +1,41 @@
 import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { catchError, finalize, switchMap, throwError } from 'rxjs';
+import { catchError, from, switchMap, throwError } from 'rxjs';
 import { ErrorHandlerService } from '@core/services/error-handler.service';
 import { AuthFacade } from '@features/auth/services/auth.facade';
+import { Router } from '@angular/router';
+
+const SKIP_AUTH_HEADER_FOR = ['/api/auth/login', '/api/auth/register', '/api/auth/refresh'];
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
-  // const authFacade = inject(AuthFacade),
-  //   errorHandler = inject(ErrorHandlerService),
-    // accessToken = authFacade.getAccessToken();
+    const authFacade = inject(AuthFacade),
+        router = inject(Router),
+        errorHandler = inject(ErrorHandlerService),
+        isAuthEndpoint = SKIP_AUTH_HEADER_FOR.some((url) => req.url.includes(url)),
+        accessToken = authFacade.getAccessToken();
 
-  // if (accessToken) {
-  //   req = req.clone({
-  //     headers: req.headers.set('Authorization', `Bearer ${accessToken}`)
-  //   });
-  // }
+    const authReq = !isAuthEndpoint && accessToken ? req.clone({ setHeaders: { Authorization: `Bearer ${accessToken}` } }) : req;
 
+    return next(authReq).pipe(
+        catchError((error: HttpErrorResponse) => {
+            if (error.status !== 401 || isAuthEndpoint) {
+                return throwError(() => error);
+            }
 
-  // return next(req).pipe(
-  //   catchError((error: HttpErrorResponse) => {
-  //     if (error.status === 401) {
-  //       authFacade.refreshToken().pipe(
-  //         switchMap(() => {
-  //           const newToken = authFacade.getAccessToken();
-  //           const cloned = req.clone({
-  //             setHeaders: { Authorization: `Bearer ${newToken}` }
-  //           });
-  //           return next(cloned);
-  //         }),
-  //         catchError(() => {
-  //           authFacade.logout();
-  //           return throwError(() => error);
-  //         })
-  //       );
-  //     }
-  //     errorHandler.handleError(req.url, error);
-  //     return throwError(() => error);
-  //   }),
-  //   finalize(() => {
-  //   })
-  // );
-    return next(req)
+            return from(authFacade.refreshAccessToken()).pipe(
+                switchMap((newToken) => {
+                    if (!newToken) {
+                        return from(authFacade.logout()).pipe(
+                            switchMap(() => {
+                                router.navigate(['/login']).then();
+                                return throwError(() => error);
+                            })
+                        );
+                    }
+                    const retryReq = req.clone({ setHeaders: { Authorization: `Bearer ${newToken}` } });
+                    return next(retryReq);
+                })
+            );
+        })
+    );
 };
