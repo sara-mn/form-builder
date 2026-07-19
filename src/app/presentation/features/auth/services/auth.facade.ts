@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { RefreshTokenUseCase } from '@app/application/auth/refresh-token.use.case';
 import { LoginRequest, User } from '@app/domain';
 import { AuthState } from '@app/presentation/core/services/auth-state';
 import { LoginUseCase } from '@application/auth/login.use.case';
@@ -11,6 +12,7 @@ export class AuthFacade {
     constructor(
         private loginUseCase: LoginUseCase,
         private logoutUseCase: LogoutUseCase,
+        private refreshTokenUseCase: RefreshTokenUseCase,
         private authState: AuthState
     ) {}
 
@@ -19,6 +21,13 @@ export class AuthFacade {
             this.authState.setUser(user);
             return user;
         });
+    }
+
+    async restoreSession(): Promise<void> {
+        const user = await this.refreshTokenUseCase.execute();
+        if (user) {
+            this.authState.setUser(user);
+        }
     }
 
     logout(): Promise<void> {
