@@ -1,0 +1,21 @@
+<div class="topbar">
+    <a class="topbar-logo" routerLink="/">
+        <img [ngSrc]="'assets/layout/images/formbuilder.png'" alt="Form Builder" height="28" width="28" />
+        <span>Form Builder</span>
+    </a>
+
+    <div class="topbar-actions">
+        <button pButton iconOnly rounded severity="secondary" (onClick)="shellState.toggleDarkMode()">
+            <svg [pIcon]="shellState.darkTheme() ? 'sun' : 'moon'"></svg>
+        </button>
+
+        @if (authState.currentUser(); as user) {
+        <div class="topbar-user">
+            <span class="topbar-user-name">{{ user.name }}</span>
+            <span class="topbar-user-role">{{ user.roles[0] }}</span>
+        </div>
+        }
+
+        <button pButton label="Log out" [text]="true" severity="secondary" (onClick)="logout()"></button>
+    </div>
+</div>
