@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router';
 import { authGuard } from '@core/guards/auth.guard';
-import { AppLayout } from '@presentation/layout/component/app.layout';
 import { Dashboard } from '@features/dashboard/dashboard';
 import { Notfound } from '@features/notfound/notfound';
 import { Landing } from '@features/landing/landing';
@@ -8,11 +7,12 @@ import { LoginComponent } from '@presentation/features/auth/login/component/logi
 import { permissionGuard } from '@presentation/core/guards/permission-guard';
 import { UserPermissionEnum } from '@domain/user/enums/user-permission.enum';
 import { Unauthorized } from './presentation/features/unauthorized/unauthorized';
+import { Shell } from './presentation/shell/shell';
 
 export const routes: Routes = [
     {
         path: '',
-        component: AppLayout,
+        component: Shell,
         children: [
             { path: '', component: Dashboard },
             {

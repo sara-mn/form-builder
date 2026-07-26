@@ -44,6 +44,7 @@
     "@angular/platform-browser-dynamic": "^22.0.5",
     "@angular/router": "^22.0.5",
     "@ngneat/svg-icon": "^7.1.6",
+    "@primeicons/angular": "^8.0.0",
     "@primeuix/themes": "^3.0.0-rc.1",
     "@tailwindcss/postcss": "^4.1.4",
     "chart.js": "^4.4.9",

@@ -28,7 +28,7 @@ export class AuthApiAdapter implements AuthGateway {
     }
 
     refreshToken(): Promise<LoginResponse> {
-        const $res: Observable<LoginResponse> = this.httpClient.post<{ accessToken: string }>(`${this.authUrl}/refresh`, {}, { withCredentials: true }).pipe(map((res) => this.toRefreshedResponse(res.accessToken)));
+        const $res: Observable<LoginResponse> = this.httpClient.post<AuthServerResponse>(`${this.authUrl}/refresh`, {}, { withCredentials: true }).pipe(map((res) => this.toLoginResponse(res)));
         return lastValueFrom($res);
     }
 
