@@ -15,8 +15,8 @@ import { PIcon } from '@primeicons/angular';
     styleUrl: './topbar.scss'
 })
 export class Topbar {
-    protected readonly shellState = inject(ShellState);
-    protected readonly authState = inject(AuthState);
+    readonly shellState = inject(ShellState);
+    readonly authState = inject(AuthState);
 
     private readonly authFacade = inject(AuthFacade);
     private readonly router = inject(Router);

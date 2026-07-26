@@ -1,21 +1,37 @@
-<div class="topbar">
-    <a class="topbar-logo" routerLink="/">
-        <img [ngSrc]="'assets/layout/images/formbuilder.png'" alt="Form Builder" height="28" width="28" />
-        <span>Form Builder</span>
-    </a>
-
-    <div class="topbar-actions">
-        <button pButton iconOnly rounded severity="secondary" (onClick)="shellState.toggleDarkMode()">
-            <svg [pIcon]="shellState.darkTheme() ? 'sun' : 'moon'"></svg>
+<div class="flex items-center justify-between h-14 px-5 border-b border-surface-200 dark:border-surface-700 bg-surface-0 dark:bg-surface-900">
+    <div class="flex items-center gap-2">
+        <button
+            type="button"
+            class="lg:hidden flex items-center justify-center w-8 h-8 rounded-md text-surface-600 dark:text-surface-300 hover:bg-surface-100 dark:hover:bg-surface-800"
+            (click)="shellState.toggleMobileSidebar()"
+            aria-label="Toggle menu"
+        >
+            <svg pIcon="bars" class="w-5 h-5"></svg>
         </button>
 
+        <a routerLink="/" class="flex items-center gap-2 text-surface-900 dark:text-surface-0 no-underline">
+            <img [ngSrc]="'assets/layout/images/formbuilder.png'" alt="Form Builder" height="28" width="28" />
+            <span class="font-medium">Form Builder</span>
+        </a>
+    </div>
+
+    <div class="flex items-center gap-4">
+        <button pButton type="button" [rounded]="true" [text]="true" severity="secondary" (click)="shellState.toggleDarkMode()">
+            <svg [pIcon]="shellState.darkTheme() ? 'sun' : 'moon'" class="w-4 h-4"></svg>
+        </button>
+
+        <div class="w-px h-5 bg-surface-200 dark:bg-surface-700"></div>
+
         @if (authState.currentUser(); as user) {
-        <div class="topbar-user">
-            <span class="topbar-user-name">{{ user.name }}</span>
-            <span class="topbar-user-role">{{ user.roles[0] }}</span>
+        <div class="flex items-center gap-2">
+            <div class="w-8 h-8 rounded-full bg-primary/15 flex items-center justify-center text-xs font-medium text-primary">{{ user.name?.charAt(0) }}</div>
+            <div class="hidden sm:flex flex-col leading-tight">
+                <span class="text-sm font-medium text-surface-900 dark:text-surface-0">{{ user.name }}</span>
+                <span class="text-xs font-medium px-1.5 rounded-full bg-primary/15 text-primary w-fit">{{ user.roles[0] }}</span>
+            </div>
         </div>
         }
 
-        <button pButton label="Log out" [text]="true" severity="secondary" (onClick)="logout()"></button>
+        <button pButton type="button" severity="secondary" [text]="true" (click)="logout()">Log out</button>
     </div>
 </div>

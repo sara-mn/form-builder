@@ -8,6 +8,7 @@ import { LoginComponent } from '@presentation/features/auth/login/component/logi
 import { permissionGuard } from '@presentation/core/guards/permission-guard';
 import { UserPermissionEnum } from '@domain/user/enums/user-permission.enum';
 import { Unauthorized } from './presentation/features/unauthorized/unauthorized';
+import { Shell } from './presentation/shell/shell';
 
 export const routes: Routes = [
     {
@@ -34,6 +35,11 @@ export const routes: Routes = [
                 loadChildren: () => import('./presentation/features/form-designer/form-designer.module').then((module) => module.FormDesignerModule)
             }
         ]
+    },
+    {
+        path: 'shell-preview',
+        component: Shell,
+        children: [{ path: '', component: Dashboard }]
     },
     { path: 'landing', component: Landing },
     { path: 'notfound', component: Notfound },
