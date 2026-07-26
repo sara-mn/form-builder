@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router';
 import { authGuard } from '@core/guards/auth.guard';
-import { AppLayout } from '@presentation/layout/component/app.layout';
 import { Dashboard } from '@features/dashboard/dashboard';
 import { Notfound } from '@features/notfound/notfound';
 import { Landing } from '@features/landing/landing';
@@ -13,7 +12,7 @@ import { Shell } from './presentation/shell/shell';
 export const routes: Routes = [
     {
         path: '',
-        component: AppLayout,
+        component: Shell,
         children: [
             { path: '', component: Dashboard },
             {
@@ -35,11 +34,6 @@ export const routes: Routes = [
                 loadChildren: () => import('./presentation/features/form-designer/form-designer.module').then((module) => module.FormDesignerModule)
             }
         ]
-    },
-    {
-        path: 'shell-preview',
-        component: Shell,
-        children: [{ path: '', component: Dashboard }]
     },
     { path: 'landing', component: Landing },
     { path: 'notfound', component: Notfound },
