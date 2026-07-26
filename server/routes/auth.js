@@ -75,10 +75,15 @@ export default function createAuthRouter(db) {
         try {
             const decoded = jwt.verify(refreshToken, REFRESH_TOKEN_SECRET);
 
-            const payload = { sub: decoded.sub, email: decoded.email, roles: decoded.roles };
+            const user = getUsers().find({ id: decoded.sub }).value();
+            if (!user) {
+                return res.status(401).json({ message: 'User no longer exists' });
+            }
+
+            const payload = { sub: user.id, email: user.email, roles: user.roles };
             const accessToken = jwt.sign(payload, ACCESS_TOKEN_SECRET, { expiresIn: '1h' });
 
-            res.json({ accessToken });
+            res.json({ accessToken, user: toSafeUser(user) });
         } catch (error) {
             return res.status(401).json({ message: 'Invalid or expired refresh token' });
         }
