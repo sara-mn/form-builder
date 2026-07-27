@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FieldTypeEnum, FormSchemaModel, UserRoleEnum, ValidationConfigModel } from '@app/domain';
+import { FieldTypeEnum, FormModel, UserRoleEnum, ValidationConfigModel } from '@app/domain';
 import { FormCreatorService } from '@features/form-renderer/services/form-creator.service';
 import { FormGroup } from '@angular/forms';
 
@@ -14,7 +14,7 @@ export class DynamicFormComponent implements OnInit {
     viewer: UserRoleEnum = UserRoleEnum.Viewer;
     editor: UserRoleEnum = UserRoleEnum.Editor;
     admin: UserRoleEnum = UserRoleEnum.Admin;
-    formJson: FormSchemaModel = {
+    formJson = {
         fields: [
             {
                 name: 'firstName',

@@ -1,5 +1,5 @@
-import { FormSchemaModel } from '@domain/form/models/form-schema.model';
+import { FormModel } from '@app/domain/form/models/form.model';
 
 export abstract class FormRepository {
-  abstract getFormById(formId: string): Promise<FormSchemaModel>;
+    abstract getFormById(formId: string): Promise<FormModel>;
 }

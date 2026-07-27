@@ -2,21 +2,19 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { lastValueFrom, Observable } from 'rxjs';
 import { FormRepository } from '@domain/form/abstracts/form.repository.abstract';
-import { FormSchemaModel } from '@domain/form/models/form-schema.model';
+import { FormModel } from '@app/domain/form/models/form.model';
 import { environment } from '@env/environment';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class FormApiAdapter implements FormRepository {
+    private formsUrl = `${environment.apiUrl}/forms`;
 
-  private formsUrl = `${environment.apiUrl}/forms`;
+    constructor(private httpClient: HttpClient) {}
 
-  constructor(private httpClient: HttpClient) {
-  }
-
-  getFormById(formId: string): Promise<FormSchemaModel> {
-    const $res: Observable<FormSchemaModel> = this.httpClient.get<FormSchemaModel>(`${this.formsUrl}/${formId}`);
-    return lastValueFrom($res);
-  }
+    getFormById(formId: string): Promise<FormModel> {
+        const $res: Observable<FormModel> = this.httpClient.get<FormModel>(`${this.formsUrl}/${formId}`);
+        return lastValueFrom($res);
+    }
 }

@@ -1,12 +1,13 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Button } from 'primeng/button';
-import { FieldConfigModel, FieldTypeEnum, FormSchemaModel } from '@app/domain';
+import { FieldConfigModel, FieldTypeEnum, FormModel } from '@app/domain';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputText } from 'primeng/inputtext';
 import { FieldEntryComponent } from '@features/form-designer/components/field-entry/field-entry.component';
 import { ActivatedRoute } from '@angular/router';
 import { FormDesignerFacade } from '@features/form-designer/services/form-designer.facade';
 import { FieldListComponent } from '@features/form-designer/components/field-list/field-list.component';
+import { FormStatusEnum } from '@app/domain/form/enums/form-status.enum';
 
 enum FieldEntryModeEnum {
     add,
@@ -27,7 +28,7 @@ export class FormEntryComponent implements OnInit {
     private editedFieldIndex = -1;
 
     fields: FieldConfigModel[] = [];
-    form: FormSchemaModel = { title: '', fields: [] };
+    form: FormModel = { id: '', title: '', description: '', status: FormStatusEnum.Draft, ownerId: '', fields: [], createdAt: '', updatedAt: '' };
     field: FieldConfigModel = this.initialField;
     fieldEntryMode: FieldEntryModeEnum = FieldEntryModeEnum.noMode;
 
