@@ -1,5 +1,5 @@
 import { FormStatusEnum } from '../enums/form-status.enum';
-import { FieldConfigModel } from './field-config.model';
+import { FormPageModel } from './form-page.model';
 
 export interface FormModel {
     id: string;
@@ -7,7 +7,7 @@ export interface FormModel {
     description: string;
     status: FormStatusEnum;
     ownerId: string;
-    fields: FieldConfigModel[];
+    pages: FormPageModel[];
     createdAt: string;
     updatedAt: string;
 }
