@@ -6,6 +6,7 @@ export interface FieldConfigModel {
     name: string;
     label: string;
     type: FieldTypeEnum;
+    order: number;
     validators: FieldValidatorConfigModel[];
     options?: string[] | { key: string; value: string }[];
     access?: UserRoleEnum[];
