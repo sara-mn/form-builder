@@ -5,6 +5,7 @@ export * from './user/enums/user-permission.enum';
 export * from './form/enums/field-validator-type.enum';
 export * from './form/enums/field-type.enum';
 export * from './form/enums/form-status.enum';
+export * from './form/enums/cross-field-validator-type.enum';
 
 //constants
 export * from './user/constants/role-permissions.constant';
@@ -22,6 +23,7 @@ export * from './form/models/field-config.model';
 export * from './form/models/access-config.model';
 export * from './form/models/field-validator-config.model';
 export * from './form/models/form-page.model';
+export * from './form/models/cross-field-validator-config.model';
 
 //abstracts
 export * from './auth/abstracts/auth.gateway.abstract';
