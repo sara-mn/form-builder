@@ -1,6 +1,5 @@
 @use "tailwindcss";
-@use './assets/layout/layout.scss';
-@use './assets/demo/demo.scss';
+
 @custom-variant dark (&:where(.app-dark, .app-dark *));
 
 @plugin 'tailwindcss-primeui';
