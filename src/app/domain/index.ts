@@ -24,6 +24,7 @@ export * from './form/models/access-config.model';
 export * from './form/models/field-validator-config.model';
 export * from './form/models/form-page.model';
 export * from './form/models/cross-field-validator-config.model';
+export * from './form/models/form-submission.model';
 
 //abstracts
 export * from './auth/abstracts/auth.gateway.abstract';
