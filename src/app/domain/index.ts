@@ -20,7 +20,6 @@ export * from './user/models/register-request.model';
 
 export * from './form/models/form.model';
 export * from './form/models/field-config.model';
-export * from './form/models/access-config.model';
 export * from './form/models/field-validator-config.model';
 export * from './form/models/form-page.model';
 export * from './form/models/cross-field-validator-config.model';
