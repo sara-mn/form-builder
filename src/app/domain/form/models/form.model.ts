@@ -13,4 +13,5 @@ export interface FormModel {
     validators: CrossFieldValidatorConfigModel[];
     createdAt: string;
     updatedAt: string;
+    clonedFromId?: Guid;
 }
