@@ -29,111 +29,114 @@
       }
     }
   ],
-  "forms": [
-    {
-      "id": "1",
-      "title": "form Id 1",
-      "fields": [
-        {
-          "name": "firstName",
-          "label": "نام",
-          "type": "text",
-          "required": true,
-          "validation": {
-            "minLength": 3,
-            "maxLength": 15,
-            "required": true
+ "forms": [
+  {
+    "id": "1",
+    "title": "form Id 1",
+    "description": "",
+    "status": "published",
+    "ownerId": "1784454563753",
+    "pages": [
+      {
+        "id": "page-1-1",
+        "title": "Page 1",
+        "order": 0,
+        "fields": [
+          {
+            "name": "firstName",
+            "label": "مان",
+            "type": "text",
+            "order": 0,
+            "validators": [
+              { "id": "v-1", "type": "required", "message": "This field is required" },
+              { "id": "v-2", "type": "minLength", "value": 3, "message": "Minimum length is 3" },
+              { "id": "v-3", "type": "maxLength", "value": 15, "message": "Maximum length is 15" }
+            ],
+            "access": ["guest", "user"]
           },
-          "access": [
-            "guest",
-            "user"
-          ]
-        },
-        {
-          "name": "lastName",
-          "label": "نام خانوادگی",
-          "type": "text",
-          "required": true,
-          "validation": {
-            "minLength": 3,
-            "maxLength": 15,
-            "required": true
+          {
+            "name": "lastName",
+            "label": "یگداوناخ مان",
+            "type": "text",
+            "order": 1,
+            "validators": [
+              { "id": "v-4", "type": "required", "message": "This field is required" },
+              { "id": "v-5", "type": "minLength", "value": 3, "message": "Minimum length is 3" },
+              { "id": "v-6", "type": "maxLength", "value": 15, "message": "Maximum length is 15" }
+            ],
+            "access": ["guest", "user"]
           },
-          "access": [
-            "guest",
-            "user"
-          ]
-        },
-        {
-          "name": "nationalCode",
-          "label": "کد ملی",
-          "type": "number",
-          "required": true,
-          "validation": {
-            "required": true
+          {
+            "name": "nationalCode",
+            "label": "یلم دک",
+            "type": "number",
+            "order": 2,
+            "validators": [
+              { "id": "v-7", "type": "required", "message": "This field is required" }
+            ],
+            "access": ["guest", "user"]
           },
-          "access": [
-            "guest",
-            "user"
-          ]
-        },
-        {
-          "name": "gender",
-          "label": "جنسیت",
-          "type": "select",
-          "required": true,
-          "validation": {
-            "required": false
+          {
+            "name": "gender",
+            "label": "تیسنج",
+            "type": "select",
+            "order": 3,
+            "validators": [],
+            "access": ["guest", "user"],
+            "options": [
+              { "key": "male", "value": "درم" },
+              { "key": "female", "value": "نز" }
+            ]
+          }
+        ],
+        "validators": []
+      }
+    ],
+    "validators": [],
+    "createdAt": "2025-01-01T00:00:00.000Z",
+    "updatedAt": "2025-01-01T00:00:00.000Z"
+  },
+  {
+    "id": "2",
+    "title": "Contact Form",
+    "description": "",
+    "status": "published",
+    "ownerId": "1784454563753",
+    "pages": [
+      {
+        "id": "page-2-1",
+        "title": "Page 1",
+        "order": 0,
+        "fields": [
+          {
+            "name": "email",
+            "label": "Email",
+            "type": "text",
+            "order": 0,
+            "validators": [
+              { "id": "v-8", "type": "required", "message": "This field is required" },
+              { "id": "v-9", "type": "email", "message": "Must be a valid email" }
+            ],
+            "access": ["guest", "user"]
           },
-          "access": [
-            "guest",
-            "user"
-          ],
-          "options": [
-            {
-              "key": "male",
-              "value": "مرد"
-            },
-            {
-              "key": "female",
-              "value": "زن"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "2",
-      "title": "Contact Form",
-      "fields": [
-        {
-          "name": "email",
-          "label": "Email",
-          "type": "text",
-          "required": true,
-          "validation": {
-            "required": true,
-            "email": true
-          },
-          "access": [
-            "guest",
-            "user"
-          ]
-        },
-        {
-          "name": "message",
-          "label": "Message",
-          "type": "textarea",
-          "required": false,
-          "validation": {
-            "maxLength": 500
-          },
-          "access": [
-            "guest",
-            "user"
-          ]
-        }
-      ]
-    }
-  ]
+          {
+            "name": "message",
+            "label": "Message",
+            "type": "textarea",
+            "order": 1,
+            "validators": [
+              { "id": "v-10", "type": "maxLength", "value": 500, "message": "Maximum length is 500" }
+            ],
+            "access": ["guest", "user"]
+          }
+        ],
+        "validators": []
+      }
+    ],
+    "validators": [],
+    "createdAt": "2025-01-01T00:00:00.000Z",
+    "updatedAt": "2025-01-01T00:00:00.000Z"
+  }
+],
+"submissions": []
 }
