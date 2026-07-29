@@ -24,6 +24,7 @@ export * from './form/models/field-validator-config.model';
 export * from './form/models/form-page.model';
 export * from './form/models/cross-field-validator-config.model';
 export * from './form/models/form-submission.model';
+export * from './form/models/validation-result.model';
 
 //abstracts
 export * from './auth/abstracts/auth.gateway.abstract';
@@ -35,3 +36,10 @@ export * from './form/abstracts/submission.repository.abstract';
 
 //types
 export * from './shared/types/guid.type';
+
+//validation
+export * from './form/validation/cross-field-validator-runner';
+export * from './form/validation/cross-field-validators';
+export * from './form/validation/field-validator-runner';
+export * from './form/validation/field-validators';
+export * from './form/validation/form-validation.service';

@@ -5,6 +5,6 @@ export interface CrossFieldValidatorConfigModel {
     id: Guid;
     type: CrossFieldValidatorTypeEnum;
     message: string;
-    targetFieldName: string; // فیلدی که rule روش اعمال می‌شه
-    dependsOnFieldName: string; // فیلد مرجع مقایسه
+    targetFieldId: Guid; // فیلدی که rule روش اعمال می‌شه
+    dependsOnFieldId: Guid; // فیلد مرجع مقایسه
 }
