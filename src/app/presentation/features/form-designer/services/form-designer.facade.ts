@@ -13,7 +13,7 @@ export class FormDesignerFacade {
     private readonly _form = signal<FormModel | null>(null);
     private readonly _hasSubmissions = signal<boolean>(false);
 
-    private form: Signal<FormModel | null> = this._form.asReadonly();
+    readonly form: Signal<FormModel | null> = this._form.asReadonly();
     readonly isLocked: Signal<boolean> = computed(() => this._hasSubmissions());
 
     private getFormByIdUseCase = inject(GetFormByIdUseCase);
