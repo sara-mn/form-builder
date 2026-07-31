@@ -26,12 +26,6 @@ export const routes: Routes = [
                 data: { permissions: [UserPermissionEnum.FormGenerate, UserPermissionEnum.FormCreate] },
                 canActivate: [authGuard, permissionGuard],
                 loadChildren: () => import('./presentation/features/form-renderer/form-renderer.module').then((module) => module.FormRendererModule)
-            },
-            {
-                path: '',
-                data: { permissions: [UserPermissionEnum.FormCreate, UserPermissionEnum.FormEdit, UserPermissionEnum.FormDelete] },
-                canActivate: [authGuard, permissionGuard],
-                loadChildren: () => import('./presentation/features/form-designer/form-designer.module').then((module) => module.FormDesignerModule)
             }
         ]
     },
