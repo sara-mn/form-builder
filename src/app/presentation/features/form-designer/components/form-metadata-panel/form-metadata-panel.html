@@ -1,0 +1,10 @@
+<div class="metadata-panel">
+    <div class="metadata-panel__field">
+        <label for="form-title">Title</label>
+        <input id="form-title" type="text" [value]="title()" (input)="onTitleChange($any($event.target).value)" [disabled]="disabled()" placeholder="Untitled form" />
+    </div>
+    <div class="metadata-panel__field">
+        <label for="form-description">Description</label>
+        <input id="form-description" type="text" [value]="description()" (input)="onDescriptionChange($any($event.target).value)" [disabled]="disabled()" placeholder="Optional description" rows="2" />
+    </div>
+</div>
