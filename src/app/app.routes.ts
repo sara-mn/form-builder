@@ -16,6 +16,12 @@ export const routes: Routes = [
         children: [
             { path: '', component: Dashboard },
             {
+                path: 'forms/:id/edit',
+                data: { permissions: [UserPermissionEnum.FormCreate, UserPermissionEnum.FormEdit, UserPermissionEnum.FormDelete] },
+                canActivate: [authGuard, permissionGuard],
+                loadComponent: () => import('./presentation/features/form-designer/components/form-designer-page/form-designer-page').then((m) => m.FormDesignerPage)
+            },
+            {
                 path: 'form-list',
                 data: { permissions: [] },
                 canActivate: [authGuard, permissionGuard],
