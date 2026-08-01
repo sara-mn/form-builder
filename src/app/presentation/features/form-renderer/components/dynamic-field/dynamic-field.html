@@ -1,0 +1,19 @@
+@if (simpleInputType; as type) {
+<app-simple-text-input [field]="field()" [control]="control()" [inputType]="type" />
+} @else if (field().type === FieldTypeEnum.Textarea) {
+<app-textarea-field-input [field]="field()" [control]="control()" />
+} @else if (field().type === FieldTypeEnum.Select) {
+<app-select-field-input [field]="field()" [control]="control()" />
+} @else if (field().type === FieldTypeEnum.Radio) {
+<app-radio-field-input [field]="field()" [control]="control()" />
+} @else if (field().type === FieldTypeEnum.Checkbox) {
+<app-checkbox-field-input [field]="field()" [control]="control()" />
+} @else if (isDateTimeType) {
+<app-date-time-field-input [field]="field()" [control]="control()" />
+} @else if (field().type === FieldTypeEnum.DateRange) {
+<app-date-range-field-input [field]="field()" [control]="control()" />
+} @else if (field().type === FieldTypeEnum.Color) {
+<app-color-field-input [field]="field()" [control]="control()" />
+} @else if (field().type === FieldTypeEnum.Range) {
+<app-range-field-input [field]="field()" [control]="control()" />
+}
