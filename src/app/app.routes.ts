@@ -26,12 +26,6 @@ export const routes: Routes = [
                 data: { permissions: [] },
                 canActivate: [authGuard, permissionGuard],
                 loadComponent: () => import('./presentation/features/form-list/components/form-list-page/form-list-page').then((m) => m.FormListPage)
-            },
-            {
-                path: 'dynamic-form',
-                data: { permissions: [UserPermissionEnum.FormGenerate, UserPermissionEnum.FormCreate] },
-                canActivate: [authGuard, permissionGuard],
-                loadChildren: () => import('./presentation/features/form-renderer/form-renderer.module').then((module) => module.FormRendererModule)
             }
         ]
     },
