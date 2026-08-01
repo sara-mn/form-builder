@@ -15,7 +15,7 @@
                 <ng-template #content let-activateCallback="activateCallback">
                     <form [formGroup]="pageGroups()[i]" class="renderer-page__fields">
                         @for (field of page.fields; track field.id) {
-                        <app-dynamic-field [field]="field" [control]="pageGroups()[i].get(field.name)!" />
+                        <app-dynamic-field [field]="field" [control]="$any(pageGroups()[i].get(field.name))" />
                         }
                     </form>
 
