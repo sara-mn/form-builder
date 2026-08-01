@@ -3,7 +3,7 @@ import { Component, input } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { FieldConfigModel } from '@app/domain';
 import { InputTextModule } from 'primeng/inputtext';
-export type SimpleInputType = 'text' | 'password' | 'email' | 'number' | 'tel' | 'url' | 'color' | 'range';
+export type SimpleInputType = 'text' | 'password' | 'email' | 'number' | 'tel' | 'url';
 
 @Component({
     selector: 'app-simple-text-input',

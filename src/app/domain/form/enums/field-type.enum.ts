@@ -12,5 +12,7 @@ export enum FieldTypeEnum {
     Date = 'date',
     DateRange = 'date-range',
     Time = 'time',
-    Color = 'color'
+    DateTime = 'date-time',
+    Color = 'color',
+    Range = 'range'
 }
