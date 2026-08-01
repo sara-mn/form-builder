@@ -1,0 +1,7 @@
+<div class="field-input">
+    <label [for]="field().name">{{ field().label }}</label>
+    <p-datepicker [inputId]="field().name" selectionMode="range" [readonlyInput]="true" [formControl]="control()" />
+    @if (control().invalid && control().touched) {
+    <span class="field-input__error"> @for (error of control().errors | keyvalue; track error.key) { {{ error.value }} } </span>
+    }
+</div>
