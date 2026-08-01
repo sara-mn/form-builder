@@ -16,6 +16,11 @@ export class SubmissionApiAdapter implements SubmissionRepository {
         return lastValueFrom($res);
     }
 
+    getAllSubmissions(): Promise<FormSubmissionModel[]> {
+        const $res: Observable<FormSubmissionModel[]> = this.httpClient.get<FormSubmissionModel[]>(this.submissionsUrl);
+        return lastValueFrom($res);
+    }
+
     getSubmissionsByFormId(formId: Guid): Promise<FormSubmissionModel[]> {
         const $res: Observable<FormSubmissionModel[]> = this.httpClient.get<FormSubmissionModel[]>(this.submissionsUrl, { params: { formId } });
         return lastValueFrom($res);
