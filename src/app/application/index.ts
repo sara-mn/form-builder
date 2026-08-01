@@ -17,7 +17,8 @@ import { DeleteFormUseCase } from '@application/form/delete-form.use.case';
 import { CloneFormUseCase } from '@application/form/clone-form.use.case';
 import { SubmitFormUseCase } from '@application/form/submit-form.use.case';
 import { FormValidationService } from '@domain/form/validation/form-validation.service';
-import { GetSubmissionUseCase } from './form/get-submission.use-case';
+import { GetSubmissionUseCase } from './form/get-submission.use.case';
+import { GetFormsWithSubmissionCountsUseCase } from './form/get-forms-with-submission-counts.use.case';
 
 export const applicationProviders = [
     {
@@ -99,6 +100,11 @@ export const applicationProviders = [
         provide: GetSubmissionUseCase,
         useFactory: (subRepo: SubmissionRepository) => new GetSubmissionUseCase(subRepo),
         deps: [SubmissionRepository]
+    },
+    {
+        provide: GetFormsWithSubmissionCountsUseCase,
+        useFactory: (formRepo: FormRepository, subRepo: SubmissionRepository) => new GetFormsWithSubmissionCountsUseCase(formRepo, subRepo),
+        deps: [FormRepository, SubmissionRepository]
     },
     FormValidationService
 ];
