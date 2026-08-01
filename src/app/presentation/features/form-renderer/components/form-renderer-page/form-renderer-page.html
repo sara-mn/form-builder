@@ -1,0 +1,43 @@
+@if (alreadySubmitted()) {
+<app-already-submitted-banner />
+} @else if (form(); as currentForm) {
+<div class="renderer-page">
+    <h2>{{ currentForm.title }}</h2>
+    @if (currentForm.description) {
+    <p class="renderer-page__description">{{ currentForm.description }}</p>
+    }
+
+    <p-stepper [value]="activeStep()">
+        @for (page of currentForm.pages; track page.id; let i = $index) {
+        <p-step-item [value]="i + 1">
+            <p-step>{{ page.title }}</p-step>
+            <p-step-panel>
+                <ng-template #content let-activateCallback="activateCallback">
+                    <form [formGroup]="pageGroups()[i]" class="renderer-page__fields">
+                        @for (field of page.fields; track field.id) {
+                        <app-dynamic-field [field]="field" [control]="pageGroups()[i].get(field.name)!" />
+                        }
+                    </form>
+
+                    <div class="renderer-page__nav">
+                        @if (i > 0) {
+                        <button pButton label="Back" severity="secondary" (click)="goToStep(i, activateCallback)"></button>
+                        } @if (!isLastStep()) {
+                        <button pButton label="Next" (click)="goToStep(i + 2, activateCallback)"></button>
+                        } @else {
+                        <button pButton label="Submit" [loading]="isSubmitting()" (click)="onSubmit()"></button>
+                        }
+                    </div>
+                </ng-template>
+            </p-step-panel>
+        </p-step-item>
+        }
+    </p-stepper>
+
+    @if (submitError(); as error) {
+    <p class="renderer-page__error">{{ error }}</p>
+    }
+</div>
+} @else {
+<div class="renderer-page__loading">Loading form...</div>
+}
