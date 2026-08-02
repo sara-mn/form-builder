@@ -22,7 +22,10 @@ export class FormListPage implements OnInit {
     cloningFormId = signal<Guid | null>(null);
 
     ngOnInit(): void {
-        this.facade.loadForms();
+        this.facade.loadForms().then(() => {
+            console.log('Loaded items:', this.items());
+            console.log('First item structure:', JSON.stringify(this.items()[0], null, 2));
+        });
     }
 
     onNewFormClick(): void {

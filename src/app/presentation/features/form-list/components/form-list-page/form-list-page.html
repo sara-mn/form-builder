@@ -5,7 +5,7 @@
     </div>
 
     <p-table [value]="items()" styleClass="form-list-page__table">
-        <ng-template pTemplate="header">
+        <ng-template #header>
             <tr>
                 <th>Title</th>
                 <th>Status</th>
@@ -14,7 +14,7 @@
                 <th>Actions</th>
             </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-item>
+        <ng-template #body let-item>
             <tr>
                 <td>{{ item.form.title }}</td>
                 <td>
@@ -31,7 +31,7 @@
                 </td>
             </tr>
         </ng-template>
-        <ng-template pTemplate="emptymessage">
+        <ng-template #emptymessage>
             <tr>
                 <td colspan="5" class="form-list-page__empty">No forms yet. Create your first one.</td>
             </tr>
