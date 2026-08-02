@@ -16,22 +16,22 @@ export const routes: Routes = [
         children: [
             { path: '', component: Dashboard },
             {
+                path: 'forms/:id/edit',
+                data: { permissions: [UserPermissionEnum.FormCreate, UserPermissionEnum.FormEdit, UserPermissionEnum.FormDelete] },
+                canActivate: [authGuard, permissionGuard],
+                loadComponent: () => import('./presentation/features/form-designer/components/form-designer-page/form-designer-page').then((m) => m.FormDesignerPage)
+            },
+            {
                 path: 'form-list',
                 data: { permissions: [] },
                 canActivate: [authGuard, permissionGuard],
-                loadChildren: () => import('./presentation/features/form-list/form-list.module').then((module) => module.FormListModule)
+                loadComponent: () => import('./presentation/features/form-list/components/form-list-page/form-list-page').then((m) => m.FormListPage)
             },
             {
-                path: 'dynamic-form',
+                path: 'forms/:id/fill',
                 data: { permissions: [UserPermissionEnum.FormGenerate, UserPermissionEnum.FormCreate] },
                 canActivate: [authGuard, permissionGuard],
-                loadChildren: () => import('./presentation/features/form-renderer/form-renderer.module').then((module) => module.FormRendererModule)
-            },
-            {
-                path: '',
-                data: { permissions: [UserPermissionEnum.FormCreate, UserPermissionEnum.FormEdit, UserPermissionEnum.FormDelete] },
-                canActivate: [authGuard, permissionGuard],
-                loadChildren: () => import('./presentation/features/form-designer/form-designer.module').then((module) => module.FormDesignerModule)
+                loadComponent: () => import('./presentation/features/form-renderer/components/form-renderer-page/form-renderer-page').then((m) => m.FormRendererPage)
             }
         ]
     },

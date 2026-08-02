@@ -7,6 +7,9 @@ export class AuthState {
     private readonly _currentUser = signal<User | null>(null);
     readonly currentUser = this._currentUser.asReadonly();
 
+    private readonly _sessionRestored = signal<boolean>(false);
+    readonly sessionRestored = this._sessionRestored.asReadonly();
+
     readonly isAuthenticated = computed(() => !!this._currentUser());
     readonly permissions = computed<UserPermissionEnum[]>(() => {
         const user = this._currentUser();
@@ -24,6 +27,9 @@ export class AuthState {
 
     setUser(user: User): void {
         this._currentUser.set(user);
+    }
+    setSessionRestored(sessionRestored: boolean): void {
+        this._sessionRestored.set(sessionRestored);
     }
 
     clearUser(): void {

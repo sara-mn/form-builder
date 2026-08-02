@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { RefreshTokenUseCase } from '@app/application/auth/refresh-token.use.case';
 import { LoginRequest, User } from '@app/domain';
 import { StorageGateway } from '@app/domain/storage.gateway.abstract';
@@ -30,6 +30,7 @@ export class AuthFacade {
         if (user) {
             this.authState.setUser(user);
         }
+        this.authState.setSessionRestored(true);
     }
 
     logout(): Promise<void> {

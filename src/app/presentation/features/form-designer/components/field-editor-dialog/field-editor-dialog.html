@@ -1,0 +1,36 @@
+<p-dialog [header]="editingField() ? 'Edit Field' : 'Add Field'" [visible]="isOpen()" [modal]="true" [style]="{ width: '32rem' }" (onHide)="onDialogHide()">
+    <div class="field-editor">
+        <div class="field-editor__row">
+            <label for="field-name">Name (key)</label>
+            <input id="field-name" type="text" [value]="name()" (input)="onNameChange($any($event.target).value)" />
+        </div>
+
+        <div class="field-editor__row">
+            <label for="field-label">Label</label>
+            <input id="field-label" type="text" [value]="label()" (input)="onLabelChange($any($event.target).value)" />
+        </div>
+
+        <div class="field-editor__row">
+            <label for="field-type">Type</label>
+            <select id="field-type" [value]="type()" (change)="onTypeChange($any($event.target).value)">
+                @for (t of fieldTypes; track t) {
+                <option [value]="t">{{ t }}</option>
+                }
+            </select>
+        </div>
+
+        @if (showOptions) {
+        <div class="field-editor__row">
+            <label for="field-options">Options (one per line, key:value)</label>
+            <textarea id="field-options" rows="3" [value]="optionsText()" (input)="onOptionsTextChange($any($event.target).value)"></textarea>
+        </div>
+        }
+
+        <app-field-validator-editor [validators]="validators()" (validatorAdded)="onValidatorAdded($event)" (validatorRemoved)="onValidatorRemoved($event)" />
+    </div>
+
+    <ng-template #footer>
+        <button type="button" class="field-editor__cancel-btn" (click)="onDialogHide()">Cancel</button>
+        <button type="button" class="field-editor__save-btn" (click)="onSave()">Save</button>
+    </ng-template>
+</p-dialog>

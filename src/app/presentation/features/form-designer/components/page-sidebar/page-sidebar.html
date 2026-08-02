@@ -1,0 +1,17 @@
+<div class="page-sidebar">
+    <div class="page-sidebar__header">
+        <h3>Pages</h3>
+        <button type="button" class="page-sidebar__add-btn" [disabled]="disabled()" (click)="onAdd()">+ Add Page</button>
+    </div>
+
+    <ul class="page-sidebar__list">
+        @for (page of pages(); track page.id) {
+        <li class="page-sidebar__item" [class.page-sidebar__item--active]="page.id === selectedPageId()" (click)="onSelect(page.id)">
+            <span class="page-sidebar__item-title">{{ page.title }}</span>
+            <button type="button" class="page-sidebar__delete-btn" [disabled]="disabled()" (click)="onDelete(page.id, $event)" aria-label="Delete page"></button>
+        </li>
+        } @empty {
+        <li class="page-sidebar__empty">No pages yet.</li>
+        }
+    </ul>
+</div>

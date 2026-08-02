@@ -1,0 +1,22 @@
+.status-badge {
+    display: inline-block;
+    padding: 0.125rem 0.625rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.status-badge--draft {
+    background-color: var(--p-surface-100, #f4f4f5);
+    color: var(--p-surface-600, #52525b);
+}
+
+.status-badge--published {
+    background-color: var(--p-green-100, #dcfce7);
+    color: var(--p-green-700, #15803d);
+}
+
+.status-badge--locked {
+    background-color: var(--p-red-100, #fee2e2);
+    color: var(--p-red-700, #b91c1c);
+}

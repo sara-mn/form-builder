@@ -1,0 +1,34 @@
+<div class="validator-editor">
+    <h4>Validators</h4>
+
+    @if (validators().length > 0) {
+    <ul class="validator-editor__list">
+        @for (validator of validators(); track validator.id) {
+        <li class="validator-editor__item">
+            <span class="validator-editor__item-type">{{ validator.type }}</span>
+            @if (validator.value !== undefined) {
+            <span class="validator-editor__item-value">({{ validator.value }})</span>
+            }
+            <span class="validator-editor__item-message">{{ validator.message }}</span>
+            <button type="button" class="validator-editor__remove-btn" (click)="onRemove(validator.id)" aria-label="Remove validator">&times;</button>
+        </li>
+        }
+    </ul>
+    }
+
+    <div class="validator-editor__add-row">
+        <select [value]="newType()" (change)="onTypeChange($any($event.target).value)">
+            @for (type of validatorTypes; track type) {
+            <option [value]="type">{{ type }}</option>
+            }
+        </select>
+
+        @if (requiresValue) {
+        <input type="text" placeholder="Value" [value]="newValue()" (input)="onValueChange($any($event.target).value)" />
+        }
+
+        <input type="text" placeholder="Error message" [value]="newMessage()" (input)="onMessageChange($any($event.target).value)" />
+
+        <button type="button" (click)="onAdd()">Add</button>
+    </div>
+</div>

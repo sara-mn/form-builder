@@ -1,0 +1,8 @@
+<div class="lock-banner" role="alert">
+    <span class="lock-banner__icon">🔒</span>
+    <div class="lock-banner__text">
+        <strong>This form is locked.</strong>
+        <span>It has received submissions and can no longer be edited. Clone it to make changes.</span>
+    </div>
+    <button type="button" class="lock-banner__clone-btn" [disabled]="cloning()" (click)="onCloneClick()">{{ cloning() ? 'Cloning...' : 'Clone to Edit' }}</button>
+</div>

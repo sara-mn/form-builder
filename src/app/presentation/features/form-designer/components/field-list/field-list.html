@@ -1,0 +1,24 @@
+<!-- field-list.component.html -->
+<div class="field-list">
+    <div class="field-list__header">
+        <h3>Fields</h3>
+        <button type="button" class="field-list__add-btn" [disabled]="disabled()" (click)="onAdd()">+ Add Field</button>
+    </div>
+
+    <div class="field-list__table">
+        @for (field of fields(); track field.id) {
+        <div class="field-list__row">
+            <div class="field-list__row-info">
+                <span class="field-list__row-label">{{ field.label }}</span>
+                <span class="field-list__row-type">{{ field.type }}</span>
+            </div>
+            <div class="field-list__row-actions">
+                <button type="button" class="field-list__edit-btn" [disabled]="disabled()" (click)="onEdit(field)">Edit</button>
+                <button type="button" class="field-list__delete-btn" [disabled]="disabled()" (click)="onDelete(field)">Delete</button>
+            </div>
+        </div>
+        } @empty {
+        <div class="field-list__empty">No fields in this page yet.</div>
+        }
+    </div>
+</div>
