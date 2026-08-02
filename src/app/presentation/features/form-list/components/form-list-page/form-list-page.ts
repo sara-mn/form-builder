@@ -5,6 +5,7 @@ import { Guid } from '@app/domain/shared/types/guid.type';
 import { NewFormData, NewFormDialog } from '../new-form-dialog/new-form-dialog';
 import { StatusBadge } from '../status-badge/status-badge';
 import { TableModule } from 'primeng/table';
+import { FormStatusEnum } from '@app/domain';
 
 @Component({
     selector: 'app-form-list-page',
@@ -15,7 +16,7 @@ import { TableModule } from 'primeng/table';
 export class FormListPage implements OnInit {
     private facade = inject(FormListFacade);
     private router = inject(Router);
-
+    readonly FormStatusEnum = FormStatusEnum;
     items = this.facade.formListItems;
 
     isNewFormDialogOpen = signal<boolean>(false);
@@ -60,5 +61,9 @@ export class FormListPage implements OnInit {
         } finally {
             this.cloningFormId.set(null);
         }
+    }
+
+    onFill(formId: Guid): void {
+        this.router.navigate(['/forms', formId, 'fill']);
     }
 }

@@ -26,6 +26,8 @@
                     <button type="button" (click)="onEdit(item.form.id)">Edit</button>
                     @if (item.submissionCount > 0) {
                     <button type="button" [disabled]="cloningFormId() === item.form.id" (click)="onClone(item.form.id)">{{ cloningFormId() === item.form.id ? 'Cloning...' : 'Clone' }}</button>
+                    } @if (item.form.status === FormStatusEnum.Published) {
+                    <button type="button" (click)="onFill(item.form.id)">Fill</button>
                     }
                     <button type="button" class="form-list-page__delete-btn" (click)="onDelete(item.form.id, item.form.title)">Delete</button>
                 </td>
