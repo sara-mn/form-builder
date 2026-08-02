@@ -4,7 +4,7 @@ import { AlreadySubmittedBanner } from '../already-submitted-banner/already-subm
 import { DynamicField } from '../dynamic-field/dynamic-field';
 import { Guid } from '@app/domain';
 import { FormRendererFacade } from '../../services/form-renderer.facade';
-import { DynamicFormBuilderServic } from '../../services/dynamic-form-builder.servic';
+import { DynamicFormBuilderService } from '../../services/dynamic-form-builder.service';
 import { StepperModule } from 'primeng/stepper';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 
@@ -18,7 +18,7 @@ export class FormRendererPage {
     id = input.required<Guid>();
 
     private facade = inject(FormRendererFacade);
-    private formBuilder = inject(DynamicFormBuilderServic);
+    private formBuilder = inject(DynamicFormBuilderService);
 
     form = this.facade.form;
     alreadySubmitted = this.facade.alreadySubmitted;

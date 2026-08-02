@@ -14,13 +14,7 @@ export class FieldValidatorEditor {
     validatorRemoved = output<Guid>();
 
     readonly validatorTypes = Object.values(FieldValidatorTypeEnum);
-
-    newType = signal<FieldValidatorTypeEnum>(FieldValidatorTypeEnum.Required);
-    newValue = signal<string>('');
-    newMessage = signal<string>(this.buildDefaultMessage(FieldValidatorTypeEnum.Required, ''));
-
     private readonly numericTypes = new Set<FieldValidatorTypeEnum>([FieldValidatorTypeEnum.MinLength, FieldValidatorTypeEnum.MaxLength, FieldValidatorTypeEnum.MinValue, FieldValidatorTypeEnum.MaxValue]);
-
     private readonly defaultMessageBuilders: Record<FieldValidatorTypeEnum, (value: string) => string> = {
         [FieldValidatorTypeEnum.Required]: () => 'This field is required',
         [FieldValidatorTypeEnum.MinLength]: (value) => `Minimum length is ${value}`,
@@ -30,6 +24,9 @@ export class FieldValidatorEditor {
         [FieldValidatorTypeEnum.MaxValue]: (value) => `Maximum value is ${value || '?'}`,
         [FieldValidatorTypeEnum.Email]: () => 'Must be a valid email address'
     };
+    newType = signal<FieldValidatorTypeEnum>(FieldValidatorTypeEnum.Required);
+    newValue = signal<string>('');
+    newMessage = signal<string>(this.buildDefaultMessage(FieldValidatorTypeEnum.Required, ''));
 
     get requiresValue(): boolean {
         return this.newType() !== FieldValidatorTypeEnum.Required && this.newType() !== FieldValidatorTypeEnum.Email;

@@ -5,7 +5,7 @@ import { toCrossFieldValidatorFn } from '@app/presentation/shared/validators/cro
 import { toFieldValidatorFn } from '@app/presentation/shared/validators/field-validator.factory';
 
 @Service()
-export class DynamicFormBuilderServic {
+export class DynamicFormBuilderService {
     buildPageGroups(form: FormModel): FormGroup[] {
         const allFields = form.pages.flatMap((page) => page.fields);
 
