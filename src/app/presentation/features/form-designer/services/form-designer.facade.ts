@@ -2,7 +2,7 @@ import { computed, inject, Service, Signal, signal } from '@angular/core';
 import { CloneFormUseCase } from '@app/application/form/clone-form.use.case';
 import { DeleteFormUseCase } from '@app/application/form/delete-form.use.case';
 import { GetFormByIdUseCase } from '@app/application/form/get-form-by-id.use.case';
-import { GetSubmissionsByFormIdUseCase } from '@app/application/form/get-submissions-by-form-id.use.casse';
+import { GetSubmissionsByFormIdUseCase } from '@app/application/form/get-submissions-by-form-id.use.case';
 import { SubmitFormUseCase } from '@app/application/form/submit-form.use.case';
 import { UpdateFormUseCase } from '@app/application/form/update-form.use.case';
 import { FieldConfigModel, FieldValidatorConfigModel, FormModel, Guid } from '@app/domain';

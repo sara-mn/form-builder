@@ -19,6 +19,7 @@ import { SubmitFormUseCase } from '@application/form/submit-form.use.case';
 import { FormValidationService } from '@domain/form/validation/form-validation.service';
 import { GetSubmissionUseCase } from './form/get-submission.use.case';
 import { GetFormsWithSubmissionCountsUseCase } from './form/get-forms-with-submission-counts.use.case';
+import { GetSubmissionsByFormIdUseCase } from './form/get-submissions-by-form-id.use.case';
 
 export const applicationProviders = [
     {
@@ -99,6 +100,11 @@ export const applicationProviders = [
     {
         provide: GetSubmissionUseCase,
         useFactory: (subRepo: SubmissionRepository) => new GetSubmissionUseCase(subRepo),
+        deps: [SubmissionRepository]
+    },
+    {
+        provide: GetSubmissionsByFormIdUseCase,
+        useFactory: (subRepo: SubmissionRepository) => new GetSubmissionsByFormIdUseCase(subRepo),
         deps: [SubmissionRepository]
     },
     {
