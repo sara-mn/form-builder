@@ -1,0 +1,49 @@
+.field-input {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+    margin-bottom: 1rem;
+
+    label {
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: var(--p-surface-700, #3f3f46);
+    }
+
+    input,
+    textarea,
+    select {
+        padding: 0.5rem 0.75rem;
+        border: 1px solid var(--p-surface-300, #d4d4d8);
+        border-radius: 0.375rem;
+        font-size: 0.9375rem;
+        font-family: inherit;
+
+        &:focus {
+            outline: none;
+            border-color: var(--p-primary-500, #6366f1);
+        }
+    }
+
+    textarea {
+        resize: vertical;
+    }
+}
+
+.field-input__error {
+    color: var(--p-red-600, #dc2626);
+    font-size: 0.8125rem;
+}
+
+.field-input__radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.field-input__radio-option,
+.field-input__checkbox-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}

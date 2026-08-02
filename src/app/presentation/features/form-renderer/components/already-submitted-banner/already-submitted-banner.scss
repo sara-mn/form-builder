@@ -1,0 +1,22 @@
+.already-submitted-banner {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 1.25rem;
+    background-color: var(--p-green-50, #f0fdf4);
+    border: 1px solid var(--p-green-200, #bbf7d0);
+    border-radius: 0.5rem;
+    margin: 2rem 0;
+}
+
+.already-submitted-banner__icon {
+    font-size: 1.5rem;
+    color: var(--p-green-600, #16a34a);
+}
+
+.already-submitted-banner__text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    font-size: 0.875rem;
+}

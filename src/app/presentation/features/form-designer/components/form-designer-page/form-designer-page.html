@@ -1,0 +1,24 @@
+@if (form(); as currentForm) {
+<div class="designer-page">
+    @if (isLocked()) {
+    <app-lock-banner [cloning]="isCloning()" (cloneRequested)="onCloneRequested()" />
+    }
+
+    <div class="designer-page__header">
+        <app-form-metadata-panel [title]="currentForm.title" [description]="currentForm.description" [disabled]="isLocked()" (metadataChanged)="onMetadataChanged($event)" />
+        <button type="button" class="designer-page__save-btn" [disabled]="isLocked() || isSaving()" (click)="onSave()">{{ isSaving() ? 'Saving...' : 'Save' }}</button>
+    </div>
+
+    <div class="designer-page__body">
+        <app-page-sidebar [pages]="currentForm.pages" [selectedPageId]="selectedPageId()" [disabled]="isLocked()" (pageSelected)="onPageSelected($event)" (pageAdded)="onPageAdded()" (pageDeleted)="onPageDeleted($event)" />
+
+        @if (selectedPage; as page) {
+        <app-field-list [fields]="page.fields" [disabled]="isLocked()" (fieldAddRequested)="onFieldAddRequested()" (fieldEditRequested)="onFieldEditRequested($event)" (fieldDeleteRequested)="onFieldDeleteRequested($event)" />
+        }
+    </div>
+
+    <app-field-editor-dialog [isOpen]="isDialogOpen()" [editingField]="editingField()" [nextOrder]="selectedPage?.fields?.length ?? 0" (closed)="onFieldDialogClosed()" (saved)="onFieldSaved($event)" />
+</div>
+} @else {
+<div class="designer-page__loading">Loading form...</div>
+}

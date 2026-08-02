@@ -6,10 +6,13 @@ import { TokenStorageService } from '@app/infrastructure/storage/token-storage.s
 import { StorageGateway } from '@domain/storage.gateway.abstract';
 import { FormRepository } from '@domain/form/abstracts/form.repository.abstract';
 import { FormApiAdapter } from '@app/infrastructure/api/form-api.adapter';
+import { SubmissionApiAdapter } from './api/submission-api.adapter';
+import { SubmissionRepository } from '@app/domain/form/abstracts/submission.repository.abstract';
 
 export const infrastructureProviders = [
-  { provide: AuthGateway, useClass: AuthApiAdapter },
-  { provide: UserRepository, useClass: UserApiAdapter },
-  { provide: StorageGateway, useClass: TokenStorageService },
-  { provide: FormRepository, useClass: FormApiAdapter }
+    { provide: AuthGateway, useClass: AuthApiAdapter },
+    { provide: UserRepository, useClass: UserApiAdapter },
+    { provide: StorageGateway, useClass: TokenStorageService },
+    { provide: FormRepository, useClass: FormApiAdapter },
+    { provide: SubmissionRepository, useClass: SubmissionApiAdapter }
 ];

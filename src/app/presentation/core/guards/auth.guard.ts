@@ -1,14 +1,16 @@
 import { CanActivateFn, Router } from '@angular/router';
 import { inject } from '@angular/core';
 import { AuthState } from '../services/auth-state';
+import { AuthFacade } from '@app/presentation/features/auth/services/auth.facade';
 
-export const authGuard: CanActivateFn = (route, state) => {
+export const authGuard: CanActivateFn = async () => {
     const authState = inject(AuthState);
+    const authFacade = inject(AuthFacade);
     const router = inject(Router);
 
-    if (authState.isAuthenticated()) {
-        return true;
+    if (!authState.sessionRestored()) {
+        await authFacade.restoreSession();
     }
 
-    return router.createUrlTree(['/login']);
+    return authState.isAuthenticated() ? true : router.createUrlTree(['/login']);
 };

@@ -1,0 +1,14 @@
+<div class="field-input">
+    <label>{{ field().label }}</label>
+    <div class="field-input__radio-group">
+        @for (opt of options(); track opt.key) {
+        <div class="field-input__radio-option">
+            <p-radiobutton [inputId]="field().name + '-' + opt.key" [value]="opt.key" [formControl]="control()" [name]="field().name" />
+            <label [for]="field().name + '-' + opt.key">{{ opt.value }}</label>
+        </div>
+        }
+    </div>
+    @if (control().invalid && control().touched) {
+    <span class="field-input__error"> @for (error of control().errors | keyvalue; track error.key) { {{ error.value }} } </span>
+    }
+</div>
