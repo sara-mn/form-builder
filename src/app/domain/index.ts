@@ -28,6 +28,7 @@ export * from './form/models/validation-result.model';
 
 //abstracts
 export * from './auth/abstracts/auth.gateway.abstract';
+export * from './storage.gateway.abstract';
 
 export * from './user/abstracts/user.repository.abstract';
 
