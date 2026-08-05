@@ -1,5 +1,5 @@
 import { Component, input, output, signal } from '@angular/core';
-import { FieldValidatorConfigModel, FieldValidatorTypeEnum, Guid } from '@app/domain';
+import { FieldValidatorConfigModel, FieldValidatorTypeEnum, Guid, isValidNumericString, isValidRegexPattern } from '@app/domain';
 
 @Component({
     selector: 'app-field-validator-editor',
@@ -27,6 +27,7 @@ export class FieldValidatorEditor {
     newType = signal<FieldValidatorTypeEnum>(FieldValidatorTypeEnum.Required);
     newValue = signal<string>('');
     newMessage = signal<string>(this.buildDefaultMessage(FieldValidatorTypeEnum.Required, ''));
+    valueError = signal<string | null>(null);
 
     get requiresValue(): boolean {
         return this.newType() !== FieldValidatorTypeEnum.Required && this.newType() !== FieldValidatorTypeEnum.Email;
@@ -36,11 +37,13 @@ export class FieldValidatorEditor {
         const newType = type as FieldValidatorTypeEnum;
         this.newType.set(newType);
         this.newMessage.set(this.buildDefaultMessage(newType, this.newValue()));
+        this.validateValue(newType, this.newValue());
     }
 
     onValueChange(value: string): void {
         this.newValue.set(value);
         this.newMessage.set(this.buildDefaultMessage(this.newType(), value));
+        this.validateValue(this.newType(), value);
     }
 
     onMessageChange(message: string): void {
@@ -49,6 +52,7 @@ export class FieldValidatorEditor {
 
     onAdd(): void {
         if (!this.newMessage().trim()) return;
+        if (this.valueError()) return;
 
         const validator: FieldValidatorConfigModel = {
             id: crypto.randomUUID(),
@@ -61,6 +65,7 @@ export class FieldValidatorEditor {
         this.newType.set(FieldValidatorTypeEnum.Required);
         this.newValue.set('');
         this.newMessage.set(this.buildDefaultMessage(FieldValidatorTypeEnum.Required, ''));
+        this.valueError.set(null);
     }
 
     onRemove(validatorId: Guid): void {
@@ -69,5 +74,17 @@ export class FieldValidatorEditor {
 
     private buildDefaultMessage(type: FieldValidatorTypeEnum, value: string): string {
         return this.defaultMessageBuilders[type](value);
+    }
+
+    private validateValue(type: FieldValidatorTypeEnum, value: string): void {
+        if (type === FieldValidatorTypeEnum.Pattern) {
+            this.valueError.set(!isValidRegexPattern(value) ? 'Invalid regular expression' : null);
+            return;
+        }
+        if (this.numericTypes.has(type)) {
+            this.valueError.set(value && !isValidNumericString(value) ? 'Must be a valid number' : null);
+            return;
+        }
+        this.valueError.set(null);
     }
 }

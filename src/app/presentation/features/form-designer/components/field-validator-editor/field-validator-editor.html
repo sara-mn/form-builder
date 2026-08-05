@@ -25,10 +25,12 @@
 
         @if (requiresValue) {
         <input type="text" placeholder="Value" [value]="newValue()" (input)="onValueChange($any($event.target).value)" />
+        } @if (valueError()) {
+        <span class="validator-editor__error">{{ valueError() }}</span>
         }
 
         <input type="text" placeholder="Error message" [value]="newMessage()" (input)="onMessageChange($any($event.target).value)" />
 
-        <button type="button" (click)="onAdd()">Add</button>
+        <button type="button" (click)="onAdd()" [disabled]="!!valueError()">Add</button>
     </div>
 </div>
