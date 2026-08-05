@@ -14,6 +14,15 @@ export function checkMaxLength(value: unknown, max: number): boolean {
     return value.length <= max;
 }
 
+export function isValidRegexPattern(pattern: string): boolean {
+    try {
+        new RegExp(pattern);
+        return true;
+    } catch {
+        return false;
+    }
+}
+
 export function checkPattern(value: unknown, pattern: string): boolean {
     if (typeof value !== 'string') return true;
     return new RegExp(pattern).test(value);
