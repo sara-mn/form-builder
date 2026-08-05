@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { checkRequired, checkMinLength, checkMaxLength, checkPattern, checkMinValue, checkMaxValue, checkEmail, isValidRegexPattern } from './field-validators';
+import { checkRequired, checkMinLength, checkMaxLength, checkPattern, checkMinValue, checkMaxValue, checkEmail, isValidRegexPattern, isValidNumericString } from './field-validators';
 
 describe('checkRequired', () => {
     it('should return false for null', () => {
@@ -170,5 +170,40 @@ describe('isValidRegexPattern', () => {
     it('should return true for an empty string (technically a valid regex)', () => {
         // یه edge case غیر intuitive: new RegExp('') در جاوااسکریپت معتبر است
         expect(isValidRegexPattern('')).toBe(true);
+    });
+
+    describe('isValidNumericString', () => {
+        it('should return true for a valid integer string', () => {
+            expect(isValidNumericString('42')).toBe(true);
+        });
+
+        it('should return true for a valid decimal string', () => {
+            expect(isValidNumericString('3.14')).toBe(true);
+        });
+
+        it('should return true for a negative number string', () => {
+            expect(isValidNumericString('-5')).toBe(true);
+        });
+
+        it('should return false for a non-numeric string', () => {
+            expect(isValidNumericString('abc')).toBe(false);
+        });
+
+        it('should return false for empty string', () => {
+            expect(isValidNumericString('')).toBe(false);
+        });
+
+        it('should return false for whitespace-only string', () => {
+            expect(isValidNumericString('   ')).toBe(false);
+        });
+
+        it('should return false for a mixed alphanumeric string', () => {
+            expect(isValidNumericString('12abc')).toBe(false);
+        });
+
+        it('should return true for numeric string with leading/trailing whitespace', () => {
+            // این رفتار Number() هست: خودش trim می‌کنه؛ صراحتاً مستندش می‌کنیم
+            expect(isValidNumericString('  42  ')).toBe(true);
+        });
     });
 });
