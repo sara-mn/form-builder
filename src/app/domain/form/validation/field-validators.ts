@@ -14,15 +14,6 @@ export function checkMaxLength(value: unknown, max: number): boolean {
     return value.length <= max;
 }
 
-export function isValidRegexPattern(pattern: string): boolean {
-    try {
-        new RegExp(pattern);
-        return true;
-    } catch {
-        return false;
-    }
-}
-
 export function checkPattern(value: unknown, pattern: string): boolean {
     if (typeof value !== 'string') return true;
     return new RegExp(pattern).test(value);
@@ -41,4 +32,18 @@ export function checkMaxValue(value: unknown, max: number): boolean {
 export function checkEmail(value: unknown): boolean {
     if (typeof value !== 'string') return true;
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+}
+
+export function isValidRegexPattern(pattern: string): boolean {
+    try {
+        new RegExp(pattern);
+        return true;
+    } catch {
+        return false;
+    }
+}
+
+export function isValidNumericString(value: string): boolean {
+    if (value.trim() === '') return false;
+    return !Number.isNaN(Number(value));
 }
