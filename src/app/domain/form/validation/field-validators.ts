@@ -1,7 +1,7 @@
+import { isFilled } from './shared';
+
 export function checkRequired(value: unknown): boolean {
-    if (value === null || value === undefined) return false;
-    if (typeof value === 'string') return value.trim().length > 0;
-    return true;
+    return isFilled(value);
 }
 
 export function checkMinLength(value: unknown, min: number): boolean {
