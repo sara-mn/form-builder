@@ -84,8 +84,8 @@ export const applicationProviders = [
     },
     {
         provide: DeleteFormUseCase,
-        useFactory: (formRepo: FormRepository) => new DeleteFormUseCase(formRepo),
-        deps: [FormRepository]
+        useFactory: (formRepo: FormRepository, subRepo: SubmissionRepository) => new DeleteFormUseCase(formRepo, subRepo),
+        deps: [FormRepository, SubmissionRepository]
     },
     {
         provide: CloneFormUseCase,
