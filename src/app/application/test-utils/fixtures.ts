@@ -12,6 +12,7 @@ import {
     ValidationResult,
     FieldValidationError
 } from '@app/domain';
+import { User, LoginResponse, RegisterRequest, UserProfile, UserRoleEnum } from '@app/domain';
 
 export function createFakeForm(overrides: Partial<FormModel> = {}): FormModel {
     return {
@@ -95,6 +96,44 @@ export function createFakeValidationResult(overrides: Partial<ValidationResult> 
     return {
         isValid: true,
         errors: [],
+        ...overrides
+    };
+}
+
+export function createFakeUserProfile(overrides: Partial<UserProfile> = {}): UserProfile {
+    return {
+        avatarUrl: '',
+        bio: '',
+        ...overrides
+    };
+}
+
+export function createFakeUser(overrides: Partial<User> = {}): User {
+    return {
+        id: 'user-1',
+        email: 'test@example.com',
+        name: 'Test User',
+        roles: [UserRoleEnum.Viewer],
+        profile: createFakeUserProfile(),
+        ...overrides
+    };
+}
+
+export function createFakeLoginResponse(overrides: Partial<LoginResponse> = {}): LoginResponse {
+    return {
+        accessToken: 'fake-access-token',
+        expiresIn: 3600,
+        user: createFakeUser(),
+        ...overrides
+    };
+}
+
+export function createFakeRegisterRequest(overrides: Partial<RegisterRequest> = {}): RegisterRequest {
+    return {
+        email: 'newuser@example.com',
+        mobile: '09120000000',
+        password: 'SecurePass123!',
+        confirmPassword: 'SecurePass123!',
         ...overrides
     };
 }

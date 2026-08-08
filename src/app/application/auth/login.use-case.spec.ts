@@ -1,46 +1,30 @@
-import { AuthGateway, LoginRequest, LoginResponse, StorageGateway, User, UserRoleEnum } from '@app/domain';
+import { describe, it, expect, beforeEach } from 'vitest';
 import { LoginUseCase } from './login.use-case';
+import { createMockAuthGateway, createMockStorageGateway, createFakeUser, createFakeLoginResponse } from '../test-utils';
+import { LoginRequest, UserRoleEnum } from '@app/domain';
 
 describe('LoginUseCase', () => {
-    let useCase: LoginUseCase;
-    let authGatewayMock: AuthGateway;
-    let storageGatewayMock: StorageGateway;
+    function setup() {
+        const authGateway = createMockAuthGateway();
+        const storageGateway = createMockStorageGateway();
+        const useCase = new LoginUseCase(authGateway, storageGateway);
+        return { useCase, authGateway, storageGateway };
+    }
 
-    const mockUser: User = {
+    const mockUser = createFakeUser({
         id: 'user-guid-1',
         email: 'admin@example.com',
         name: 'Admin User',
-        roles: [UserRoleEnum.Admin],
-        profile: {
-            avatarUrl: 'https://example.com/avatar.png',
-            bio: 'Test bio'
-        }
-    };
-
-    const mockLoginResponse: LoginResponse = {
+        roles: [UserRoleEnum.Admin]
+    });
+    const mockLoginResponse = createFakeLoginResponse({
         accessToken: 'mock-access-token',
-        expiresIn: 3600,
         user: mockUser
-    };
-
-    beforeEach(() => {
-        authGatewayMock = {
-            login: vi.fn().mockResolvedValue(mockLoginResponse),
-            refreshToken: vi.fn(),
-            logout: vi.fn()
-        };
-
-        storageGatewayMock = {
-            setItem: vi.fn(),
-            getItem: vi.fn(),
-            removeItem: vi.fn(),
-            clear: vi.fn()
-        };
-
-        useCase = new LoginUseCase(authGatewayMock, storageGatewayMock);
     });
 
-    it('should log in successfully and return the user', async () => {
+    it('logs in successfully and returns the user', async () => {
+        const { useCase, authGateway } = setup();
+        authGateway.login.mockResolvedValue(mockLoginResponse);
         const payload: LoginRequest = { username: 'admin@example.com', password: 'admin123' };
 
         const result = await useCase.execute(payload);
@@ -48,41 +32,48 @@ describe('LoginUseCase', () => {
         expect(result).toEqual(mockUser);
     });
 
-    it('should call authGateway.login with the exact payload provided', async () => {
+    it('calls authGateway.login with the exact payload provided', async () => {
+        const { useCase, authGateway } = setup();
+        authGateway.login.mockResolvedValue(mockLoginResponse);
         const payload: LoginRequest = { username: 'admin@example.com', password: 'admin123' };
 
         await useCase.execute(payload);
 
-        expect(authGatewayMock.login).toHaveBeenCalledTimes(1);
-        expect(authGatewayMock.login).toHaveBeenCalledWith(payload);
+        expect(authGateway.login).toHaveBeenCalledTimes(1);
+        expect(authGateway.login).toHaveBeenCalledWith(payload);
     });
 
-    it('should store the access token via storageGateway.setItem after a successful login', async () => {
+    it('stores the access token via storageGateway.setItem after a successful login', async () => {
+        const { useCase, authGateway, storageGateway } = setup();
+        authGateway.login.mockResolvedValue(mockLoginResponse);
         const payload: LoginRequest = { username: 'admin@example.com', password: 'admin123' };
 
         await useCase.execute(payload);
 
-        expect(storageGatewayMock.setItem).toHaveBeenCalledWith('token', mockLoginResponse.accessToken);
+        expect(storageGateway.setItem).toHaveBeenCalledWith('token', mockLoginResponse.accessToken);
     });
 
-    it('should throw and not call authGateway.login when username is missing', async () => {
+    it('throws and does not call authGateway.login when username is missing', async () => {
+        const { useCase, authGateway } = setup();
         const payload: LoginRequest = { username: '', password: 'admin123' };
 
         await expect(useCase.execute(payload)).rejects.toThrow('Username and password must be provided');
-        expect(authGatewayMock.login).not.toHaveBeenCalled();
+        expect(authGateway.login).not.toHaveBeenCalled();
     });
 
-    it('should throw and not call authGateway.login when password is missing', async () => {
+    it('throws and does not call authGateway.login when password is missing', async () => {
+        const { useCase, authGateway } = setup();
         const payload: LoginRequest = { username: 'admin@example.com', password: '' };
 
         await expect(useCase.execute(payload)).rejects.toThrow('Username and password must be provided');
-        expect(authGatewayMock.login).not.toHaveBeenCalled();
+        expect(authGateway.login).not.toHaveBeenCalled();
     });
 
-    it('should not call storageGateway.setItem when validation fails', async () => {
+    it('does not call storageGateway.setItem when validation fails', async () => {
+        const { useCase, storageGateway } = setup();
         const payload: LoginRequest = { username: '', password: '' };
 
         await expect(useCase.execute(payload)).rejects.toThrow();
-        expect(storageGatewayMock.setItem).not.toHaveBeenCalled();
+        expect(storageGateway.setItem).not.toHaveBeenCalled();
     });
 });
