@@ -43,7 +43,8 @@ export function isValidRegexPattern(pattern: string): boolean {
     }
 }
 
-export function isValidNumericString(value: string): boolean {
-    if (value.trim() === '') return false;
-    return !Number.isNaN(Number(value));
+export function isValidNumericString(value: string | number): boolean {
+    const strValue = String(value).trim();
+    if (strValue === '') return false;
+    return !Number.isNaN(Number(strValue));
 }

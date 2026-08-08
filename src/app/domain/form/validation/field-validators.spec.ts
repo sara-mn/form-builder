@@ -177,6 +177,10 @@ describe('isValidRegexPattern', () => {
             expect(isValidNumericString('42')).toBe(true);
         });
 
+        it('should return true for a numeric value (not string)', () => {
+            expect(isValidNumericString(42)).toBe(true);
+        });
+
         it('should return true for a valid decimal string', () => {
             expect(isValidNumericString('3.14')).toBe(true);
         });
