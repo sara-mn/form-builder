@@ -1,5 +1,6 @@
 import { Component, input, output, signal } from '@angular/core';
 import { FieldValidatorConfigModel, FieldValidatorTypeEnum, Guid, isValidNumericString, isValidRegexPattern } from '@app/domain';
+import { getValidatorConfigError, numericValidatorTypes } from '@app/domain/form/validation/validator-config-validation';
 
 @Component({
     selector: 'app-field-validator-editor',
@@ -14,7 +15,6 @@ export class FieldValidatorEditor {
     validatorRemoved = output<Guid>();
 
     readonly validatorTypes = Object.values(FieldValidatorTypeEnum);
-    private readonly numericTypes = new Set<FieldValidatorTypeEnum>([FieldValidatorTypeEnum.MinLength, FieldValidatorTypeEnum.MaxLength, FieldValidatorTypeEnum.MinValue, FieldValidatorTypeEnum.MaxValue]);
     private readonly defaultMessageBuilders: Record<FieldValidatorTypeEnum, (value: string) => string> = {
         [FieldValidatorTypeEnum.Required]: () => 'This field is required',
         [FieldValidatorTypeEnum.MinLength]: (value) => `Minimum length is ${value}`,
@@ -37,13 +37,13 @@ export class FieldValidatorEditor {
         const newType = type as FieldValidatorTypeEnum;
         this.newType.set(newType);
         this.newMessage.set(this.buildDefaultMessage(newType, this.newValue()));
-        this.validateValue(newType, this.newValue());
+        this.valueError.set(getValidatorConfigError(newType, this.newValue()));
     }
 
     onValueChange(value: string): void {
         this.newValue.set(value);
         this.newMessage.set(this.buildDefaultMessage(this.newType(), value));
-        this.validateValue(this.newType(), value);
+        this.valueError.set(getValidatorConfigError(this.newType(), value));
     }
 
     onMessageChange(message: string): void {
@@ -58,7 +58,7 @@ export class FieldValidatorEditor {
             id: crypto.randomUUID(),
             type: this.newType(),
             message: this.newMessage(),
-            ...(this.requiresValue ? { value: this.numericTypes.has(this.newType()) ? Number(this.newValue()) : this.newValue() } : {})
+            ...(this.requiresValue ? { value: numericValidatorTypes.has(this.newType()) ? Number(this.newValue()) : this.newValue() } : {})
         };
 
         this.validatorAdded.emit(validator);
@@ -74,17 +74,5 @@ export class FieldValidatorEditor {
 
     private buildDefaultMessage(type: FieldValidatorTypeEnum, value: string): string {
         return this.defaultMessageBuilders[type](value);
-    }
-
-    private validateValue(type: FieldValidatorTypeEnum, value: string): void {
-        if (type === FieldValidatorTypeEnum.Pattern) {
-            this.valueError.set(!isValidRegexPattern(value) ? 'Invalid regular expression' : null);
-            return;
-        }
-        if (this.numericTypes.has(type)) {
-            this.valueError.set(value && !isValidNumericString(value) ? 'Must be a valid number' : null);
-            return;
-        }
-        this.valueError.set(null);
     }
 }
