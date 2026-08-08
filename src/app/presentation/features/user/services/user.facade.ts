@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { RegisterUseCase } from '@application/user/register.use.case';
+import { RegisterUseCase } from '@application/user/register.use-case';
 import { RegisterRequest } from '@app/domain';
 
 @Injectable({

@@ -1,5 +1,5 @@
 import { AuthGateway, LoginRequest, LoginResponse, StorageGateway, User, UserRoleEnum } from '@app/domain';
-import { LoginUseCase } from './login.use.case';
+import { LoginUseCase } from './login.use-case';
 
 describe('LoginUseCase', () => {
     let useCase: LoginUseCase;
