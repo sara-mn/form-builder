@@ -2,13 +2,11 @@ import { LoginUseCase } from '@application/auth/login.use-case';
 import { AuthGateway, UserRepository, FormRepository, SubmissionRepository } from '@app/domain';
 import { StorageGateway } from '@domain/storage.gateway.abstract';
 import { LogoutUseCase } from '@application/auth/logout.use-case';
-import { UpdateProfileUseCase } from '@app/application/auth/update-profile.use-case';
+import { UpdateProfileUseCase } from '@app/application/user/update-profile.use-case';
 import { ResetPasswordUseCase } from '@app/application/auth/reset-password.use-case';
 import { ResetPasswordConfirmUseCase } from '@app/application/auth/reset-password-confirm.use-case';
 import { RefreshTokenUseCase } from '@application/auth/refresh-token.use-case';
-import { ChangePasswordUseCase } from '@app/application/auth/change-password.use-case';
-import { RegisterUseCase as UserRegisterUseCase } from '@application/user/register.use-case';
-
+import { ChangePasswordUseCase } from '@app/application/user/change-password.use-case';
 import { GetAllFormsUseCase } from '@application/form/get-all-forms.use-case';
 import { GetFormByIdUseCase } from '@application/form/get-form-by-id.use-case';
 import { CreateFormUseCase } from '@application/form/create-form.use-case';
@@ -20,6 +18,7 @@ import { FormValidationService } from '@domain/form/validation/form-validation.s
 import { GetSubmissionUseCase } from './form/get-submission.use-case';
 import { GetFormsWithSubmissionCountsUseCase } from './form/get-forms-with-submission-counts.use-case';
 import { GetSubmissionsByFormIdUseCase } from './form/get-submissions-by-form-id.use-case';
+import { RegisterUseCase } from './auth/register.use-case';
 
 export const applicationProviders = [
     {
@@ -58,8 +57,8 @@ export const applicationProviders = [
         deps: [AuthGateway, StorageGateway]
     },
     {
-        provide: UserRegisterUseCase,
-        useFactory: (userService: UserRepository) => new UserRegisterUseCase(userService),
+        provide: RegisterUseCase,
+        useFactory: (userService: UserRepository) => new RegisterUseCase(userService),
         deps: [UserRepository]
     },
     {

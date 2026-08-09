@@ -1,16 +1,14 @@
 import { Injectable } from '@angular/core';
-import { RegisterUseCase } from '@application/user/register.use-case';
+import { RegisterUseCase } from '@app/application/auth/register.use-case';
 import { RegisterRequest } from '@app/domain';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class UserFacade {
+    constructor(private registerUseCase: RegisterUseCase) {}
 
-  constructor(private registerUseCase: RegisterUseCase) {
-  }
-
-  register(data: RegisterRequest): Promise<boolean> {
-    return this.registerUseCase.execute(data);
-  }
+    register(data: RegisterRequest): Promise<boolean> {
+        return this.registerUseCase.execute(data);
+    }
 }
