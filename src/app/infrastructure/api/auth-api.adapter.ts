@@ -3,7 +3,7 @@ import { AuthGateway } from '@domain/auth/abstracts/auth.gateway.abstract';
 import { LoginRequest } from '@app/domain/auth/models/login-request.model';
 import { LoginResponse } from '@app/domain/auth/models/login-response.model';
 import { User } from '@app/domain/user/models/user.model';
-import { environment } from '@env/environment.development';
+import { environment } from '@env/environment';
 import { HttpClient } from '@angular/common/http';
 import { lastValueFrom, Observable, map } from 'rxjs';
 
