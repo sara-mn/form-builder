@@ -92,7 +92,8 @@
           "options": {
            "runner": "vitest", 
            "tsConfig": "tsconfig.spec.json",
-           "browsers": ["chromium"]
+           "browsers": ["chromium"],
+               "buildTarget": "::development"
           }
         },
         "deploy": {
