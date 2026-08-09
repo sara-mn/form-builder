@@ -46,19 +46,6 @@ export class AuthApiAdapter implements AuthGateway {
         };
     }
 
-    private toRefreshedResponse(accessToken: string): LoginResponse {
-        const payload = this.decodeToken(accessToken);
-        return {
-            accessToken,
-            expiresIn: this.getExpiresInFromToken(accessToken),
-            user: {
-                id: payload.sub,
-                email: payload.email,
-                roles: payload.roles
-            } as User
-        };
-    }
-
     private getExpiresInFromToken(token: string): number {
         try {
             const payload = this.decodeToken(token);
