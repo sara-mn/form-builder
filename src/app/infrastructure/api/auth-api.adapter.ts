@@ -40,7 +40,12 @@ export class AuthApiAdapter implements AuthGateway {
 
     register(payload: RegisterRequest): Promise<void> {
         const name = [payload.firstName, payload.lastName].filter(Boolean).join(' ') || payload.email;
-        const body = { email: payload.email, password: payload.password, name };
+        const body = {
+            email: payload.email,
+            password: payload.password,
+            mobile: payload.mobile,
+            name
+        };
         const $res: Observable<void> = this.httpClient.post<RegisterServerResponse>(`${this.authUrl}/register`, body).pipe(map(() => undefined));
         return lastValueFrom($res);
     }
