@@ -1,10 +1,9 @@
-import { UserRepository, RegisterRequest } from '@app/domain';
+import { RegisterRequest, AuthGateway } from '@app/domain';
 
 export class RegisterUseCase {
-  constructor(private userService: UserRepository) {
-  }
+    constructor(private authService: AuthGateway) {}
 
-  async execute(data: RegisterRequest): Promise<boolean> {
-    return this.userService.register(data);
-  }
+    async execute(data: RegisterRequest): Promise<void> {
+        return this.authService.register(data);
+    }
 }

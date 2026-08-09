@@ -1,28 +1,25 @@
 import { describe, it, expect } from 'vitest';
 import { RegisterUseCase } from './register.use-case';
-import { createMockUserRepository, createFakeRegisterRequest } from '../test-utils';
+import { createFakeRegisterRequest, createMockAuthGateway } from '../test-utils';
 
 describe('RegisterUseCase', () => {
-    it('delegates registration to the user repository and returns the result', async () => {
-        const userRepository = createMockUserRepository();
-        const useCase = new RegisterUseCase(userRepository);
+    it('delegates registration to the auth gateway', async () => {
+        const authGateway = createMockAuthGateway();
+        const useCase = new RegisterUseCase(authGateway);
         const registerData = createFakeRegisterRequest();
-        userRepository.register.mockResolvedValue(true);
+        authGateway.register.mockResolvedValue(undefined);
 
-        const result = await useCase.execute(registerData);
+        await useCase.execute(registerData);
 
-        expect(userRepository.register).toHaveBeenCalledWith(registerData);
-        expect(result).toBe(true);
+        expect(authGateway.register).toHaveBeenCalledWith(registerData);
     });
 
-    it('returns false when registration fails', async () => {
-        const userRepository = createMockUserRepository();
-        const useCase = new RegisterUseCase(userRepository);
+    it('propagates the error when the auth gateway rejects (e.g. duplicate email)', async () => {
+        const authGateway = createMockAuthGateway();
+        const useCase = new RegisterUseCase(authGateway);
         const registerData = createFakeRegisterRequest({ email: 'taken@example.com' });
-        userRepository.register.mockResolvedValue(false);
+        authGateway.register.mockRejectedValue(new Error('Email already exists'));
 
-        const result = await useCase.execute(registerData);
-
-        expect(result).toBe(false);
+        await expect(useCase.execute(registerData)).rejects.toThrow('Email already exists');
     });
 });
