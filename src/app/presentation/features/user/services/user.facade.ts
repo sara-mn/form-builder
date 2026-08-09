@@ -7,8 +7,8 @@ import { RegisterRequest } from '@app/domain';
 })
 export class UserFacade {
     constructor(private registerUseCase: RegisterUseCase) {}
-
-    register(data: RegisterRequest): Promise<boolean> {
+    // user.facade.ts
+    register(data: RegisterRequest): Promise<void> {
         return this.registerUseCase.execute(data);
     }
 }
