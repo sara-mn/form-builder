@@ -16,14 +16,14 @@
     </div>
 
     <div class="flex items-center gap-4">
-        <button pButton type="button" [rounded]="true" [text]="true" severity="secondary" (click)="shellState.toggleDarkMode()">
+        <button pButton type="button" [rounded]="true" [text]="true" severity="secondary" (click)="shellState.toggleDarkMode()" aria-label="Toggle dark mode">
             <svg [pIcon]="shellState.darkTheme() ? 'sun' : 'moon'" class="w-4 h-4"></svg>
         </button>
 
         <div class="w-px h-5 bg-surface-200 dark:bg-surface-700"></div>
 
         @if (authState.currentUser(); as user) {
-        <div class="flex items-center gap-2">
+        <div class="flex items-center gap-2" data-testid="user-info">
             <div class="w-8 h-8 rounded-full bg-primary/15 flex items-center justify-center text-xs font-medium text-primary">{{ user.name?.charAt(0) }}</div>
             <div class="hidden sm:flex flex-col leading-tight">
                 <span class="text-sm font-medium text-surface-900 dark:text-surface-0">{{ user.name }}</span>
@@ -32,6 +32,6 @@
         </div>
         }
 
-        <button pButton type="button" severity="secondary" [text]="true" (click)="logout()">Log out</button>
+        <button pButton type="button" severity="secondary" [text]="true" (click)="logout()" aria-label="Log out">Log out</button>
     </div>
 </div>

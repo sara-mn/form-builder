@@ -36,7 +36,15 @@ export class FormValidationService {
         for (const validator of validators) {
             const targetField = allFields.find((f) => f.id === validator.targetFieldId);
             const dependsOnField = allFields.find((f) => f.id === validator.dependsOnFieldId);
-            if (!targetField || !dependsOnField) continue;
+
+            if (!targetField || !dependsOnField) {
+                errors.push({
+                    fieldId: validator.targetFieldId,
+                    validatorType: validator.type,
+                    message: 'Form configuration error: validator references a field that no longer exists'
+                });
+                continue;
+            }
 
             const targetValue = answers[targetField.name];
             const dependsOnValue = answers[dependsOnField.name];

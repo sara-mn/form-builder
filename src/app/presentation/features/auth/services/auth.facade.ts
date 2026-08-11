@@ -1,10 +1,10 @@
 import { Injectable, signal } from '@angular/core';
-import { RefreshTokenUseCase } from '@app/application/auth/refresh-token.use.case';
+import { RefreshTokenUseCase } from '@app/application/auth/refresh-token.use-case';
 import { LoginRequest, User } from '@app/domain';
 import { StorageGateway } from '@app/domain/storage.gateway.abstract';
 import { AuthState } from '@app/presentation/core/services/auth-state';
-import { LoginUseCase } from '@application/auth/login.use.case';
-import { LogoutUseCase } from '@application/auth/logout.use.case';
+import { LoginUseCase } from '@application/auth/login.use-case';
+import { LogoutUseCase } from '@application/auth/logout.use-case';
 
 @Injectable({
     providedIn: 'root'

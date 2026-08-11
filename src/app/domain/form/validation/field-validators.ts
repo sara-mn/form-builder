@@ -1,7 +1,7 @@
+import { isFilled } from './shared';
+
 export function checkRequired(value: unknown): boolean {
-    if (value === null || value === undefined) return false;
-    if (typeof value === 'string') return value.trim().length > 0;
-    return true;
+    return isFilled(value);
 }
 
 export function checkMinLength(value: unknown, min: number): boolean {
@@ -32,4 +32,19 @@ export function checkMaxValue(value: unknown, max: number): boolean {
 export function checkEmail(value: unknown): boolean {
     if (typeof value !== 'string') return true;
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+}
+
+export function isValidRegexPattern(pattern: string): boolean {
+    try {
+        new RegExp(pattern);
+        return true;
+    } catch {
+        return false;
+    }
+}
+
+export function isValidNumericString(value: string | number): boolean {
+    const strValue = String(value).trim();
+    if (strValue === '') return false;
+    return !Number.isNaN(Number(strValue));
 }
