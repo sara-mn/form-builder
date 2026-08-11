@@ -39,8 +39,8 @@ describe('NavItem', () => {
     it('should render a link (not a toggle button) for a leaf item', async () => {
         await setup(createFakeNavItemModel({ label: 'Dashboard' }));
 
-        const link = fixture.nativeElement.querySelector('a[aria-label="Dashboard"]');
-        const button = fixture.nativeElement.querySelector('button');
+        const link = fixture.nativeElement.querySelector(':scope > a[aria-label="Dashboard"]');
+        const button = fixture.nativeElement.querySelector(':scope > button');
 
         expect(link).toBeTruthy();
         expect(button).toBeFalsy();
@@ -53,8 +53,8 @@ describe('NavItem', () => {
         });
         await setup(parent);
 
-        const link = fixture.nativeElement.querySelector('a');
-        const button = fixture.nativeElement.querySelector('button[aria-label="Toggle Settings submenu"]');
+        const link = fixture.nativeElement.querySelector(':scope > a');
+        const button = fixture.nativeElement.querySelector(':scope > button[aria-label="Toggle Settings submenu"]');
 
         expect(button).toBeTruthy();
         expect(link).toBeFalsy();
@@ -67,7 +67,7 @@ describe('NavItem', () => {
         });
         await setup(parent);
 
-        const button: HTMLButtonElement = fixture.nativeElement.querySelector('button[aria-label="Toggle Settings submenu"]');
+        const button: HTMLButtonElement = fixture.nativeElement.querySelector(':scope > button[aria-label="Toggle Settings submenu"]');
         expect(button.getAttribute('aria-expanded')).toBe('false');
     });
 
@@ -78,7 +78,7 @@ describe('NavItem', () => {
         });
         await setup(parent);
 
-        const button: HTMLButtonElement = fixture.nativeElement.querySelector('button[aria-label="Toggle Settings submenu"]');
+        const button: HTMLButtonElement = fixture.nativeElement.querySelector(':scope > button[aria-label="Toggle Settings submenu"]');
         button.click();
         fixture.detectChanges();
 
@@ -92,7 +92,7 @@ describe('NavItem', () => {
         });
         await setup(parent);
 
-        const button: HTMLButtonElement = fixture.nativeElement.querySelector('button[aria-label="Toggle Settings submenu"]');
+        const button: HTMLButtonElement = fixture.nativeElement.querySelector(':scope > button[aria-label="Toggle Settings submenu"]');
         button.click();
         fixture.detectChanges();
         button.click();
@@ -107,7 +107,7 @@ describe('NavItem', () => {
         });
         await setup(parent);
 
-        const nestedItems = fixture.nativeElement.querySelectorAll('app-nav-item');
+        const nestedItems = fixture.nativeElement.querySelectorAll('li > app-nav-item');
         expect(nestedItems.length).toBe(2);
     });
 
@@ -115,7 +115,7 @@ describe('NavItem', () => {
         const parent = createFakeNavItemModel({ label: 'Empty', items: [] });
         await setup(parent);
 
-        const button = fixture.nativeElement.querySelector('button[aria-label="Toggle Empty submenu"]');
+        const button = fixture.nativeElement.querySelector(':scope > button[aria-label="Toggle Empty submenu"]');
         expect(button).toBeTruthy(); // potential UX bug — see discussion above
     });
 
