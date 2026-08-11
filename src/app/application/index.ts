@@ -58,8 +58,8 @@ export const applicationProviders = [
     },
     {
         provide: RegisterUseCase,
-        useFactory: (userService: UserRepository) => new RegisterUseCase(userService),
-        deps: [UserRepository]
+        useFactory: (authGateway: AuthGateway) => new RegisterUseCase(authGateway),
+        deps: [AuthGateway]
     },
     {
         provide: GetAllFormsUseCase,

@@ -8,12 +8,16 @@ import { LoginFormService } from '@features/auth/login/login-form.service';
 import { LoginFormAdapter } from '@features/auth/login/login-form.adapter';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
-import { PasswordModule } from 'primeng/password';
 import { FieldsetModule } from 'primeng/fieldset';
+import { InputPasswordModule } from 'primeng/inputpassword';
+import { InputIconModule } from 'primeng/inputicon';
+import { IconFieldModule } from 'primeng/iconfield';
+import { Eye } from '@primeicons/angular/eye';
+import { EyeSlash } from '@primeicons/angular/eye-slash';
 
 @Component({
     selector: 'app-login',
-    imports: [ReactiveFormsModule, ButtonModule, InputTextModule, PasswordModule, FieldsetModule],
+    imports: [ReactiveFormsModule, ButtonModule, InputTextModule, InputPasswordModule, FieldsetModule, InputIconModule, IconFieldModule, Eye, EyeSlash],
     templateUrl: './login.component.html',
     standalone: true,
     changeDetection: ChangeDetectionStrategy.Eager,
@@ -21,12 +25,13 @@ import { FieldsetModule } from 'primeng/fieldset';
 })
 export class LoginComponent implements OnInit {
     form!: FormGroup<FormControls<LoginFormModel>>;
+    mask: boolean = true;
+
     constructor(
         private loginFormService: LoginFormService,
         private authFacade: AuthFacade,
         private router: Router
     ) {}
-
     ngOnInit(): void {
         this.form = this.loginFormService.createForm();
     }
