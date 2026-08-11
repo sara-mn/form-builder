@@ -1,0 +1,47 @@
+<div class="flex align-items-center justify-content-start">
+    <p-fieldset legend="Register">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col" data-testid="register-form">
+            <div class="card flex flex-col gap-4">
+                <div class="flex flex-col gap-2">
+                    <label for="email">Email: </label>
+                    <input id="email" type="email" pInputText formControlName="email" autocomplete="username" data-testid="register-email-input" />
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label for="mobile">Mobile: </label>
+                    <input id="mobile" type="tel" pInputText formControlName="mobile" autocomplete="tel" data-testid="register-mobile-input" />
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label for="firstName">First name: </label>
+                    <input id="firstName" type="text" pInputText formControlName="firstName" autocomplete="given-name" data-testid="register-first-name-input" />
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label for="lastName">Last name: </label>
+                    <input id="lastName" type="text" pInputText formControlName="lastName" autocomplete="family-name" data-testid="register-last-name-input" />
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label for="password">Password: </label>
+                    <p-iconfield>
+                        <input pInputPassword inputId="password" id="password" formControlName="password" autocomplete="new-password" [(mask)]="mask" placeholder="Password" data-testid="register-password-input" />
+                        <p-inputicon (click)="mask = !mask" (keydown.enter)="mask = !mask" tabindex="0" role="button" [attr.aria-label]="mask ? 'Show password' : 'Hide password'" style="cursor: pointer" data-testid="register-password-toggle">
+                            @if (mask) {
+                            <svg data-p-icon="eye"></svg>
+                            } @else {
+                            <svg data-p-icon="eye-slash"></svg>
+                            }
+                        </p-inputicon>
+                    </p-iconfield>
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label for="confirmPassword">Confirm password: </label>
+                    <input pInputPassword inputId="confirmPassword" id="confirmPassword" formControlName="confirmPassword" autocomplete="new-password" placeholder="Confirm password" data-testid="register-confirm-password-input" />
+                </div>
+                @if (form.errors?.['passwordMismatch'] && form.get('confirmPassword')?.touched) {
+                <small class="text-red-500" data-testid="register-password-mismatch-error">Passwords do not match.</small>
+                }
+                <div class="flex flex-col gap-2">
+                    <button pButton type="submit" [disabled]="form.invalid" data-testid="register-submit-button">Register</button>
+                </div>
+            </div>
+        </form>
+    </p-fieldset>
+</div>

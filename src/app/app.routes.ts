@@ -3,11 +3,12 @@ import { authGuard } from '@core/guards/auth.guard';
 import { Dashboard } from '@features/dashboard/dashboard';
 import { Notfound } from '@features/notfound/notfound';
 import { Landing } from '@features/landing/landing';
-import { LoginComponent } from '@presentation/features/auth/login/component/login.component';
+import { Login } from '@app/presentation/features/auth/login/login';
 import { permissionGuard } from '@presentation/core/guards/permission-guard';
 import { UserPermissionEnum } from '@domain/user/enums/user-permission.enum';
 import { Unauthorized } from './presentation/features/unauthorized/unauthorized';
 import { Shell } from './presentation/shell/shell';
+import { Register } from './presentation/features/auth/register/register';
 
 export const routes: Routes = [
     {
@@ -37,7 +38,8 @@ export const routes: Routes = [
     },
     { path: 'landing', component: Landing },
     { path: 'notfound', component: Notfound },
-    { path: 'login', component: LoginComponent },
+    { path: 'login', component: Login },
+    { path: 'register', component: Register },
     { path: 'unauthorized', component: Unauthorized },
     // { path: 'auth', loadChildren: () => import('./app/pages/auth/auth.routes') },
     { path: '**', redirectTo: '/notfound' }
