@@ -1,7 +1,8 @@
+import { isFilled } from './shared';
+
 export function checkRequiredIfFilled(targetValue: unknown, dependsOnValue: unknown): boolean {
-    const dependsOnIsFilled = dependsOnValue !== null && dependsOnValue !== undefined && dependsOnValue !== '';
-    if (!dependsOnIsFilled) return true; // If the reference field is empty, this rule will not apply at all
-    return targetValue !== null && targetValue !== undefined && targetValue !== '';
+    if (!isFilled(dependsOnValue)) return true; // If the reference field is empty, this rule will not apply at all
+    return isFilled(targetValue);
 }
 
 export function checkDateAfter(targetValue: unknown, dependsOnValue: unknown): boolean {

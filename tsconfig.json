@@ -30,7 +30,8 @@
 
       "@env/*":["./src/environments/*"],
       "@assets/*":["./src/assets/*"]
-    }
+    },
+    "types": ["vitest/globals"]
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

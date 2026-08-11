@@ -1,6 +1,6 @@
 import { inject, Service, Signal, signal } from '@angular/core';
-import { GetFormByIdUseCase } from '@app/application/form/get-form-by-id.use.case';
-import { SubmitFormUseCase } from '@app/application/form/submit-form.use.case';
+import { GetFormByIdUseCase } from '@app/application/form/get-form-by-id.use-case';
+import { SubmitFormUseCase } from '@app/application/form/submit-form.use-case';
 import { FormSubmissionModel } from '@app/domain';
 import { FormModel } from '@app/domain/form/models/form.model';
 import { Guid } from '@app/domain/shared/types/guid.type';

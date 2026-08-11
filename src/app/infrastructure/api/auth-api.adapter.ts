@@ -3,12 +3,18 @@ import { AuthGateway } from '@domain/auth/abstracts/auth.gateway.abstract';
 import { LoginRequest } from '@app/domain/auth/models/login-request.model';
 import { LoginResponse } from '@app/domain/auth/models/login-response.model';
 import { User } from '@app/domain/user/models/user.model';
-import { environment } from '@env/environment.development';
+import { environment } from '@env/environment';
 import { HttpClient } from '@angular/common/http';
 import { lastValueFrom, Observable, map } from 'rxjs';
+import { RegisterRequest } from '@app/domain';
 
 interface AuthServerResponse {
     accessToken: string;
+    user: User;
+}
+
+interface RegisterServerResponse {
+    message: string;
     user: User;
 }
 
@@ -32,6 +38,18 @@ export class AuthApiAdapter implements AuthGateway {
         return lastValueFrom($res);
     }
 
+    register(payload: RegisterRequest): Promise<void> {
+        const name = [payload.firstName, payload.lastName].filter(Boolean).join(' ') || payload.email;
+        const body = {
+            email: payload.email,
+            password: payload.password,
+            mobile: payload.mobile,
+            name
+        };
+        const $res: Observable<void> = this.httpClient.post<RegisterServerResponse>(`${this.authUrl}/register`, body).pipe(map(() => undefined));
+        return lastValueFrom($res);
+    }
+
     logout(): Promise<void> {
         const $res: Observable<void> = this.httpClient.post<void>(`${this.authUrl}/logout`, {}, { withCredentials: true });
         return lastValueFrom($res);
@@ -43,19 +61,6 @@ export class AuthApiAdapter implements AuthGateway {
             accessToken: res.accessToken,
             expiresIn,
             user: res.user
-        };
-    }
-
-    private toRefreshedResponse(accessToken: string): LoginResponse {
-        const payload = this.decodeToken(accessToken);
-        return {
-            accessToken,
-            expiresIn: this.getExpiresInFromToken(accessToken),
-            user: {
-                id: payload.sub,
-                email: payload.email,
-                roles: payload.roles
-            } as User
         };
     }
 
