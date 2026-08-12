@@ -20,19 +20,19 @@ export const routes: Routes = [
                 path: 'forms/:id/edit',
                 data: { permissions: [UserPermissionEnum.FormCreate, UserPermissionEnum.FormEdit, UserPermissionEnum.FormDelete] },
                 canActivate: [authGuard, permissionGuard],
-                loadComponent: () => import('./presentation/features/form-designer/components/form-designer-page/form-designer-page').then((m) => m.FormDesignerPage)
+                loadComponent: () => import('./presentation/features/form-designer/form-designer').then((m) => m.FormDesigner)
             },
             {
                 path: 'form-list',
                 data: { permissions: [] },
                 canActivate: [authGuard, permissionGuard],
-                loadComponent: () => import('./presentation/features/form-list/components/form-list-page/form-list-page').then((m) => m.FormListPage)
+                loadComponent: () => import('./presentation/features/form-list/form-list').then((m) => m.FormList)
             },
             {
                 path: 'forms/:id/fill',
                 data: { permissions: [UserPermissionEnum.FormGenerate, UserPermissionEnum.FormCreate] },
                 canActivate: [authGuard, permissionGuard],
-                loadComponent: () => import('./presentation/features/form-renderer/components/form-renderer-page/form-renderer-page').then((m) => m.FormRendererPage)
+                loadComponent: () => import('./presentation/features/form-renderer/form-renderer').then((m) => m.FormRenderer)
             }
         ]
     },

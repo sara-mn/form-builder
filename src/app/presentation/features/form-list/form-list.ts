@@ -1,19 +1,19 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { FormListFacade } from '../../services/form-list.facade';
 import { Router } from '@angular/router';
 import { Guid } from '@app/domain/shared/types/guid.type';
-import { NewFormData, NewFormDialog } from '../new-form-dialog/new-form-dialog';
-import { StatusBadge } from '../status-badge/status-badge';
 import { TableModule } from 'primeng/table';
 import { FormStatusEnum } from '@app/domain';
+import { NewFormData, NewFormDialog } from './components/new-form-dialog/new-form-dialog';
+import { StatusBadge } from './components/status-badge/status-badge';
+import { FormListFacade } from './services/form-list.facade';
 
 @Component({
-    selector: 'app-form-list-page',
+    selector: 'app-form-list',
     imports: [TableModule, NewFormDialog, StatusBadge],
-    templateUrl: './form-list-page.html',
-    styleUrl: './form-list-page.scss'
+    templateUrl: './form-list.html',
+    styleUrl: './form-list.scss'
 })
-export class FormListPage implements OnInit {
+export class FormList implements OnInit {
     private facade = inject(FormListFacade);
     private router = inject(Router);
     readonly FormStatusEnum = FormStatusEnum;

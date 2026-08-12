@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { Sidebar } from './sidebar/sidebar';
-import { Topbar } from './topbar/topbar';
-import { Footer } from './footer/footer';
+import { Topbar } from './components/topbar/topbar';
+import { Footer } from './components/footer/footer';
+import { Sidebar } from './components/sidebar/sidebar';
 
 @Component({
     selector: 'app-shell',

@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FormRendererPage } from './form-renderer-page';
+import { FormDesigner } from './form-designer';
 
-describe('FormRendererPage', () => {
-    let component: FormRendererPage;
-    let fixture: ComponentFixture<FormRendererPage>;
+describe('FormDesigner', () => {
+    let component: FormDesigner;
+    let fixture: ComponentFixture<FormDesigner>;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [FormRendererPage]
+            imports: [FormDesigner]
         }).compileComponents();
 
-        fixture = TestBed.createComponent(FormRendererPage);
+        fixture = TestBed.createComponent(FormDesigner);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });

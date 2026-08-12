@@ -1,20 +1,20 @@
 import { Component, computed, effect, inject, input, signal } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
-import { AlreadySubmittedBanner } from '../already-submitted-banner/already-submitted-banner';
-import { DynamicField } from '../dynamic-field/dynamic-field';
-import { Guid } from '@app/domain';
-import { FormRendererFacade } from '../../services/form-renderer.facade';
-import { DynamicFormBuilderService } from '../../services/dynamic-form-builder.service';
 import { StepperModule } from 'primeng/stepper';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { AlreadySubmittedBanner } from './components/already-submitted-banner/already-submitted-banner';
+import { DynamicField } from './components/dynamic-field/dynamic-field';
+import { Guid } from '@app/domain';
+import { FormRendererFacade } from './services/form-renderer.facade';
+import { DynamicFormBuilderService } from './services/dynamic-form-builder.service';
 
 @Component({
-    selector: 'app-form-renderer-page',
+    selector: 'app-form-renderer',
     imports: [ReactiveFormsModule, ButtonModule, StepperModule, AlreadySubmittedBanner, DynamicField],
-    templateUrl: './form-renderer-page.html',
-    styleUrl: './form-renderer-page.scss'
+    templateUrl: './form-renderer.html',
+    styleUrl: './form-renderer.scss'
 })
-export class FormRendererPage {
+export class FormRenderer {
     id = input.required<Guid>();
 
     private facade = inject(FormRendererFacade);

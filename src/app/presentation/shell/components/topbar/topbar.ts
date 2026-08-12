@@ -2,10 +2,10 @@ import { NgOptimizedImage } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
-import { ShellState } from '../shell-state';
 import { AuthState } from '@app/presentation/core/services/auth-state';
 import { AuthFacade } from '@app/presentation/features/auth/services/auth.facade';
 import { PIcon } from '@primeicons/angular';
+import { ShellState } from '../../shell-state';
 
 @Component({
     selector: 'app-topbar',

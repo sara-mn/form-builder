@@ -1,20 +1,20 @@
 import { Component, effect, inject, input, signal } from '@angular/core';
-import { PageSidebar } from '../page-sidebar/page-sidebar';
-import { FormMetadataPanel, MetadataChange } from '../form-metadata-panel/form-metadata-panel';
-import { LockBanner } from '../lock-banner/lock-banner';
-import { FieldEditorDialog } from '../field-editor-dialog/field-editor-dialog';
-import { FieldList } from '../field-list/field-list';
-import { FieldConfigModel, FormPageModel, Guid } from '@app/domain';
-import { FormDesignerFacade } from '../../services/form-designer.facade';
 import { Router } from '@angular/router';
+import { LockBanner } from './components/lock-banner/lock-banner';
+import { FormMetadataPanel, MetadataChange } from './components/form-metadata-panel/form-metadata-panel';
+import { PageSidebar } from './components/page-sidebar/page-sidebar';
+import { FieldList } from './components/field-list/field-list';
+import { FieldEditorDialog } from './components/field-editor-dialog/field-editor-dialog';
+import { FieldConfigModel, FormPageModel, Guid } from '@app/domain';
+import { FormDesignerFacade } from './services/form-designer.facade';
 
 @Component({
-    selector: 'app-form-designer-page',
+    selector: 'app-form-designer',
     imports: [LockBanner, FormMetadataPanel, PageSidebar, FieldList, FieldEditorDialog],
-    templateUrl: './form-designer-page.html',
-    styleUrl: './form-designer-page.scss'
+    templateUrl: './form-designer.html',
+    styleUrl: './form-designer.scss'
 })
-export class FormDesignerPage {
+export class FormDesigner {
     id = input.required<Guid>();
 
     private facade = inject(FormDesignerFacade);

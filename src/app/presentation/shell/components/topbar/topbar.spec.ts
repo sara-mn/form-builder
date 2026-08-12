@@ -2,11 +2,11 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter, Router } from '@angular/router';
 
 import { Topbar } from './topbar';
-import { ShellState } from '../shell-state';
 import { AuthState } from '@app/presentation/core/services/auth-state';
 import { AuthFacade } from '@app/presentation/features/auth/services/auth.facade';
 import { User } from '@app/domain/user/models/user.model';
 import { UserRoleEnum } from '@app/domain';
+import { ShellState } from '../../shell-state';
 
 function createFakeUser(overrides: Partial<User> = {}): User {
     return {

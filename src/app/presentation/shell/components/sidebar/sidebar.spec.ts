@@ -2,8 +2,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 
 import { Sidebar } from './sidebar';
-import { ShellState } from '../shell-state';
 import { NAV_ITEMS } from './nav-items';
+import { ShellState } from '../../shell-state';
 
 describe('Sidebar', () => {
     let component: Sidebar;
