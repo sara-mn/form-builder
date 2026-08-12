@@ -1,12 +1,10 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 
 @Component({
     selector: 'app-notfound',
-    standalone: true,
     imports: [RouterModule, ButtonModule],
-    changeDetection: ChangeDetectionStrategy.Eager,
     template: ` <div class="flex items-center justify-center min-h-screen overflow-hidden">
         <div class="flex flex-col items-center justify-center">
             <svg width="54" height="40" viewBox="0 0 54 40" fill="none" xmlns="http://www.w3.org/2000/svg" class="mb-8 w-32 shrink-0">
