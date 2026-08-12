@@ -2,7 +2,6 @@ import { Routes } from '@angular/router';
 import { authGuard } from '@core/guards/auth.guard';
 import { Dashboard } from '@features/dashboard/dashboard';
 import { Notfound } from '@features/notfound/notfound';
-import { Landing } from '@features/landing/landing';
 import { Login } from '@app/presentation/features/auth/login/login';
 import { permissionGuard } from '@presentation/core/guards/permission-guard';
 import { UserPermissionEnum } from '@domain/user/enums/user-permission.enum';
@@ -36,7 +35,6 @@ export const routes: Routes = [
             }
         ]
     },
-    { path: 'landing', component: Landing },
     { path: 'notfound', component: Notfound },
     { path: 'login', component: Login },
     { path: 'register', component: Register },
