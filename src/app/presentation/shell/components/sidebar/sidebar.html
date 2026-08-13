@@ -14,5 +14,14 @@
 </nav>
 
 @if (shellState.mobileSidebarOpen()) {
-<div class="fixed inset-0 top-14 z-10 bg-surface-900/40 lg:hidden" (click)="shellState.closeMobileSidebar()" data-testid="sidebar-backdrop"></div>
+<div
+    class="fixed inset-0 top-14 z-10 bg-surface-900/40 lg:hidden"
+    role="button"
+    tabindex="0"
+    aria-label="Close navigation menu"
+    (click)="shellState.closeMobileSidebar()"
+    (keydown.enter)="shellState.closeMobileSidebar()"
+    (keydown.escape)="shellState.closeMobileSidebar()"
+    data-testid="sidebar-backdrop"
+></div>
 }

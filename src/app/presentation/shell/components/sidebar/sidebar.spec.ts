@@ -68,4 +68,37 @@ describe('Sidebar', () => {
 
         expect(shellState.mobileSidebarOpen()).toBe(false);
     });
+    it('should have a keyboard-accessible role and tabindex on the backdrop', () => {
+        shellState.toggleMobileSidebar();
+        fixture.detectChanges();
+
+        const backdrop: HTMLElement = fixture.nativeElement.querySelector('[data-testid="sidebar-backdrop"]');
+        expect(backdrop.getAttribute('role')).toBe('button');
+        expect(backdrop.getAttribute('tabindex')).toBe('0');
+        expect(backdrop.getAttribute('aria-label')).toBe('Close navigation menu');
+    });
+
+    it('should close mobile sidebar when Enter is pressed on the backdrop', () => {
+        shellState.toggleMobileSidebar();
+        fixture.detectChanges();
+        expect(shellState.mobileSidebarOpen()).toBe(true);
+
+        const backdrop: HTMLElement = fixture.nativeElement.querySelector('[data-testid="sidebar-backdrop"]');
+        backdrop.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
+        fixture.detectChanges();
+
+        expect(shellState.mobileSidebarOpen()).toBe(false);
+    });
+
+    it('should close mobile sidebar when Escape is pressed on the backdrop', () => {
+        shellState.toggleMobileSidebar();
+        fixture.detectChanges();
+        expect(shellState.mobileSidebarOpen()).toBe(true);
+
+        const backdrop: HTMLElement = fixture.nativeElement.querySelector('[data-testid="sidebar-backdrop"]');
+        backdrop.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
+        fixture.detectChanges();
+
+        expect(shellState.mobileSidebarOpen()).toBe(false);
+    });
 });
