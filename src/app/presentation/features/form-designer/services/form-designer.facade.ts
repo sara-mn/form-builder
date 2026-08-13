@@ -84,7 +84,24 @@ export class FormDesignerFacade {
     }
 
     deleteField(pageId: Guid, fieldId: Guid): void {
-        this._form.update((form) => this.mutatePageFields(form, pageId, (fields) => fields.filter((f) => f.id !== fieldId)));
+        this._form.update((form) => {
+            if (!form) return form;
+            const withoutField = this.mutatePageFields(form, pageId, (fields) => fields.filter((f) => f.id !== fieldId));
+            return withoutField ? this.removeOrphanedCrossFieldValidators(withoutField, fieldId) : withoutField;
+        });
+    }
+
+    private removeOrphanedCrossFieldValidators(form: FormModel, fieldId: Guid): FormModel {
+        const referencesField = (v: { targetFieldId: Guid; dependsOnFieldId: Guid }) => v.targetFieldId === fieldId || v.dependsOnFieldId === fieldId;
+
+        return {
+            ...form,
+            validators: form.validators.filter((v) => !referencesField(v)),
+            pages: form.pages.map((page) => ({
+                ...page,
+                validators: page.validators.filter((v) => !referencesField(v))
+            }))
+        };
     }
 
     addFieldValidator(pageId: Guid, fieldId: Guid, validator: FieldValidatorConfigModel): void {
