@@ -111,12 +111,15 @@ describe('NavItem', () => {
         expect(nestedItems.length).toBe(2);
     });
 
-    it('documents current behavior: empty items array is still treated as expandable', async () => {
-        const parent = createFakeNavItemModel({ label: 'Empty', items: [] });
-        await setup(parent);
+    it('should render a link (not a toggle button) when items is an empty array', async () => {
+        const item = createFakeNavItemModel({ label: 'Empty Parent', items: [] });
+        await setup(item);
 
-        const button = fixture.nativeElement.querySelector(':scope > button[aria-label="Toggle Empty submenu"]');
-        expect(button).toBeTruthy(); // potential UX bug — see discussion above
+        const link = fixture.nativeElement.querySelector(':scope > a[aria-label="Empty Parent"]');
+        const button = fixture.nativeElement.querySelector(':scope > button');
+
+        expect(link).toBeTruthy();
+        expect(button).toBeFalsy();
     });
 
     it('should default root to false when not provided', async () => {
