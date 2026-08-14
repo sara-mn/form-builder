@@ -6,6 +6,8 @@
     "singleQuote": true,
     "printWidth": 250,
     "bracketSameLine": false,
+    "plugins": ["prettier-plugin-tailwindcss"],
+    "tailwindStylesheet": "./src/styles.scss",
     "overrides": [
         {
             "files": ["*.ts", "*.mts", "*.d.ts"],
