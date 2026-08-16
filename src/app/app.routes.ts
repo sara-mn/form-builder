@@ -14,7 +14,7 @@ export const routes: Routes = [
         path: '',
         component: Shell,
         children: [
-            { path: '', component: Dashboard },
+            { path: '', data: { permissions: [] }, canActivate: [authGuard, permissionGuard], component: Dashboard },
             {
                 path: 'forms/:id/edit',
                 data: { permissions: [UserPermissionEnum.FormCreate, UserPermissionEnum.FormEdit, UserPermissionEnum.FormDelete] },
