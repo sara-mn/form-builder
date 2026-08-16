@@ -7,8 +7,7 @@ import { DatePickerModule } from 'primeng/datepicker';
 @Component({
     selector: 'app-date-range-field-input',
     imports: [ReactiveFormsModule, DatePickerModule, KeyValuePipe],
-    templateUrl: './date-range-field-input.html',
-    styleUrl: './date-range-field-input.scss'
+    templateUrl: './date-range-field-input.html'
 })
 export class DateRangeFieldInput {
     field = input.required<FieldConfigModel>();

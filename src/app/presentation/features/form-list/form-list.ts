@@ -2,25 +2,24 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { Guid } from '@app/domain/shared/types/guid.type';
 import { TableModule } from 'primeng/table';
+import { ButtonModule } from 'primeng/button';
 import { FormStatusEnum } from '@app/domain';
 import { NewFormData, NewFormDialog } from './components/new-form-dialog/new-form-dialog';
 import { StatusBadge } from './components/status-badge/status-badge';
 import { FormListFacade } from './services/form-list.facade';
-import { MessageService, ConfirmationService } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @Component({
     selector: 'app-form-list',
-    imports: [TableModule, NewFormDialog, StatusBadge, ConfirmDialogModule],
+    imports: [TableModule, ButtonModule, NewFormDialog, StatusBadge, ConfirmDialogModule],
     templateUrl: './form-list.html',
-    styleUrl: './form-list.scss',
-    providers: [ConfirmationService, MessageService]
+    providers: [ConfirmationService]
 })
 export class FormList implements OnInit {
     private facade = inject(FormListFacade);
     private router = inject(Router);
     private confirmationService = inject(ConfirmationService);
-    private messageService = inject(MessageService);
     readonly FormStatusEnum = FormStatusEnum;
     items = this.facade.formListItems;
 
@@ -28,10 +27,7 @@ export class FormList implements OnInit {
     cloningFormId = signal<Guid | null>(null);
 
     ngOnInit(): void {
-        this.facade.loadForms().then(() => {
-            console.log('Loaded items:', this.items());
-            console.log('First item structure:', JSON.stringify(this.items()[0], null, 2));
-        });
+        this.facade.loadForms();
     }
 
     onNewFormClick(): void {
@@ -52,7 +48,7 @@ export class FormList implements OnInit {
         this.router.navigate(['/forms', formId, 'edit']);
     }
 
-    async onDelete(formId: Guid, title: string): Promise<void> {
+    onDelete(formId: Guid, title: string): void {
         this.confirmationService.confirm({
             message: `Delete form "${title}"? This cannot be undone.`,
             header: 'Confirm Deletion',

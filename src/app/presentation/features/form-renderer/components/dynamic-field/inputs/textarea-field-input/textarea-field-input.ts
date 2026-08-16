@@ -7,8 +7,7 @@ import { TextareaModule } from 'primeng/textarea';
 @Component({
     selector: 'app-textarea-field-input',
     imports: [ReactiveFormsModule, KeyValuePipe, TextareaModule],
-    templateUrl: './textarea-field-input.html',
-    styleUrl: './textarea-field-input.scss'
+    templateUrl: './textarea-field-input.html'
 })
 export class TextareaFieldInput {
     field = input.required<FieldConfigModel>();

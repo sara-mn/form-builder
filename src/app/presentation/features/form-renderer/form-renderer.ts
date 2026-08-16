@@ -11,8 +11,7 @@ import { DynamicFormBuilderService } from './services/dynamic-form-builder.servi
 @Component({
     selector: 'app-form-renderer',
     imports: [ReactiveFormsModule, ButtonModule, StepperModule, AlreadySubmittedBanner, DynamicField],
-    templateUrl: './form-renderer.html',
-    styleUrl: './form-renderer.scss'
+    templateUrl: './form-renderer.html'
 })
 export class FormRenderer {
     id = input.required<Guid>();

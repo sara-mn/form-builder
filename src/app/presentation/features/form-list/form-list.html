@@ -1,10 +1,10 @@
-<div class="form-list-page">
-    <div class="form-list-page__header">
-        <h2>Forms</h2>
-        <button type="button" class="form-list-page__new-btn" (click)="onNewFormClick()">+ New Form</button>
+<div class="mx-auto max-w-4xl p-6">
+    <div class="mb-6 flex items-center justify-between">
+        <h2 class="m-0 text-xl font-semibold text-surface-900 dark:text-surface-0">Forms</h2>
+        <button pButton type="button" (click)="onNewFormClick()">+ New Form</button>
     </div>
 
-    <p-table [value]="items()" styleClass="form-list-page__table">
+    <p-table [value]="items()">
         <ng-template #header>
             <tr>
                 <th>Title</th>
@@ -22,20 +22,22 @@
                 </td>
                 <td>{{ item.form.pages.length }}</td>
                 <td>{{ item.submissionCount }}</td>
-                <td class="form-list-page__actions">
-                    <button type="button" (click)="onEdit(item.form.id)">Edit</button>
+                <td class="flex gap-2">
+                    <button pButton type="button" severity="secondary" [outlined]="true" size="small" (click)="onEdit(item.form.id)">Edit</button>
                     @if (item.submissionCount > 0) {
-                    <button type="button" [disabled]="cloningFormId() === item.form.id" (click)="onClone(item.form.id)">{{ cloningFormId() === item.form.id ? 'Cloning...' : 'Clone' }}</button>
+                    <button pButton type="button" severity="secondary" [outlined]="true" size="small" [disabled]="cloningFormId() === item.form.id" (click)="onClone(item.form.id)">
+                        {{ cloningFormId() === item.form.id ? 'Cloning...' : 'Clone' }}
+                    </button>
                     } @if (item.form.status === FormStatusEnum.Published) {
-                    <button type="button" (click)="onFill(item.form.id)">Fill</button>
+                    <button pButton type="button" severity="secondary" [outlined]="true" size="small" (click)="onFill(item.form.id)">Fill</button>
                     }
-                    <button type="button" class="form-list-page__delete-btn" (click)="onDelete(item.form.id, item.form.title)">Delete</button>
+                    <button pButton type="button" severity="danger" [outlined]="true" size="small" (click)="onDelete(item.form.id, item.form.title)">Delete</button>
                 </td>
             </tr>
         </ng-template>
         <ng-template #emptymessage>
             <tr>
-                <td colspan="5" class="form-list-page__empty">No forms yet. Create your first one.</td>
+                <td colspan="5" class="p-8 text-center text-surface-400 dark:text-surface-500">No forms yet. Create your first one.</td>
             </tr>
         </ng-template>
     </p-table>

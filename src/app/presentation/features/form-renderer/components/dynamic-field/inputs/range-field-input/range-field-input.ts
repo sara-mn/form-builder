@@ -7,8 +7,7 @@ import { SliderModule } from 'primeng/slider';
 @Component({
     selector: 'app-range-field-input',
     imports: [ReactiveFormsModule, SliderModule, KeyValuePipe],
-    templateUrl: './range-field-input.html',
-    styleUrl: './range-field-input.scss'
+    templateUrl: './range-field-input.html'
 })
 export class RangeFieldInput {
     field = input.required<FieldConfigModel>();

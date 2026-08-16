@@ -1,12 +1,12 @@
 @if (alreadySubmitted()) {
 <app-already-submitted-banner />
 } @else if (form(); as currentForm) {
-<div class="renderer-page">
-    <h2>{{ currentForm.title }}</h2>
+<div class="mx-auto max-w-2xl p-6">
+    <h2 class="text-xl font-semibold text-surface-900 dark:text-surface-0">{{ currentForm.title }}</h2>
     @if (currentForm.description) {
-    <p class="renderer-page__description">{{ currentForm.description }}</p>
+    <p class="mb-6 text-surface-500 dark:text-surface-400">{{ currentForm.description }}</p>
     }
-    <p-stepper [value]="activeStep()" class="basis-200 min-w-0">
+    <p-stepper [value]="activeStep()" class="min-w-0">
         <p-step-list>
             @for (page of currentForm.pages; track page.id; let i = $index) {
             <p-step [value]="i + 1">{{ page.title }}</p-step>
@@ -14,20 +14,19 @@
         </p-step-list>
         <p-step-panels>
             @for (page of currentForm.pages; track page.id; let i = $index) {
-
             <p-step-panel [value]="i + 1">
                 <ng-template #content let-activateCallback>
-                    <form [formGroup]="pageGroups()[i]" class="renderer-page__fields">
+                    <form [formGroup]="pageGroups()[i]" class="flex flex-col py-6">
                         @for (field of page.fields; track field.id) {
                         <app-dynamic-field [field]="field" [control]="$any(pageGroups()[i].get(field.name))" />
                         }
                     </form>
-                    <div class="renderer-page__nav">
+                    <div class="flex justify-between pt-4">
                         @if (i > 0) {
                         <button pButton type="button" [text]="true" severity="secondary" (click)="goToStep(i, activateCallback)">Back</button>
-                        }@if (!isLastStep()) {
+                        } @if (!isLastStep()) {
                         <button pButton type="button" [text]="true" (click)="goToStep(i + 2, activateCallback)">Next</button>
-                        } @else{
+                        } @else {
                         <button pButton type="button" [text]="true" [loading]="isSubmitting()" (click)="onSubmit()">Submit</button>
                         }
                     </div>
@@ -38,9 +37,9 @@
     </p-stepper>
 
     @if (submitError(); as error) {
-    <p class="renderer-page__error">{{ error }}</p>
+    <p class="mt-4 text-red-600 dark:text-red-400">{{ error }}</p>
     }
 </div>
 } @else {
-<div class="renderer-page__loading">Loading form...</div>
+<div class="flex items-center justify-center p-12 text-surface-400 dark:text-surface-500">Loading form...</div>
 }
