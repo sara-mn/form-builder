@@ -1,28 +1,30 @@
-import { Injectable, signal } from '@angular/core';
-import { RefreshTokenUseCase } from '@app/application/auth/refresh-token.use-case';
-import { LoginRequest, User } from '@app/domain';
+import { Service, inject } from '@angular/core';
+import { LoginRequest, RegisterRequest, User } from '@app/domain';
 import { StorageGateway } from '@app/domain/storage.gateway.abstract';
 import { AuthState } from '@app/presentation/core/services/auth-state';
 import { LoginUseCase } from '@application/auth/login.use-case';
 import { LogoutUseCase } from '@application/auth/logout.use-case';
+import { RefreshTokenUseCase } from '@app/application/auth/refresh-token.use-case';
+import { RegisterUseCase } from '@application/auth/register.use-case';
 
-@Injectable({
-    providedIn: 'root'
-})
+@Service()
 export class AuthFacade {
-    constructor(
-        private loginUseCase: LoginUseCase,
-        private logoutUseCase: LogoutUseCase,
-        private refreshTokenUseCase: RefreshTokenUseCase,
-        private authState: AuthState,
-        private tokenStorage: StorageGateway
-    ) {}
+    private loginUseCase = inject(LoginUseCase);
+    private logoutUseCase = inject(LogoutUseCase);
+    private refreshTokenUseCase = inject(RefreshTokenUseCase);
+    private registerUseCase = inject(RegisterUseCase);
+    private authState = inject(AuthState);
+    private tokenStorage = inject(StorageGateway);
 
     login(data: LoginRequest): Promise<User> {
         return this.loginUseCase.execute(data).then((user) => {
             this.authState.setUser(user);
             return user;
         });
+    }
+
+    register(data: RegisterRequest): Promise<void> {
+        return this.registerUseCase.execute(data);
     }
 
     async restoreSession(): Promise<void> {

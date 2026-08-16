@@ -1,11 +1,10 @@
 import { Component, input, output } from '@angular/core';
-import { Guid } from '@app/domain';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
     selector: 'app-lock-banner',
-    imports: [],
-    templateUrl: './lock-banner.html',
-    styleUrl: './lock-banner.scss'
+    imports: [ButtonModule],
+    templateUrl: './lock-banner.html'
 })
 export class LockBanner {
     cloning = input<boolean>(false);

@@ -1,9 +1,9 @@
-<div class="field-input">
-    <div class="field-input__checkbox-row">
+<div class="mb-4 gap-1.5 flex flex-col">
+    <div class="gap-2 flex items-center">
         <p-checkbox [inputId]="field().name" [binary]="true" [formControl]="control()" />
-        <label [for]="field().name">{{ field().label }}</label>
+        <label [for]="field().name" class="text-sm font-semibold text-surface-700 dark:text-surface-300">{{ field().label }}</label>
     </div>
     @if (control().invalid && control().touched) {
-    <span class="field-input__error"> @for (error of control().errors | keyvalue; track error.key) { {{ error.value }} } </span>
+    <span class="text-red-600 dark:text-red-400 text-[13px]"> @for (error of control().errors | keyvalue; track error.key) { {{ error.value }} } </span>
     }
 </div>

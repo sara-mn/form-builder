@@ -1,8 +1,12 @@
-<div class="min-h-screen flex flex-col bg-surface-50 dark:bg-surface-950">
-    <app-topbar class="sticky top-0 z-30" />
+<div class="flex min-h-screen flex-col bg-surface-50 dark:bg-surface-950">
+    <header class="top-0 sticky z-30">
+        <app-topbar />
+    </header>
     <div class="flex flex-1">
-        <app-sidebar />
-        <main class="flex-1 p-6">
+        <aside class="border-r border-surface-200 bg-surface-0 dark:border-surface-700 dark:bg-surface-900">
+            <app-sidebar />
+        </aside>
+        <main class="p-6 flex-1">
             <router-outlet />
         </main>
     </div>

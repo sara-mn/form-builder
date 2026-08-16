@@ -1,12 +1,13 @@
-@use "tailwindcss";
+@layer tailwind-base, primeng, tailwind-utilities;
+@import 'tailwindcss/theme.css' layer(tailwind-base);
+@import 'tailwindcss/preflight.css' layer(tailwind-base);
+@import 'tailwindcss/utilities.css' layer(tailwind-utilities);
 
 @custom-variant dark (&:where(.app-dark, .app-dark *));
 
 @plugin 'tailwindcss-primeui';
-@layer tailwind, primeng;
-
 
 @theme {
-  --breakpoint-2xs: 23rem;
-  --breakpoint-xs: 30rem;
+    --breakpoint-2xs: 23rem;
+    --breakpoint-xs: 30rem;
 }

@@ -1,13 +1,19 @@
-import { Component, input, output } from '@angular/core';
+import { Component, inject, input, output } from '@angular/core';
 import { FormPageModel, Guid } from '@app/domain';
+import { ButtonModule } from 'primeng/button';
+import { ConfirmationService } from 'primeng/api';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { Trash } from '@primeicons/angular/trash';
 
 @Component({
     selector: 'app-page-sidebar',
-    imports: [],
-    templateUrl: './page-sidebar.html',
-    styleUrl: './page-sidebar.scss'
+    imports: [ButtonModule, ConfirmDialogModule, Trash],
+    providers: [ConfirmationService],
+    templateUrl: './page-sidebar.html'
 })
 export class PageSidebar {
+    private confirmationService = inject(ConfirmationService);
+
     pages = input.required<FormPageModel[]>();
     selectedPageId = input<Guid | null>(null);
     disabled = input<boolean>(false);
@@ -26,8 +32,13 @@ export class PageSidebar {
 
     onDelete(pageId: Guid, event: Event): void {
         event.stopPropagation();
-        if (confirm('Delete this page and all its fields?')) {
-            this.pageDeleted.emit(pageId);
-        }
+        this.confirmationService.confirm({
+            message: 'Delete this page and all its fields?',
+            header: 'Confirm Deletion',
+            icon: 'pi pi-exclamation-triangle',
+            accept: () => {
+                this.pageDeleted.emit(pageId);
+            }
+        });
     }
 }

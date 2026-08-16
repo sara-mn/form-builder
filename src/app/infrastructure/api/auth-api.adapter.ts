@@ -7,6 +7,7 @@ import { environment } from '@env/environment';
 import { HttpClient } from '@angular/common/http';
 import { lastValueFrom, Observable, map } from 'rxjs';
 import { RegisterRequest } from '@app/domain';
+import { base64UrlToBase64 } from '../utils/base64-url.util';
 
 interface AuthServerResponse {
     accessToken: string;
@@ -75,6 +76,6 @@ export class AuthApiAdapter implements AuthGateway {
     }
 
     private decodeToken(token: string): any {
-        return JSON.parse(atob(token.split('.')[1]));
+        return JSON.parse(atob(base64UrlToBase64(token.split('.')[1])));
     }
 }

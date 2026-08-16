@@ -36,7 +36,7 @@ export default function createAuthRouter(db) {
             password: hashedPassword,
             name: name || email,
             roles: roles || ['viewer'],
-            profile: { avatarUrl: '', bio: '', phone: mobile || '' }
+            profile: { avatarUrl: '', bio: '', mobile: mobile || '' }
         };
 
         getUsers().push(newUser).write();

@@ -1,11 +1,11 @@
 import { Component, input, output } from '@angular/core';
 import { FieldConfigModel } from '@app/domain';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
     selector: 'app-field-list',
-    imports: [],
-    templateUrl: './field-list.html',
-    styleUrl: './field-list.scss'
+    imports: [ButtonModule],
+    templateUrl: './field-list.html'
 })
 export class FieldList {
     fields = input.required<FieldConfigModel[]>();

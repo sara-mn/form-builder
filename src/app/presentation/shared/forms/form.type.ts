@@ -1,9 +1,5 @@
 import { FormControl, ɵValue } from '@angular/forms';
 
-export type FormValue<T> = {
-    [K in keyof T]: T[K];
-};
-
 export type FormControls<T> = {
     [K in keyof T]: FormControl<T[K]>;
 };

@@ -7,8 +7,7 @@ import { ColorPickerModule } from 'primeng/colorpicker';
 @Component({
     selector: 'app-color-field-input',
     imports: [ReactiveFormsModule, ColorPickerModule, KeyValuePipe],
-    templateUrl: './color-field-input.html',
-    styleUrl: './color-field-input.scss'
+    templateUrl: './color-field-input.html'
 })
 export class ColorFieldInput {
     field = input.required<FieldConfigModel>();

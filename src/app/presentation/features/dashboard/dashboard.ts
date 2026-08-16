@@ -1,16 +1,17 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
+import { DashboardFacade } from './services/dashboard.facade';
+import { StatsWidget } from './components/stats-widget/stats-widget';
 
 @Component({
     selector: 'app-dashboard',
-    imports: [],
     standalone: true,
-    changeDetection: ChangeDetectionStrategy.Eager,
-    template: `
-        <div class="grid grid-cols-12 gap-8">
-            <!--      <app-stats-widget class="contents" />-->
-            <div class="col-span-12 xl:col-span-6"></div>
-            <div class="col-span-12 xl:col-span-6"></div>
-        </div>
-    `
+    imports: [StatsWidget],
+    templateUrl: './dashboard.html'
 })
-export class Dashboard {}
+export class Dashboard implements OnInit {
+    protected readonly dashboardFacade = inject(DashboardFacade);
+
+    ngOnInit(): void {
+        this.dashboardFacade.loadStats();
+    }
+}
