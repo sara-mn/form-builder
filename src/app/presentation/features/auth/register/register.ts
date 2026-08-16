@@ -18,8 +18,7 @@ import { RegisterFormAdapter } from './register-form-model.adapter';
 @Component({
     selector: 'app-register',
     imports: [ReactiveFormsModule, RouterLink, ButtonModule, InputTextModule, InputPasswordModule, FieldsetModule, InputIconModule, IconFieldModule, Eye, EyeSlash],
-    templateUrl: './register.html',
-    styleUrl: './register.scss'
+    templateUrl: './register.html'
 })
 export class Register implements OnInit {
     private registerFormCreator = inject(RegisterFormCreator);

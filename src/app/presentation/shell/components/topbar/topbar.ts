@@ -11,8 +11,7 @@ import { ShellState } from '../../shell-state';
     selector: 'app-topbar',
     imports: [RouterLink, NgOptimizedImage, ButtonModule, PIcon],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    templateUrl: './topbar.html',
-    styleUrl: './topbar.scss'
+    templateUrl: './topbar.html'
 })
 export class Topbar {
     readonly shellState = inject(ShellState);

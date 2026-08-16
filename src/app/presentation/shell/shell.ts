@@ -8,7 +8,6 @@ import { Sidebar } from './components/sidebar/sidebar';
     selector: 'app-shell',
     imports: [RouterOutlet, Topbar, Sidebar, Footer],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    templateUrl: './shell.html',
-    styleUrl: './shell.scss'
+    templateUrl: './shell.html'
 })
 export class Shell {}

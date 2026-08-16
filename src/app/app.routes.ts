@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { authGuard } from '@core/guards/auth.guard';
 import { Dashboard } from '@features/dashboard/dashboard';
-import { Notfound } from '@features/notfound/notfound';
+import { NotFound } from '@features/not-found/not-found';
 import { Login } from '@app/presentation/features/auth/login/login';
 import { permissionGuard } from '@presentation/core/guards/permission-guard';
 import { UserPermissionEnum } from '@domain/user/enums/user-permission.enum';
@@ -35,13 +35,9 @@ export const routes: Routes = [
             }
         ]
     },
-    { path: 'notfound', component: Notfound },
+    { path: 'notfound', component: NotFound },
     { path: 'login', component: Login },
     { path: 'register', component: Register },
     { path: 'unauthorized', component: Unauthorized },
-    // { path: 'auth', loadChildren: () => import('./app/pages/auth/auth.routes') },
     { path: '**', redirectTo: '/notfound' }
-    // { path: '**', redirectTo: 'panel/home' },
-    // { path: '',   redirectTo: '/', pathMatch: 'full' },
-    // { path: '**', component: PageNotFoundComponent },
 ];

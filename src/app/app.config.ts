@@ -18,6 +18,7 @@ export const appConfig: ApplicationConfig = {
         }),
         provideZoneChangeDetection({ eventCoalescing: true }),
         provideRouter(routes, withInMemoryScrolling({ anchorScrolling: 'enabled', scrollPositionRestoration: 'enabled' }), withEnabledBlockingInitialNavigation(), withComponentInputBinding()),
+        // eslint-disable-next-line @typescript-eslint/no-deprecated -- PrimeNG's Dialog/ConfirmDialog/Tooltip still depend on @angular/animations; blocked on PrimeNG's own migration (see primefaces/primeng#18863)
         provideAnimationsAsync(),
         providePrimeNG({
             theme: {
@@ -33,7 +34,7 @@ export const appConfig: ApplicationConfig = {
             },
             ripple: true
         }),
-        provideHttpClient(withFetch(), withInterceptors([authInterceptor])),
+        provideHttpClient(withInterceptors([authInterceptor])),
         ...infrastructureProviders,
         ...applicationProviders
     ]

@@ -7,8 +7,7 @@ import { NavItemModel } from '../nav-item.model';
     selector: 'app-nav-item',
     imports: [RouterLink, RouterLinkActive, PIcon, NavItem],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    templateUrl: './nav-item.html',
-    styleUrl: './nav-item.scss'
+    templateUrl: './nav-item.html'
 })
 export class NavItem {
     @Input({ required: true }) item!: NavItemModel;

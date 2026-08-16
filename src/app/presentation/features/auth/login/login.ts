@@ -18,8 +18,7 @@ import { EyeSlash } from '@primeicons/angular/eye-slash';
 @Component({
     selector: 'app-login',
     imports: [ReactiveFormsModule, RouterLink, ButtonModule, InputTextModule, InputPasswordModule, FieldsetModule, InputIconModule, IconFieldModule, Eye, EyeSlash],
-    templateUrl: './login.html',
-    styleUrl: './login.scss'
+    templateUrl: './login.html'
 })
 export class Login implements OnInit {
     private loginFormCreator = inject(LoginFormCreator);

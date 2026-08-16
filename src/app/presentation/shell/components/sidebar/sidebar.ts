@@ -7,8 +7,7 @@ import { ShellState } from '../../shell-state';
     selector: 'app-sidebar',
     imports: [NavItem],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    templateUrl: './sidebar.html',
-    styleUrl: './sidebar.scss'
+    templateUrl: './sidebar.html'
 })
 export class Sidebar {
     protected readonly shellState = inject(ShellState);
