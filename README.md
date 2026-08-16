@@ -1,106 +1,147 @@
-# 📝 Angular Form Builder
+# Form Builder
 
-A **modular Form Builder project** developed with **Angular** following **Domain-Driven Design (DDD)** principles.  
-This project allows creating, editing, and managing dynamic forms, providing better maintainability, scalability, and testability by separating different layers of the application.
+A form-building application built with **Angular 22** (Zoneless, Signals) and **PrimeNG v22**, structured around **Clean Architecture** and **Domain-Driven Design**. Admins design multi-page forms with field-level and cross-field validation rules; viewers fill and submit them. Built as a portfolio project targeting the German frontend job market — every architectural decision below is deliberate and documented as a trade-off, not a default.
 
----
-
-## 🔬 Project Context
-
-This project is not only a dynamic Form Builder, but also a **research and learning challenge** on applying **Clean Architecture** and **Domain-Driven Design (DDD)** in frontend development.
-
-The goal is to design the project so that the **DOMAIN** and **APPLICATION** layers are independent and reusable, enabling the core business logic to be used with other JavaScript frameworks in the future.
+**[Live demo](https://sara-mn.github.io/form-builder/)**
 
 ---
 
-## 🌐 Demo
+## Architecture
 
-You can view the live demo of the Form Builder hosted on GitHub Pages:  
-[🔗 View Demo](https://sara-mn.github.io/form-builder/)
+The codebase is organized into four layers, with dependencies pointing strictly inward:
 
----
-
-## ✨ Features
-- 📌 Create dynamic forms with various field types (text, select, checkbox, etc.)
-- 🔀 Drag & Drop to reorder fields
-- ✅ Flexible validation for form fields
-- 💾 Save and load forms
-- 👀 Live preview of the form
-- 📤 Export forms as JSON
-
----
-
-## 📂 Project Structure
-```plaintext
-src/
-┣ app/
-┃ ┣ application/         # Application layer (Use Cases)
-┃ ┣ domain/              # Domain entities, models, and abstracts
-┃ ┃                       # abstracts: define interfaces and base classes
-┃ ┣ infrastructure/      # Infrastructure layer
-┃ ┃ ┣ api/               # API communication
-┃ ┃ ┗ storage/           # Local or cloud storage
-┃ ┣ presentation/        # Presentation layer (UI)
-┃ ┃ ┣ core/              # Core modules
-┃ ┃ ┃ ┣ guards/          # Route guards
-┃ ┃ ┃ ┣ interceptors/    # HTTP interceptors
-┃ ┃ ┃ ┗ services/        # General services
-┃ ┃ ┣ features/          # Feature modules and FacadeServices
-┃ ┃ ┃                       # FacadeServices: simplify access to Application layer
-┃ ┃ ┣ layout/            # Layouts and UI structure
-┃ ┃ ┗ shared/            # Shared modules and components
-┃ ┣ app.module.ts        # Main application module
-┃ ┣ app.config.ts        # Global configuration
-┃ ┗ app.route.ts         # Route definitions
-┣ assets/                # Static files (CSS, images, etc.)
-┗ environments/          # Environment settings (dev/prod)
 ```
+Presentation → Application → Domain
+                    ↑
+              Infrastructure
+```
+
+```
+src/app/
+├── domain/            Pure TypeScript. Zero Angular imports, zero I/O.
+│                       Models, business rules, and abstract ports
+│                       (*Gateway for technical ports, *Repository for
+│                       data-access ports).
+├── application/        Use Cases. Promise-based orchestration of Domain
+│                       Services against the abstract ports. Still
+│                       framework-agnostic.
+├── infrastructure/     *ApiAdapter classes implement the Domain's
+│                       abstract ports, converting HTTP Observables to
+│                       Promises via firstValueFrom.
+└── presentation/       Angular. Facades (signal-based) expose Application
+                        use cases to components. Routed components live at
+                        each feature's root; presentational children live
+                        under components/; orchestration lives under
+                        services/.
+```
+
+**Why split Domain and Application from Angular entirely:** the business rules — what makes a form valid, when a form locks, how cloning regenerates IDs — don't depend on any UI framework. Keeping them framework-agnostic means they're portable and testable without a `TestBed`, and it forces a real boundary between "what the business needs" and "how Angular happens to render it."
+
+### Business rules
+
+- **Lock rule:** a form is editable until it receives its first submission; after that, its structure and metadata are frozen. Enforced server-side in `UpdateFormUseCase`, not just hidden in the UI.
+- **Clone-to-edit:** cloning a locked form produces a new Draft with fresh IDs on every page, field, and validator — except field `name` values, which are left untouched since they're semantic identifiers, not technical ones.
+- **One submission per user per form:** enforced as a pre-check in `SubmitFormUseCase`, not as a database constraint.
+- **Cascade-delete:** removing a field also strips any cross-field validator (on any page) that referenced it via `targetFieldId` or `dependsOnFieldId`, so validators never point at a field that no longer exists.
+
+### Validation engine
+
+Field-level and cross-field validation rules live in `domain/form/validation/` as pure functions, dispatched through `Record<EnumType, fn>` lookup tables instead of `switch` statements — this gives compile-time exhaustiveness checking; adding a new validator type without handling it in every dispatch table fails to compile. `FormValidationService` (a Domain Service, not a Use Case) validates a whole form against submitted answers and is the authoritative check inside `SubmitFormUseCase`. Presentation-layer adapters bridge these same pure rules into Angular's `ValidatorFn` for real-time feedback in the form-renderer, so the validation logic is written once and used both live in the browser and as the server-side source of truth.
+
+**Known scope limit:** real-time cross-page validation isn't wired into the renderer, since a page's `FormGroup` can't see other pages' controls. `SubmitFormUseCase` remains the authoritative check for those rules at submit time.
+
 ---
 
-## 🚀 Getting Started Prerequisites
+## Tech stack
 
-- [Node.js](https://nodejs.org/) (Recommended LTS version)
-- [Angular CLI](https://github.com/angular/angular-cli) (version 19.2.7)
+| | |
+|---|---|
+| Framework | Angular 22 — standalone components, Zoneless change detection, Signals, `@Service()` + `inject()` |
+| UI | PrimeNG v22 (Aura theme) + Tailwind v4 via `tailwindcss-primeui` |
+| Forms | Reactive Forms (form-renderer, to integrate with the custom validation engine); plain signal-bound inputs elsewhere |
+| Testing | Vitest + `@angular/build:unit-test`, `happy-dom`, Playwright Chromium |
+| Backend | Custom Express server (ESM) for JWT auth (`jsonwebtoken`, `bcryptjs`, httpOnly refresh cookie) + `json-server` for CRUD |
+
+---
+
+## Getting started
+
+### Prerequisites
+
+- Node.js (LTS)
+- Angular CLI
+
+### Install
 
 ```bash
 git clone https://github.com/sara-mn/form-builder.git
 cd form-builder
 npm install
 ```
-Running the Application
+
+### Configure the backend
+
+The mock API server needs two JWT secrets. Copy the example file and fill in your own values:
 
 ```bash
-ng serve
+cp .env.example .env
 ```
-The application will be available at 👉 http://localhost:4200/.
 
-Build for Production
+### Run
+
+Two processes run side by side in development — the Angular dev server and the mock API:
 
 ```bash
-ng build --configuration production
+npm run mock-server   # Express + json-server, http://localhost:3000
+npm start              # Angular dev server, http://localhost:4200
 ```
----
-## 🛠️ Technologies & Tools
 
-- ⚡ Angular
-- 🔄 RxJS
-- 🎨 Angular Material
-- 🏗️ Domain-Driven Design (DDD) architecture
-- 📦 Optional: NgRx for state management
+**Seeded accounts:**
 
----
-## ✅ Testing
+| Email | Password | Role |
+|---|---|---|
+| `admin@example.com` | `admin123` | Admin |
+| `user@example.com` | `user123` | Viewer |
 
-Run tests with:
+### Test
 
 ```bash
-ng test
+npm test
 ```
+
+### Build
+
+```bash
+npm run build-prod
+```
+
 ---
-## 📄 License
 
-This project is licensed under the MIT License.
+## Project status
 
+Actively developed in phases, each scoped and closed before the next begins:
 
+- ✅ JWT + RBAC authentication
+- ✅ Standalone shell, Tailwind styling, dark mode
+- ✅ Form persistence, multi-page domain model, validation engine
+- ✅ Core test coverage (domain, application, infrastructure, shell)
+- ✅ Architecture cleanup, accessibility fixes, visual pass, dashboard
+- ⬜ Remaining component/facade test coverage (auth, form-designer, form-list, form-renderer)
 
- 
+---
+
+## Development notes
+
+This project was built as a solo learning/portfolio effort, with Claude used as a development aid alongside manual coding:
+
+- **Claude.ai** for architecture review, working through design trade-offs (e.g. domain modeling, layer boundaries, naming conventions), and code suggestions.
+- **Claude Code** (terminal) for diagnostics and verification only — inspecting files, running builds/tests, and reporting output back for review.
+- All file edits were applied manually; every suggested change was reviewed, and often adjusted, before being committed.
+
+Architectural decisions, trade-offs, and the final code are my own — Claude was a tool in the process, not the author of the design.
+
+---
+
+## License
+
+MIT
