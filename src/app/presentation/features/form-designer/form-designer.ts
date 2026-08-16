@@ -7,12 +7,12 @@ import { FieldList } from './components/field-list/field-list';
 import { FieldEditorDialog } from './components/field-editor-dialog/field-editor-dialog';
 import { FieldConfigModel, FormPageModel, Guid } from '@app/domain';
 import { FormDesignerFacade } from './services/form-designer.facade';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
     selector: 'app-form-designer',
-    imports: [LockBanner, FormMetadataPanel, PageSidebar, FieldList, FieldEditorDialog],
-    templateUrl: './form-designer.html',
-    styleUrl: './form-designer.scss'
+    imports: [LockBanner, FormMetadataPanel, PageSidebar, FieldList, FieldEditorDialog, ButtonModule],
+    templateUrl: './form-designer.html'
 })
 export class FormDesigner {
     id = input.required<Guid>();

@@ -1,12 +1,16 @@
 import { Component, input, output, signal } from '@angular/core';
 import { FieldValidatorConfigModel, FieldValidatorTypeEnum, Guid, isValidNumericString, isValidRegexPattern } from '@app/domain';
 import { getValidatorConfigError, numericValidatorTypes } from '@app/domain/form/validation/validator-config-validation';
+import { FormsModule } from '@angular/forms';
+import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
+import { SelectModule } from 'primeng/select';
+import { Times } from '@primeicons/angular/times';
 
 @Component({
     selector: 'app-field-validator-editor',
-    imports: [],
-    templateUrl: './field-validator-editor.html',
-    styleUrl: './field-validator-editor.scss'
+    imports: [FormsModule, ButtonModule, InputTextModule, SelectModule, Times],
+    templateUrl: './field-validator-editor.html'
 })
 export class FieldValidatorEditor {
     validators = input.required<FieldValidatorConfigModel[]>();
