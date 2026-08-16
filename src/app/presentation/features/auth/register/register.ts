@@ -1,6 +1,6 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { FormControls } from '@shared/forms/form.type';
 import { RegisterFormModel } from '@features/auth/register/register-form.model';
 import { AuthFacade } from '@features/auth/services/auth.facade';
@@ -17,7 +17,7 @@ import { RegisterFormAdapter } from './register-form-model.adapter';
 
 @Component({
     selector: 'app-register',
-    imports: [ReactiveFormsModule, ButtonModule, InputTextModule, InputPasswordModule, FieldsetModule, InputIconModule, IconFieldModule, Eye, EyeSlash],
+    imports: [ReactiveFormsModule, RouterLink, ButtonModule, InputTextModule, InputPasswordModule, FieldsetModule, InputIconModule, IconFieldModule, Eye, EyeSlash],
     templateUrl: './register.html',
     styleUrl: './register.scss'
 })

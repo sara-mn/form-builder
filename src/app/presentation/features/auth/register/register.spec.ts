@@ -121,4 +121,9 @@ describe('Register', () => {
 
         expect(component.form.controls.password.hasError('minlength')).toBe(true);
     });
+
+    it('should link to the login page', () => {
+        const link = fixture.debugElement.query(By.css('a[routerLink="/login"]'));
+        expect(link).toBeTruthy();
+    });
 });

@@ -1,28 +1,63 @@
-<div class="flex align-items-center justify-content-start">
-    <p-fieldset legend="Login">
-        <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col" data-testid="login-form">
-            <div class="card flex flex-col gap-4">
-                <div class="flex flex-col gap-2">
-                    <label for="email">Email: </label>
-                    <input id="email" type="email" pInputText formControlName="email" autocomplete="username" data-testid="login-email-input" />
+<div class="lg:grid-cols-2 grid min-h-screen grid-cols-1">
+    <div class="p-12 lg:flex relative hidden flex-col justify-between overflow-hidden bg-primary text-primary-contrast">
+        <svg class="inset-0 pointer-events-none absolute h-full w-full opacity-10" viewBox="0 0 480 640" preserveAspectRatio="xMidYMid slice">
+            <defs>
+                <g id="field-motif">
+                    <rect x="0" y="0" width="120" height="12" rx="6" fill="currentColor" />
+                    <rect x="0" y="24" width="90" height="12" rx="6" fill="currentColor" />
+                    <rect x="0" y="48" width="60" height="12" rx="6" fill="currentColor" />
+                </g>
+            </defs>
+            <use href="#field-motif" x="20" y="40" />
+            <use href="#field-motif" x="260" y="90" />
+            <use href="#field-motif" x="60" y="220" />
+            <use href="#field-motif" x="300" y="270" />
+            <use href="#field-motif" x="20" y="400" />
+            <use href="#field-motif" x="270" y="450" />
+            <use href="#field-motif" x="80" y="560" />
+        </svg>
+
+        <div class="gap-3 relative z-10 flex items-center">
+            <img src="assets/img/form_builder_logo_simplified.png" alt="" width="32" height="32" />
+            <span class="text-lg font-medium">Form Builder</span>
+        </div>
+
+        <div class="max-w-sm relative z-10">
+            <p class="text-2xl font-medium leading-snug">Build forms your team can trust, from draft to submission.</p>
+        </div>
+
+        <div class="text-sm relative z-10 text-primary-contrast/70">Internal tool · Admin & Viewer access</div>
+    </div>
+
+    <div class="p-6 sm:p-10 flex items-center justify-center">
+        <div class="max-w-sm w-full">
+            <h1 class="text-2xl font-medium text-surface-900 dark:text-surface-0">Sign in</h1>
+            <p class="mt-1 text-sm text-surface-500 dark:text-surface-400">Enter your email and password to continue.</p>
+
+            <form [formGroup]="form" (ngSubmit)="onSubmit()" class="mt-8 gap-4 flex flex-col" data-testid="login-form">
+                <div class="gap-1.5 flex flex-col">
+                    <label for="email" class="text-sm font-semibold text-surface-700 dark:text-surface-300">Email</label>
+                    <input id="email" type="email" pInputText class="w-full" formControlName="email" autocomplete="username" data-testid="login-email-input" />
                 </div>
-                <div class="flex flex-col gap-2">
-                    <label for="password">Password: </label>
+
+                <div class="gap-1.5 flex flex-col">
+                    <label for="password" class="text-sm font-semibold text-surface-700 dark:text-surface-300">Password</label>
                     <p-iconfield>
-                        <input pInputPassword inputId="password" id="password" formControlName="password" autocomplete="current-password" [(mask)]="mask" placeholder="Password" data-testid="login-password-input" />
+                        <input pInputPassword inputId="password" id="password" class="w-full" formControlName="password" autocomplete="current-password" [(mask)]="mask" placeholder="Password" data-testid="login-password-input" />
                         <p-inputicon (click)="mask = !mask" (keydown.enter)="mask = !mask" tabindex="0" role="button" [attr.aria-label]="mask ? 'Show password' : 'Hide password'" style="cursor: pointer" data-testid="login-password-toggle">
                             @if (mask) {
-                                <svg data-p-icon="eye"></svg>
+                            <svg data-p-icon="eye"></svg>
                             } @else {
-                                <svg data-p-icon="eye-slash"></svg>
+                            <svg data-p-icon="eye-slash"></svg>
                             }
                         </p-inputicon>
                     </p-iconfield>
                 </div>
-                <div class="flex flex-col gap-2">
-                    <button pButton type="submit" [disabled]="form.invalid" data-testid="login-submit-button">Login</button>
-                </div>
-            </div>
-        </form>
-    </p-fieldset>
+
+                <button pButton type="submit" class="mt-2 w-full" [disabled]="form.invalid" data-testid="login-submit-button">Sign in</button>
+            </form>
+
+            <p class="mt-6 text-sm text-surface-500 dark:text-surface-400">Don't have an account? <a routerLink="/register" class="font-medium text-primary">Create one</a></p>
+        </div>
+    </div>
 </div>

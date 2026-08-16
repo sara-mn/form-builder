@@ -97,4 +97,9 @@ describe('Login', () => {
 
         expect(toggle.getAttribute('aria-label')).toBe('Show password');
     });
+
+    it('should link to the register page', () => {
+        const link = fixture.debugElement.query(By.css('a[routerLink="/register"]'));
+        expect(link).toBeTruthy();
+    });
 });
