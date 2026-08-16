@@ -1,0 +1,37 @@
+<div class="h-14 px-5 flex items-center justify-between border-b border-surface-200 bg-surface-0 dark:border-surface-700 dark:bg-surface-900">
+    <div class="gap-2 flex items-center">
+        <button
+            type="button"
+            class="lg:hidden w-8 h-8 rounded-md flex items-center justify-center text-surface-600 hover:bg-surface-100 dark:text-surface-300 dark:hover:bg-surface-800"
+            (click)="shellState.toggleMobileSidebar()"
+            aria-label="Toggle menu"
+        >
+            <svg pIcon="bars" class="w-5 h-5"></svg>
+        </button>
+
+        <a routerLink="/" class="gap-2 flex items-center text-surface-900 no-underline dark:text-surface-0">
+            <img [ngSrc]="'assets/img/form_builder_logo_simplified.png'" alt="Form Builder" height="40" width="40" />
+            <span class="font-medium">Form Builder</span>
+        </a>
+    </div>
+
+    <div class="gap-4 flex items-center">
+        <button pButton type="button" [rounded]="true" [text]="true" severity="secondary" (click)="shellState.toggleDarkMode()" aria-label="Toggle dark mode">
+            <svg [pIcon]="shellState.darkTheme() ? 'sun' : 'moon'" class="w-4 h-4"></svg>
+        </button>
+
+        <div class="h-5 w-px bg-surface-200 dark:bg-surface-700"></div>
+
+        @if (authState.currentUser(); as user) {
+        <div class="gap-2 flex items-center" data-testid="user-info">
+            <div class="w-8 h-8 text-xs font-medium flex items-center justify-center rounded-full bg-primary/15 text-primary">{{ user.name?.charAt(0) }}</div>
+            <div class="sm:flex leading-tight hidden flex-col">
+                <span class="text-sm font-medium text-surface-900 dark:text-surface-0">{{ user.name }}</span>
+                <span class="text-xs font-medium px-1.5 w-fit rounded-full bg-primary/15 text-primary">{{ user.roles[0] }}</span>
+            </div>
+        </div>
+        }
+
+        <button pButton type="button" severity="secondary" [text]="true" (click)="logout()" aria-label="Log out">Log out</button>
+    </div>
+</div>

@@ -8,8 +8,7 @@ export type SimpleInputType = 'text' | 'password' | 'email' | 'number' | 'tel' |
 @Component({
     selector: 'app-simple-text-input',
     imports: [ReactiveFormsModule, KeyValuePipe, InputTextModule],
-    templateUrl: './simple-text-input.html',
-    styleUrl: './simple-text-input.scss'
+    templateUrl: './simple-text-input.html'
 })
 export class SimpleTextInput {
     field = input.required<FieldConfigModel>();

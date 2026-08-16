@@ -18,6 +18,7 @@ export const appConfig: ApplicationConfig = {
         }),
         provideZoneChangeDetection({ eventCoalescing: true }),
         provideRouter(routes, withInMemoryScrolling({ anchorScrolling: 'enabled', scrollPositionRestoration: 'enabled' }), withEnabledBlockingInitialNavigation(), withComponentInputBinding()),
+        // eslint-disable-next-line @typescript-eslint/no-deprecated -- PrimeNG's Dialog/ConfirmDialog/Tooltip still depend on @angular/animations; blocked on PrimeNG's own migration (see primefaces/primeng#18863)
         provideAnimationsAsync(),
         providePrimeNG({
             theme: {
@@ -27,33 +28,13 @@ export const appConfig: ApplicationConfig = {
                     darkModeSelector: '.app-dark',
                     cssLayer: {
                         name: 'primeng',
-                        order: 'tailwind, primeng'
+                        order: 'tailwind-base, primeng, tailwind-utilities'
                     }
                 }
             },
-            ripple: true,
-            // inputVariant: 'filled',
-            zIndex: {
-                modal: 1100, // dialog, sidebar
-                overlay: 1000, // dropdown, overlaypanel
-                menu: 1000, // overlay menus
-                tooltip: 1100 // tooltip
-            },
-            translation: {
-                accept: 'Aceptar',
-                reject: 'Rechazar'
-                //translations
-            }
-            // csp: {
-            //   nonce: '...'
-            // },
-            // filterMatchModeOptions: {
-            //   text: [FilterMatchMode.STARTS_WITH, FilterMatchMode.CONTAINS, FilterMatchMode.NOT_CONTAINS, FilterMatchMode.ENDS_WITH, FilterMatchMode.EQUALS, FilterMatchMode.NOT_EQUALS],
-            //   numeric: [FilterMatchMode.EQUALS, FilterMatchMode.NOT_EQUALS, FilterMatchMode.LESS_THAN, FilterMatchMode.LESS_THAN_OR_EQUAL_TO, FilterMatchMode.GREATER_THAN, FilterMatchMode.GREATER_THAN_OR_EQUAL_TO],
-            //   date: [FilterMatchMode.DATE_IS, FilterMatchMode.DATE_IS_NOT, FilterMatchMode.DATE_BEFORE, FilterMatchMode.DATE_AFTER]
-            // }
+            ripple: true
         }),
-        provideHttpClient(withFetch(), withInterceptors([authInterceptor])),
+        provideHttpClient(withInterceptors([authInterceptor])),
         ...infrastructureProviders,
         ...applicationProviders
     ]

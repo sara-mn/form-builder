@@ -1,4 +1,5 @@
 import { Component, input, output } from '@angular/core';
+import { InputTextModule } from 'primeng/inputtext';
 
 export interface MetadataChange {
     title: string;
@@ -7,9 +8,8 @@ export interface MetadataChange {
 
 @Component({
     selector: 'app-form-metadata-panel',
-    imports: [],
-    templateUrl: './form-metadata-panel.html',
-    styleUrl: './form-metadata-panel.scss'
+    imports: [InputTextModule],
+    templateUrl: './form-metadata-panel.html'
 })
 export class FormMetadataPanel {
     metaDataChanged = output<{ title: string; description: string }>();

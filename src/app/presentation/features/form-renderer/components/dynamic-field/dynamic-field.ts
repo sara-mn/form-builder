@@ -23,8 +23,7 @@ const DATE_TIME_TYPES = new Set<FieldTypeEnum>([FieldTypeEnum.Date, FieldTypeEnu
 @Component({
     selector: 'app-dynamic-field',
     imports: [SimpleTextInput, TextareaFieldInput, SelectFieldInput, RadioFieldInput, CheckboxFieldInput, DateTimeFieldInput, DateRangeFieldInput, ColorFieldInput, RangeFieldInput],
-    templateUrl: './dynamic-field.html',
-    styleUrl: './dynamic-field.scss'
+    templateUrl: './dynamic-field.html'
 })
 export class DynamicField {
     field = input.required<FieldConfigModel>();

@@ -7,8 +7,7 @@ import { PrimeNG } from 'primeng/config';
     imports: [RouterOutlet],
     templateUrl: './app.component.html',
     standalone: true,
-    changeDetection: ChangeDetectionStrategy.Eager,
-    styleUrl: './app.component.scss'
+    changeDetection: ChangeDetectionStrategy.Eager
 })
 export class AppComponent implements OnInit {
     title = 'form-builder';

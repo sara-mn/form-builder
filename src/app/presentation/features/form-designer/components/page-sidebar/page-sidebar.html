@@ -1,17 +1,23 @@
-<div class="page-sidebar">
-    <div class="page-sidebar__header">
-        <h3>Pages</h3>
-        <button type="button" class="page-sidebar__add-btn" [disabled]="disabled()" (click)="onAdd()">+ Add Page</button>
+<div class="w-[220px] shrink-0 border-r border-surface-200 pr-4 dark:border-surface-700">
+    <div class="mb-4 flex flex-col gap-2">
+        <h3 class="text-sm font-semibold text-surface-600 dark:text-surface-400">Pages</h3>
+        <button pButton type="button" size="small" [disabled]="disabled()" (click)="onAdd()">+ Add Page</button>
     </div>
 
-    <ul class="page-sidebar__list">
+    <ul class="m-0 flex list-none flex-col gap-1 p-0">
         @for (page of pages(); track page.id) {
-        <li class="page-sidebar__item" [class.page-sidebar__item--active]="page.id === selectedPageId()" (click)="onSelect(page.id)">
-            <span class="page-sidebar__item-title">{{ page.title }}</span>
-            <button type="button" class="page-sidebar__delete-btn" [disabled]="disabled()" (click)="onDelete(page.id, $event)" aria-label="Delete page"></button>
+        <li
+            class="flex cursor-pointer items-center justify-between rounded-md px-3 py-2 text-sm hover:bg-surface-100 dark:hover:bg-surface-800"
+            [class]="page.id === selectedPageId() ? 'bg-primary-50 font-semibold text-primary-700 dark:bg-primary-950 dark:text-primary-300' : ''"
+            (click)="onSelect(page.id)"
+        >
+            <span>{{ page.title }}</span>
+            <button pButton type="button" severity="danger" [text]="true" [rounded]="true" size="small" [disabled]="disabled()" (click)="onDelete(page.id, $event)" aria-label="Delete page">
+                <svg data-p-icon="trash" class="h-4 w-4"></svg>
+            </button>
         </li>
         } @empty {
-        <li class="page-sidebar__empty">No pages yet.</li>
+        <li class="px-3 py-2 text-[13px] text-surface-400 italic dark:text-surface-500">No pages yet.</li>
         }
     </ul>
 </div>

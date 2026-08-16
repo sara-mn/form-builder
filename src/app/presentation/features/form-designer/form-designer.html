@@ -1,0 +1,24 @@
+@if (form(); as currentForm) {
+<div class="mx-auto max-w-4xl p-6">
+    @if (isLocked()) {
+    <app-lock-banner [cloning]="isCloning()" (cloneRequested)="onCloneRequested()" />
+    }
+
+    <div class="mb-6 flex items-start justify-between gap-4">
+        <app-form-metadata-panel class="flex-1" [title]="currentForm.title" [description]="currentForm.description" [disabled]="isLocked()" (metadataChanged)="onMetadataChanged($event)" />
+        <button pButton type="button" severity="success" class="whitespace-nowrap" [disabled]="isLocked() || isSaving()" (click)="onSave()">{{ isSaving() ? 'Saving...' : 'Save' }}</button>
+    </div>
+
+    <div class="flex gap-6">
+        <app-page-sidebar [pages]="currentForm.pages" [selectedPageId]="selectedPageId()" [disabled]="isLocked()" (pageSelected)="onPageSelected($event)" (pageAdded)="onPageAdded()" (pageDeleted)="onPageDeleted($event)" />
+
+        @if (selectedPage; as page) {
+        <app-field-list [fields]="page.fields" [disabled]="isLocked()" (fieldAddRequested)="onFieldAddRequested()" (fieldEditRequested)="onFieldEditRequested($event)" (fieldDeleteRequested)="onFieldDeleteRequested($event)" />
+        }
+    </div>
+
+    <app-field-editor-dialog [isOpen]="isDialogOpen()" [editingField]="editingField()" [nextOrder]="selectedPage?.fields?.length ?? 0" (closed)="onFieldDialogClosed()" (saved)="onFieldSaved($event)" />
+</div>
+} @else {
+<div class="flex items-center justify-center p-12 text-surface-400 dark:text-surface-500">Loading form...</div>
+}

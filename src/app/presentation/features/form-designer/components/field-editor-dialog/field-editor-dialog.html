@@ -1,28 +1,24 @@
 <p-dialog [header]="editingField() ? 'Edit Field' : 'Add Field'" [visible]="isOpen()" [modal]="true" [style]="{ width: '32rem' }" (onHide)="onDialogHide()">
-    <div class="field-editor">
-        <div class="field-editor__row">
-            <label for="field-name">Name (key)</label>
-            <input id="field-name" type="text" [value]="name()" (input)="onNameChange($any($event.target).value)" />
+    <div class="flex flex-col gap-4">
+        <div class="flex flex-col gap-1.5">
+            <label for="field-name" class="text-[13px] font-semibold text-surface-600 dark:text-surface-400">Name (key)</label>
+            <input id="field-name" type="text" pInputText class="w-full" [value]="name()" (input)="onNameChange($any($event.target).value)" />
         </div>
 
-        <div class="field-editor__row">
-            <label for="field-label">Label</label>
-            <input id="field-label" type="text" [value]="label()" (input)="onLabelChange($any($event.target).value)" />
+        <div class="flex flex-col gap-1.5">
+            <label for="field-label" class="text-[13px] font-semibold text-surface-600 dark:text-surface-400">Label</label>
+            <input id="field-label" type="text" pInputText class="w-full" [value]="label()" (input)="onLabelChange($any($event.target).value)" />
         </div>
 
-        <div class="field-editor__row">
-            <label for="field-type">Type</label>
-            <select id="field-type" [value]="type()" (change)="onTypeChange($any($event.target).value)">
-                @for (t of fieldTypes; track t) {
-                <option [value]="t">{{ t }}</option>
-                }
-            </select>
+        <div class="flex flex-col gap-1.5">
+            <label for="field-type" class="text-[13px] font-semibold text-surface-600 dark:text-surface-400">Type</label>
+            <p-select inputId="field-type" [options]="fieldTypes" [ngModel]="type()" (ngModelChange)="onTypeChange($event)" styleClass="w-full" />
         </div>
 
         @if (showOptions) {
-        <div class="field-editor__row">
-            <label for="field-options">Options (one per line, key:value)</label>
-            <textarea id="field-options" rows="3" [value]="optionsText()" (input)="onOptionsTextChange($any($event.target).value)"></textarea>
+        <div class="flex flex-col gap-1.5">
+            <label for="field-options" class="text-[13px] font-semibold text-surface-600 dark:text-surface-400">Options (one per line, key:value)</label>
+            <textarea id="field-options" pTextarea rows="3" class="w-full" [value]="optionsText()" (input)="onOptionsTextChange($any($event.target).value)"></textarea>
         </div>
         }
 
@@ -30,7 +26,7 @@
     </div>
 
     <ng-template #footer>
-        <button type="button" class="field-editor__cancel-btn" (click)="onDialogHide()">Cancel</button>
-        <button type="button" class="field-editor__save-btn" (click)="onSave()">Save</button>
+        <button pButton type="button" severity="secondary" (click)="onDialogHide()">Cancel</button>
+        <button pButton type="button" (click)="onSave()">Save</button>
     </ng-template>
 </p-dialog>

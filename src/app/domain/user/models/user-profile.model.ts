@@ -1,5 +1,5 @@
 export interface UserProfile {
-  avatarUrl: string;
-  bio: string;
-  phone?: string;
+    avatarUrl: string;
+    bio: string;
+    mobile?: string;
 }

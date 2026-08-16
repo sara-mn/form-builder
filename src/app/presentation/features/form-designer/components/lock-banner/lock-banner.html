@@ -1,8 +1,8 @@
-<div class="lock-banner" role="alert">
-    <span class="lock-banner__icon">🔒</span>
-    <div class="lock-banner__text">
+<div class="mb-4 flex items-center gap-3 rounded-lg border border-red-200 bg-red-50 px-4 py-3 dark:border-red-900 dark:bg-red-950/40" role="alert">
+    <span class="text-xl">🔒</span>
+    <div class="flex flex-1 flex-col text-sm text-red-900 dark:text-red-100">
         <strong>This form is locked.</strong>
         <span>It has received submissions and can no longer be edited. Clone it to make changes.</span>
     </div>
-    <button type="button" class="lock-banner__clone-btn" [disabled]="cloning()" (click)="onCloneClick()">{{ cloning() ? 'Cloning...' : 'Clone to Edit' }}</button>
+    <button pButton type="button" severity="danger" [disabled]="cloning()" (click)="onCloneClick()">{{ cloning() ? 'Cloning...' : 'Clone to Edit' }}</button>
 </div>

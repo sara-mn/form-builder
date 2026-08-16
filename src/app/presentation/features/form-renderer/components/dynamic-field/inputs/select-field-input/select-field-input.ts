@@ -7,8 +7,7 @@ import { SelectModule } from 'primeng/select';
 @Component({
     selector: 'app-select-field-input',
     imports: [ReactiveFormsModule, SelectModule, KeyValuePipe],
-    templateUrl: './select-field-input.html',
-    styleUrl: './select-field-input.scss'
+    templateUrl: './select-field-input.html'
 })
 export class SelectFieldInput {
     field = input.required<FieldConfigModel>();

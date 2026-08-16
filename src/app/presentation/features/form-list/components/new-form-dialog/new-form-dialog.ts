@@ -1,5 +1,8 @@
 import { Component, input, model, output } from '@angular/core';
 import { DialogModule } from 'primeng/dialog';
+import { InputTextModule } from 'primeng/inputtext';
+import { TextareaModule } from 'primeng/textarea';
+import { ButtonModule } from 'primeng/button';
 
 export interface NewFormData {
     title: string;
@@ -7,9 +10,8 @@ export interface NewFormData {
 }
 @Component({
     selector: 'app-new-form-dialog',
-    imports: [DialogModule],
-    templateUrl: './new-form-dialog.html',
-    styleUrl: './new-form-dialog.scss'
+    imports: [DialogModule, InputTextModule, TextareaModule, ButtonModule],
+    templateUrl: './new-form-dialog.html'
 })
 export class NewFormDialog {
     isOpen = input<boolean>(false);

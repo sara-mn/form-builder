@@ -1,0 +1,27 @@
+<nav
+    class="lg:sticky inset-y-0 left-0 top-14 lg:z-auto w-64 lg:w-60 lg:translate-x-0 lg:border-0 fixed z-20 -translate-x-full border-r border-surface-200 bg-surface-0 transition-transform duration-200 dark:border-surface-700 dark:bg-surface-900"
+    [class.translate-x-0]="shellState.mobileSidebarOpen()"
+    aria-label="Main navigation"
+    data-testid="sidebar-nav"
+>
+    <ul class="gap-1 p-3 flex flex-col">
+        @for (item of navItems; track item.label) {
+        <li>
+            <app-nav-item [item]="item" [root]="true" />
+        </li>
+        }
+    </ul>
+</nav>
+
+@if (shellState.mobileSidebarOpen()) {
+<div
+    class="inset-0 top-14 lg:hidden fixed z-10 bg-surface-900/40"
+    role="button"
+    tabindex="0"
+    aria-label="Close navigation menu"
+    (click)="shellState.closeMobileSidebar()"
+    (keydown.enter)="shellState.closeMobileSidebar()"
+    (keydown.escape)="shellState.closeMobileSidebar()"
+    data-testid="sidebar-backdrop"
+></div>
+}

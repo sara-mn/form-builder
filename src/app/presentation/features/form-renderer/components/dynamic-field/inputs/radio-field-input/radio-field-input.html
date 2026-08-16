@@ -1,14 +1,14 @@
-<div class="field-input">
-    <label>{{ field().label }}</label>
-    <div class="field-input__radio-group">
+<div class="mb-4 gap-1.5 flex flex-col">
+    <label class="text-sm font-semibold text-surface-700 dark:text-surface-300">{{ field().label }}</label>
+    <div class="gap-2 flex flex-col">
         @for (opt of options(); track opt.key) {
-        <div class="field-input__radio-option">
+        <div class="gap-2 flex items-center">
             <p-radiobutton [inputId]="field().name + '-' + opt.key" [value]="opt.key" [formControl]="control()" [name]="field().name" />
-            <label [for]="field().name + '-' + opt.key">{{ opt.value }}</label>
+            <label [for]="field().name + '-' + opt.key" class="text-sm text-surface-700 dark:text-surface-300">{{ opt.value }}</label>
         </div>
         }
     </div>
     @if (control().invalid && control().touched) {
-    <span class="field-input__error"> @for (error of control().errors | keyvalue; track error.key) { {{ error.value }} } </span>
+    <span class="text-red-600 dark:text-red-400 text-[13px]"> @for (error of control().errors | keyvalue; track error.key) { {{ error.value }} } </span>
     }
 </div>

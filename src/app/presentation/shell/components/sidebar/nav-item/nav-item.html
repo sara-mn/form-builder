@@ -1,0 +1,32 @@
+@if (item.items?.length) {
+<button
+    type="button"
+    class="w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm text-surface-700 dark:text-surface-200 hover:bg-surface-100 dark:hover:bg-surface-800"
+    (click)="toggle()"
+    [attr.aria-expanded]="expanded()"
+    [attr.aria-label]="'Toggle ' + item.label + ' submenu'"
+>
+    <svg [pIcon]="item.icon" class="w-4 h-4 shrink-0" aria-hidden="true"></svg>
+    <span class="flex-1 text-left">{{ item.label }}</span>
+    <svg [pIcon]="expanded() ? 'chevron-up' : 'chevron-down'" class="w-3.5 h-3.5" aria-hidden="true"></svg>
+</button>
+
+<ul class="overflow-hidden transition-[max-height] duration-200 pl-7 flex flex-col gap-1" [style.max-height]="expanded() ? '500px' : '0px'" [attr.data-testid]="'submenu-' + item.label">
+    @for (child of item.items; track child.label) {
+    <li>
+        <app-nav-item [item]="child" />
+    </li>
+    }
+</ul>
+} @else {
+<a
+    class="flex items-center gap-3 px-3 py-2 rounded-md text-sm text-surface-700 dark:text-surface-200 hover:bg-surface-100 dark:hover:bg-surface-800"
+    [routerLink]="item.routerLink"
+    routerLinkActive="!bg-primary/10 !text-primary font-medium"
+    [routerLinkActiveOptions]="{ exact: true }"
+    [attr.aria-label]="item.label"
+>
+    <svg [pIcon]="item.icon" class="w-4 h-4 shrink-0" aria-hidden="true"></svg>
+    <span>{{ item.label }}</span>
+</a>
+}

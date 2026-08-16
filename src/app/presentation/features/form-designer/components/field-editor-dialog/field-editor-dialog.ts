@@ -2,12 +2,16 @@ import { Component, effect, input, output, signal } from '@angular/core';
 import { DialogModule } from 'primeng/dialog';
 import { FieldValidatorEditor } from '../field-validator-editor/field-validator-editor';
 import { FieldConfigModel, FieldTypeEnum, FieldValidatorConfigModel } from '@app/domain';
+import { SelectModule } from 'primeng/select';
+import { FormsModule } from '@angular/forms';
+import { InputTextModule } from 'primeng/inputtext';
+import { TextareaModule } from 'primeng/textarea';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
     selector: 'app-field-editor-dialog',
-    imports: [DialogModule, FieldValidatorEditor],
-    templateUrl: './field-editor-dialog.html',
-    styleUrl: './field-editor-dialog.scss'
+    imports: [DialogModule, FieldValidatorEditor, FormsModule, SelectModule, InputTextModule, TextareaModule, ButtonModule],
+    templateUrl: './field-editor-dialog.html'
 })
 export class FieldEditorDialog {
     isOpen = input.required<boolean>();

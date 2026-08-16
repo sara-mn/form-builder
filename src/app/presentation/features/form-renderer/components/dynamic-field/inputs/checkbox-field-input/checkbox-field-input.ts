@@ -7,8 +7,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 @Component({
     selector: 'app-checkbox-field-input',
     imports: [ReactiveFormsModule, CheckboxModule, KeyValuePipe],
-    templateUrl: './checkbox-field-input.html',
-    styleUrl: './checkbox-field-input.scss'
+    templateUrl: './checkbox-field-input.html'
 })
 export class CheckboxFieldInput {
     field = input.required<FieldConfigModel>();
