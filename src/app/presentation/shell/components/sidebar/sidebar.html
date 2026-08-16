@@ -1,10 +1,10 @@
 <nav
-    class="fixed lg:static inset-y-0 lg:inset-auto left-0 top-14 lg:top-0 z-20 lg:z-auto w-64 lg:w-60 -translate-x-full lg:translate-x-0 transition-transform duration-200 border-r border-surface-200 dark:border-surface-700 bg-surface-0 dark:bg-surface-900"
+    class="lg:sticky inset-y-0 left-0 top-14 lg:z-auto w-64 lg:w-60 lg:translate-x-0 lg:border-0 fixed z-20 -translate-x-full border-r border-surface-200 bg-surface-0 transition-transform duration-200 dark:border-surface-700 dark:bg-surface-900"
     [class.translate-x-0]="shellState.mobileSidebarOpen()"
     aria-label="Main navigation"
     data-testid="sidebar-nav"
 >
-    <ul class="flex flex-col gap-1 p-3">
+    <ul class="gap-1 p-3 flex flex-col">
         @for (item of navItems; track item.label) {
         <li>
             <app-nav-item [item]="item" [root]="true" />
@@ -15,7 +15,7 @@
 
 @if (shellState.mobileSidebarOpen()) {
 <div
-    class="fixed inset-0 top-14 z-10 bg-surface-900/40 lg:hidden"
+    class="inset-0 top-14 lg:hidden fixed z-10 bg-surface-900/40"
     role="button"
     tabindex="0"
     aria-label="Close navigation menu"
