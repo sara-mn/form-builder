@@ -10,27 +10,8 @@
     "watch": "ng build --watch --configuration development",
     "format": "prettier --write \"**/*.{js,mjs,ts,mts,d.ts,html}\" --cache",
     "test": "ng test",
-    "prestart": "npm run svg",
-    "prebuild": "npm run svg",
-    "svg": "svg-generator",
     "mock-server": "node server/index.js",
     "deploy-gh": "npx angular-cli-ghpages --dir=dist/form-builder/browser"
-  },
-  "svgGenerator": {
-    "outputPath": "./src/app//presentation/shared/modules/custom-icons/icons",
-    "srcPath": "./src/assets/svg",
-    "svgoConfig": {
-      "plugins": [
-        "removeDimensions",
-        "cleanupAttrs",
-        {
-          "name": "convertColors",
-          "params": {
-            "currentColor": true
-          }
-        }
-      ]
-    }
   },
   "private": true,
   "dependencies": {
@@ -43,7 +24,6 @@
     "@angular/platform-browser": "^22.0.5",
     "@angular/platform-browser-dynamic": "^22.0.5",
     "@angular/router": "^22.0.5",
-    "@ngneat/svg-icon": "^7.1.6",
     "@primeicons/angular": "^8.0.0",
     "@primeuix/themes": "^3.0.0-rc.1",
     "@tailwindcss/postcss": "^4.1.4",
@@ -60,7 +40,6 @@
   "devDependencies": {
     "@angular-devkit/build-angular": "^22.0.5",
     "@angular/compiler-cli": "^22.0.5",
-    "@ngneat/svg-generator": "^7.0.3",
     "@vitest/browser-playwright": "^4.1.10",
     "angular-cli-ghpages": "^3.1.0",
     "bcryptjs": "^3.0.3",
