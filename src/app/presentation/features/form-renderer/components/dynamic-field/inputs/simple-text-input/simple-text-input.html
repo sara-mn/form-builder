@@ -1,7 +1,7 @@
-<div class="field-input">
-    <label [for]="field().name">{{ field().label }}</label>
-    <input pInputText [id]="field().name" [type]="inputType()" [formControl]="control()" />
+<div class="mb-4 gap-1.5 flex flex-col">
+    <label [for]="field().name" class="text-sm font-semibold text-surface-700 dark:text-surface-300">{{ field().label }}</label>
+    <input pInputText [id]="field().name" [type]="inputType()" [formControl]="control()" class="w-full" />
     @if (control().invalid && control().touched) {
-    <span class="field-input__error"> @for (error of control().errors | keyvalue; track error.key) { {{ error.value }} } </span>
+    <span class="text-red-600 dark:text-red-400 text-[13px]"> @for (error of control().errors | keyvalue; track error.key) { {{ error.value }} } </span>
     }
 </div>
