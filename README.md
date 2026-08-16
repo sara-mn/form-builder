@@ -2,7 +2,7 @@
 
 A form-building application built with **Angular 22** (Zoneless, Signals) and **PrimeNG v22**, structured around **Clean Architecture** and **Domain-Driven Design**. Admins design multi-page forms with field-level and cross-field validation rules; viewers fill and submit them. Built as a portfolio project targeting the German frontend job market — every architectural decision below is deliberate and documented as a trade-off, not a default.
 
-**[Live demo](https://sara-mn.github.io/form-builder/)**
+**[Live demo](https://sara-mn.github.io/form-builder/)** — UI/architecture only. The backend isn't deployed yet (tracked for a future phase), so login and API calls won't work there. Run locally (see below) for the full experience.
 
 ---
 
