@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
-import { AuthFacadeService } from '@features/auth/services/auth-facade.service';
+import { AuthFacade } from '@features/auth/services/auth.facade';
 import { switchMap } from 'rxjs';
 
 @Injectable({
@@ -8,7 +8,7 @@ import { switchMap } from 'rxjs';
 })
 export class ErrorHandlerService {
 
-  constructor(private authFacade: AuthFacadeService) {
+  constructor(private authFacade: AuthFacade) {
   }
 
   handleError(reqUrl: string, error: HttpErrorResponse) {

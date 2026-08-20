@@ -1,109 +1,118 @@
-const express = require('express');
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcryptjs');
+import express from 'express';
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcryptjs';
 
-const router = express.Router();
+const ACCESS_TOKEN_SECRET = process.env.JWT_ACCESS_SECRET || 'dev-only-access-secret-change-me';
+const REFRESH_TOKEN_SECRET = process.env.JWT_REFRESH_SECRET || 'dev-only-refresh-secret-change-me';
 
-const users = []; // This should be replaced with a database in a real application
-const secretKey = 'secretKey'
-// Register route
-router.post('/register', async (req, res) => {
-  const { username, password } = req.body;
+if (!process.env.JWT_ACCESS_SECRET || !process.env.JWT_REFRESH_SECRET) {
+    console.warn('[auth] Using fallback dev secrets — set JWT_ACCESS_SECRET and JWT_REFRESH_SECRET env vars for anything beyond local dev.');
+}
+export default function createAuthRouter(db) {
+    const router = express.Router();
 
-  // Hash the password
-  const hashedPassword = await bcrypt.hash(password, 10);
+    const getUsers = () => db.get('users');
 
-  // Store the new user
-  users.push({ username, password: hashedPassword });
+    const toSafeUser = (user) => {
+        const { password, ...safeUser } = user;
+        return safeUser;
+    };
 
-  res.status(201).json({ message: 'User registered successfully' });
-});
+    router.post('/register', async (req, res) => {
+        const { email, password, name, mobile, roles } = req.body;
 
-// Login route
-router.post('/login', async (req, res) => {
-  const { username, password } = req.body;
+        if (!email || !password) {
+            return res.status(400).json({ message: 'Email and password are required' });
+        }
 
-  // Find the user
-  const user = users.find(u => u.username === username);
-  if (!user) {
-    return res.status(400).json({ message: 'Invalid credentials' });
-  }
+        const existing = getUsers().find({ email }).value();
+        if (existing) {
+            return res.status(409).json({ message: 'A user with this email already exists' });
+        }
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const newUser = {
+            id: String(Date.now()),
+            email,
+            password: hashedPassword,
+            name: name || email,
+            roles: roles || ['viewer'],
+            profile: { avatarUrl: '', bio: '', mobile: mobile || '' }
+        };
 
-  // Check the password
-  const isMatch = await bcrypt.compare(password, user.password);
-  if (!isMatch) {
-    return res.status(400).json({ message: 'Invalid credentials' });
-  }
+        getUsers().push(newUser).write();
+        res.status(201).json({ message: 'User registered successfully', user: toSafeUser(newUser) });
+    });
 
-  // Create a JWT
-  const accessToken = jwt.sign({ username: user.username }, secretKey, { expiresIn: '1h' });
-  const refreshToken = jwt.sign({ username: user.username }, secretKey, { expiresIn: '1d' });
+    router.post('/login', async (req, res) => {
+        const { username, password } = req.body;
 
-  res
-    .cookie('refreshToken', refreshToken, { httpOnly: true, sameSite: 'strict' })
-    .header('Authorization', accessToken)
-    .send(user);
-});
+        // Find the user
+        const user = getUsers().find({ email: username }).value();
+        if (!user) {
+            return res.status(400).json({ message: 'Invalid credentials' });
+        }
 
-// RefreshToken route
-router.post('/refresh', (req, res) => {
-  const refreshToken = req.cookies['refreshToken'];
-  if (!refreshToken) {
-    return res.status(401).send('Access Denied. No refresh token provided.');
-  }
+        // Check the password
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
+            return res.status(400).json({ message: 'Invalid credentials' });
+        }
 
-  try {
-    const decoded = jwt.verify(refreshToken, secretKey);
-    const accessToken = jwt.sign({ user: decoded.user }, secretKey, { expiresIn: '1h' });
+        // Create a JWT
+        const payload = { sub: user.id, email: user.email, roles: user.roles };
+        const accessToken = jwt.sign(payload, ACCESS_TOKEN_SECRET, { expiresIn: '1h' });
+        const refreshToken = jwt.sign(payload, REFRESH_TOKEN_SECRET, { expiresIn: '7d' });
 
-    res
-      .header('Authorization', accessToken)
-      .send(decoded.user);
-  } catch (error) {
-    return res.status(400).send('Invalid refresh token.');
-  }
-});
+        res.cookie('refreshToken', refreshToken, { httpOnly: true, sameSite: 'strict' }).json({ accessToken, user: toSafeUser(user) });
+    });
 
-// Logout route
-router.post('/logout', (req, res) => {
-  req.clearCookie('refreshToken', { httpOnly: true, sameSite: 'strict' });
-});
+    router.post('/refresh', (req, res) => {
+        const refreshToken = req.cookies['refreshToken'];
+        if (!refreshToken) {
+            return res.status(401).json({ message: 'No refresh token provided' });
+        }
 
+        try {
+            const decoded = jwt.verify(refreshToken, REFRESH_TOKEN_SECRET);
 
-// Protected route
-const authenticate = (req, res, next) => {
-  const accessToken = req.headers['authorization'];
-  const refreshToken = req.cookies['refreshToken'];
+            const user = getUsers().find({ id: decoded.sub }).value();
+            if (!user) {
+                return res.status(401).json({ message: 'User no longer exists' });
+            }
 
-  if (!accessToken && !refreshToken) {
-    return res.status(401).send('Access Denied. No token provided.');
-  }
+            const payload = { sub: user.id, email: user.email, roles: user.roles };
+            const accessToken = jwt.sign(payload, ACCESS_TOKEN_SECRET, { expiresIn: '1h' });
 
-  try {
-    const decoded = jwt.verify(accessToken, secretKey);
-    req.user = decoded.user;
-    next();
-  } catch (error) {
-    if (!refreshToken) {
-      return res.status(401).send('Access Denied. No refresh token provided.');
-    }
+            res.json({ accessToken, user: toSafeUser(user) });
+        } catch (error) {
+            return res.status(401).json({ message: 'Invalid or expired refresh token' });
+        }
+    });
 
-    try {
-      const decoded = jwt.verify(refreshToken, secretKey);
-      const accessToken = jwt.sign({ user: decoded.user }, secretKey, { expiresIn: '1h' });
+    router.post('/logout', (req, res) => {
+        res.clearCookie('refreshToken', { httpOnly: true, sameSite: 'strict' });
+        res.status(200).json({ message: 'Logged out successfully' });
+    });
 
-      res
-        .cookie('refreshToken', refreshToken, { httpOnly: true, sameSite: 'strict' })
-        .header('Authorization', accessToken)
-        .send(decoded.user);
-    } catch (error) {
-      return res.status(400).send('Invalid Token.');
-    }
-  }
-};
+    const authenticate = (req, res, next) => {
+        const authHeader = req.headers['authorization'];
+        const accessToken = authHeader && authHeader.startsWith('Bearer ') ? authHeader.slice(7) : null;
 
-router.get('/protected', authenticate, (req, res) => {
-  res.send('Welcome to the protected route');
-});
+        if (!accessToken) {
+            return res.status(401).json({ message: 'No access token provided' });
+        }
 
-module.exports = router;
+        try {
+            req.user = jwt.verify(accessToken, ACCESS_TOKEN_SECRET);
+            next();
+        } catch (error) {
+            return res.status(401).json({ message: 'Invalid or expired access token' });
+        }
+    };
+
+    router.get('/protected', authenticate, (req, res) => {
+        res.json({ message: 'Welcome to the protected route', user: req.user });
+    });
+
+    return router;
+}

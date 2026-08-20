@@ -1,0 +1,17 @@
+<p-dialog header="New Form" [visible]="isOpen()" [modal]="true" [style]="{ width: '28rem' }" (onHide)="onDialogHide()">
+    <div class="flex flex-col gap-4">
+        <div class="flex flex-col gap-1.5">
+            <label for="new-form-title" class="text-[13px] font-semibold text-surface-600 dark:text-surface-400">Title</label>
+            <input id="new-form-title" type="text" pInputText class="w-full" [value]="title()" (input)="title.set($any($event.target).value)" placeholder="Untitled form" />
+        </div>
+        <div class="flex flex-col gap-1.5">
+            <label for="new-form-description" class="text-[13px] font-semibold text-surface-600 dark:text-surface-400">Description</label>
+            <textarea id="new-form-description" pTextarea rows="3" class="w-full" [value]="description()" (input)="description.set($any($event.target).value)" placeholder="Optional description"></textarea>
+        </div>
+    </div>
+
+    <ng-template #footer>
+        <button pButton type="button" severity="secondary" [text]="true" (click)="onDialogHide()">Cancel</button>
+        <button pButton type="button" (click)="onSave()">Create</button>
+    </ng-template>
+</p-dialog>

@@ -1,0 +1,88 @@
+<div class="grid min-h-screen grid-cols-1 lg:grid-cols-2">
+    <div class="relative hidden flex-col justify-between overflow-hidden bg-primary p-12 text-primary-contrast lg:flex">
+        <svg class="pointer-events-none absolute inset-0 h-full w-full opacity-10" viewBox="0 0 480 640" preserveAspectRatio="xMidYMid slice">
+            <defs>
+                <g id="field-motif">
+                    <rect x="0" y="0" width="120" height="12" rx="6" fill="currentColor" />
+                    <rect x="0" y="24" width="90" height="12" rx="6" fill="currentColor" />
+                    <rect x="0" y="48" width="60" height="12" rx="6" fill="currentColor" />
+                </g>
+            </defs>
+            <use href="#field-motif" x="20" y="40" />
+            <use href="#field-motif" x="260" y="90" />
+            <use href="#field-motif" x="60" y="220" />
+            <use href="#field-motif" x="300" y="270" />
+            <use href="#field-motif" x="20" y="400" />
+            <use href="#field-motif" x="270" y="450" />
+            <use href="#field-motif" x="80" y="560" />
+        </svg>
+
+        <div class="relative z-10 flex items-center gap-3">
+            <img src="assets/img/form_builder_logo_simplified.png" alt="" width="32" height="32" />
+            <span class="text-lg font-medium">Form Builder</span>
+        </div>
+
+        <div class="relative z-10 max-w-sm">
+            <p class="text-2xl leading-snug font-medium">Design once. Collect answers from your whole team.</p>
+        </div>
+
+        <div class="relative z-10 text-sm text-primary-contrast/70">Internal tool · Admin & Viewer access</div>
+    </div>
+
+    <div class="flex items-center justify-center p-6 sm:p-10">
+        <div class="w-full max-w-sm">
+            <h1 class="text-2xl font-medium text-surface-900 dark:text-surface-0">Create your account</h1>
+            <p class="mt-1 text-sm text-surface-500 dark:text-surface-400">Fill in your details to get started.</p>
+
+            <form [formGroup]="form" (ngSubmit)="onSubmit()" class="mt-8 flex flex-col gap-4" data-testid="register-form">
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="flex flex-col gap-1.5">
+                        <label for="firstName" class="text-sm font-semibold text-surface-700 dark:text-surface-300">First name</label>
+                        <input id="firstName" type="text" pInputText class="w-full" formControlName="firstName" autocomplete="given-name" data-testid="register-first-name-input" />
+                    </div>
+                    <div class="flex flex-col gap-1.5">
+                        <label for="lastName" class="text-sm font-semibold text-surface-700 dark:text-surface-300">Last name</label>
+                        <input id="lastName" type="text" pInputText class="w-full" formControlName="lastName" autocomplete="family-name" data-testid="register-last-name-input" />
+                    </div>
+                </div>
+
+                <div class="flex flex-col gap-1.5">
+                    <label for="email" class="text-sm font-semibold text-surface-700 dark:text-surface-300">Email</label>
+                    <input id="email" type="email" pInputText class="w-full" formControlName="email" autocomplete="username" data-testid="register-email-input" />
+                </div>
+
+                <div class="flex flex-col gap-1.5">
+                    <label for="mobile" class="text-sm font-semibold text-surface-700 dark:text-surface-300">Mobile</label>
+                    <input id="mobile" type="tel" pInputText class="w-full" formControlName="mobile" autocomplete="tel" data-testid="register-mobile-input" />
+                </div>
+
+                <div class="flex flex-col gap-1.5">
+                    <label for="password" class="text-sm font-semibold text-surface-700 dark:text-surface-300">Password</label>
+                    <p-iconfield>
+                        <input pInputPassword inputId="password" id="password" class="w-full" formControlName="password" autocomplete="new-password" [(mask)]="mask" placeholder="Password" data-testid="register-password-input" />
+                        <p-inputicon (click)="mask = !mask" (keydown.enter)="mask = !mask" tabindex="0" role="button" [attr.aria-label]="mask ? 'Show password' : 'Hide password'" style="cursor: pointer" data-testid="register-password-toggle">
+                            @if (mask) {
+                            <svg data-p-icon="eye"></svg>
+                            } @else {
+                            <svg data-p-icon="eye-slash"></svg>
+                            }
+                        </p-inputicon>
+                    </p-iconfield>
+                </div>
+
+                <div class="flex flex-col gap-1.5">
+                    <label for="confirmPassword" class="text-sm font-semibold text-surface-700 dark:text-surface-300">Confirm password</label>
+                    <input pInputPassword inputId="confirmPassword" id="confirmPassword" class="w-full" formControlName="confirmPassword" autocomplete="new-password" placeholder="Confirm password" data-testid="register-confirm-password-input" />
+                </div>
+
+                @if (form.errors?.['passwordMismatch'] && form.get('confirmPassword')?.touched) {
+                <span class="text-[13px] text-red-600 dark:text-red-400" data-testid="register-password-mismatch-error">Passwords do not match.</span>
+                }
+
+                <button pButton type="submit" class="mt-2 w-full" [disabled]="form.invalid" data-testid="register-submit-button">Create account</button>
+            </form>
+
+            <p class="mt-6 text-sm text-surface-500 dark:text-surface-400">Already have an account? <a routerLink="/login" class="font-medium text-primary">Sign in</a></p>
+        </div>
+    </div>
+</div>

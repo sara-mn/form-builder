@@ -1,44 +1,43 @@
 import { Routes } from '@angular/router';
 import { authGuard } from '@core/guards/auth.guard';
-import { AppLayout } from '@presentation/layout/component/app.layout';
 import { Dashboard } from '@features/dashboard/dashboard';
-import { Notfound } from '@features/notfound/notfound';
-import { Landing } from '@features/landing/landing';
+import { NotFound } from '@features/not-found/not-found';
+import { Login } from '@app/presentation/features/auth/login/login';
+import { permissionGuard } from '@presentation/core/guards/permission-guard';
+import { UserPermissionEnum } from '@domain/user/enums/user-permission.enum';
+import { Unauthorized } from './presentation/features/unauthorized/unauthorized';
+import { Shell } from './presentation/shell/shell';
+import { Register } from './presentation/features/auth/register/register';
 
 export const routes: Routes = [
-  {
-    path: '',
-    component: AppLayout,
-    children: [
-      { path: '', component: Dashboard },
-      {
-        path: 'form-list',
-        data: {},
-        canActivate: [authGuard],
-        loadChildren: () =>
-          import('./presentation/features/form-list/form-list.module').then((module) => module.FormListModule)
-      },
-      {
-        path: 'dynamic-form',
-        data: {},
-        canActivate: [authGuard],
-        loadChildren: () =>
-          import('./presentation/features/form-renderer/form-renderer.module').then((module) => module.FormRendererModule)
-      },
-      {
+    {
         path: '',
-        data: {},
-        canActivate: [authGuard],
-        loadChildren: () =>
-          import('./presentation/features/form-designer/form-designer.module').then((module) => module.FormDesignerModule)
-      }
-    ]
-  },
-  { path: 'landing', component: Landing },
-  { path: 'notfound', component: Notfound },
-  // { path: 'auth', loadChildren: () => import('./app/pages/auth/auth.routes') },
-  { path: '**', redirectTo: '/notfound' }
-  // { path: '**', redirectTo: 'panel/home' },
-  // { path: '',   redirectTo: '/', pathMatch: 'full' },
-  // { path: '**', component: PageNotFoundComponent },
+        component: Shell,
+        children: [
+            { path: '', data: { permissions: [] }, canActivate: [authGuard, permissionGuard], component: Dashboard },
+            {
+                path: 'forms/:id/edit',
+                data: { permissions: [UserPermissionEnum.FormCreate, UserPermissionEnum.FormEdit, UserPermissionEnum.FormDelete] },
+                canActivate: [authGuard, permissionGuard],
+                loadComponent: () => import('./presentation/features/form-designer/form-designer').then((m) => m.FormDesigner)
+            },
+            {
+                path: 'form-list',
+                data: { permissions: [] },
+                canActivate: [authGuard, permissionGuard],
+                loadComponent: () => import('./presentation/features/form-list/form-list').then((m) => m.FormList)
+            },
+            {
+                path: 'forms/:id/fill',
+                data: { permissions: [UserPermissionEnum.FormGenerate, UserPermissionEnum.FormCreate] },
+                canActivate: [authGuard, permissionGuard],
+                loadComponent: () => import('./presentation/features/form-renderer/form-renderer').then((m) => m.FormRenderer)
+            }
+        ]
+    },
+    { path: 'notfound', component: NotFound },
+    { path: 'login', component: Login },
+    { path: 'register', component: Register },
+    { path: 'unauthorized', component: Unauthorized },
+    { path: '**', redirectTo: '/notfound' }
 ];

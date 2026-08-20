@@ -1,0 +1,19 @@
+﻿❯ Building...
+✔ Building...
+Initial chunk files   | Names                |  Raw size | Estimated transfer size
+main-FJZPVJIY.js      | main                 | 774.12 kB |               161.11 kB
+styles-EHBAYCWY.css   | styles               |  49.26 kB |                 8.12 kB
+polyfills-5CFQRCPP.js | polyfills            |  34.59 kB |                11.33 kB
+
+                      | Initial total        | 857.97 kB |               180.56 kB
+
+Lazy chunk files      | Names                |  Raw size | Estimated transfer size
+chunk-CcL9hv72.js     | form-designer-module | 131.77 kB |                25.80 kB
+chunk-BDYVMEYk.js     | browser              |  64.90 kB |                17.32 kB
+chunk-C8upxzFH.js     | form-renderer-module |   6.86 kB |                 1.61 kB
+chunk-DRk4NWh9.js     | form-list-module     |   3.70 kB |                 1.25 kB
+
+Application bundle generation complete. [5.242 seconds] - 2026-07-26T13:34:58.175Z
+
+Output location: G:\idealProjects\form-builder\dist\form-builder
+
