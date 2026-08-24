@@ -1,7 +1,6 @@
 import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { catchError, from, switchMap, throwError } from 'rxjs';
-import { ErrorHandlerService } from '@core/services/error-handler.service';
 import { AuthFacade } from '@features/auth/services/auth.facade';
 import { Router } from '@angular/router';
 
@@ -10,7 +9,6 @@ const SKIP_AUTH_HEADER_FOR = ['/api/auth/login', '/api/auth/register', '/api/aut
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
     const authFacade = inject(AuthFacade),
         router = inject(Router),
-        errorHandler = inject(ErrorHandlerService),
         isAuthEndpoint = SKIP_AUTH_HEADER_FOR.some((url) => req.url.includes(url)),
         accessToken = authFacade.getAccessToken();
 
