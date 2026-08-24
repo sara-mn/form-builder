@@ -5,11 +5,11 @@ import { PrimeNG } from 'primeng/config';
 @Component({
     selector: 'app-root',
     imports: [RouterOutlet],
-    templateUrl: './app.component.html',
+    templateUrl: './app.html',
     standalone: true,
     changeDetection: ChangeDetectionStrategy.Eager
 })
-export class AppComponent implements OnInit {
+export class App implements OnInit {
     title = 'form-builder';
 
     constructor(private primeng: PrimeNG) {}
