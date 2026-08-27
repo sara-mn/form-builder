@@ -1,10 +1,8 @@
 # Form Builder
 
-A form-building application built with **Angular 22** (Zoneless, Signals) and **PrimeNG v22**, structured around **Clean Architecture** and **Domain-Driven Design**. Admins design multi-page forms with field-level and cross-field validation rules; viewers fill and submit them. Built as a portfolio project targeting the German frontend job market — every architectural decision below is deliberate and documented as a trade-off, not a default.
+A form-building application built with Angular 22 (Zoneless, Signals) and PrimeNG v22, structured around Clean Architecture and Domain-Driven Design. Admins design multi-page forms with field-level and cross-field validation rules; viewers fill and submit them. Built as a portfolio project targeting the German frontend job market — every architectural decision below is deliberate and documented as a trade-off, not a default.
 
-**[Live demo](https://sara-mn.github.io/form-builder/)** — UI/architecture only. The backend isn't deployed yet (tracked for a future phase), so login and API calls won't work there. Run locally (see below) for the full experience.
-
----
+**Live demo** — UI/architecture only. The backend isn't deployed yet (tracked for a future phase), so login and API calls won't work there. Run locally (see below) for the full experience.
 
 ## Architecture
 
@@ -35,34 +33,30 @@ src/app/
                         services/.
 ```
 
-**Why split Domain and Application from Angular entirely:** the business rules — what makes a form valid, when a form locks, how cloning regenerates IDs — don't depend on any UI framework. Keeping them framework-agnostic means they're portable and testable without a `TestBed`, and it forces a real boundary between "what the business needs" and "how Angular happens to render it."
+Why split Domain and Application from Angular entirely: the business rules — what makes a form valid, when a form locks, how cloning regenerates IDs — don't depend on any UI framework. Keeping them framework-agnostic means they're portable and testable without a TestBed, and it forces a real boundary between "what the business needs" and "how Angular happens to render it."
 
-### Business rules
+## Business rules
 
 - **Lock rule:** a form is editable until it receives its first submission; after that, its structure and metadata are frozen. Enforced server-side in `UpdateFormUseCase`, not just hidden in the UI.
-- **Clone-to-edit:** cloning a locked form produces a new Draft with fresh IDs on every page, field, and validator — except field `name` values, which are left untouched since they're semantic identifiers, not technical ones.
+- **Clone-to-edit:** cloning a locked form produces a new Draft with fresh IDs on every page, field, and validator — except field name values, which are left untouched since they're semantic identifiers, not technical ones.
 - **One submission per user per form:** enforced as a pre-check in `SubmitFormUseCase`, not as a database constraint.
 - **Cascade-delete:** removing a field also strips any cross-field validator (on any page) that referenced it via `targetFieldId` or `dependsOnFieldId`, so validators never point at a field that no longer exists.
 
-### Validation engine
+## Validation engine
 
-Field-level and cross-field validation rules live in `domain/form/validation/` as pure functions, dispatched through `Record<EnumType, fn>` lookup tables instead of `switch` statements — this gives compile-time exhaustiveness checking; adding a new validator type without handling it in every dispatch table fails to compile. `FormValidationService` (a Domain Service, not a Use Case) validates a whole form against submitted answers and is the authoritative check inside `SubmitFormUseCase`. Presentation-layer adapters bridge these same pure rules into Angular's `ValidatorFn` for real-time feedback in the form-renderer, so the validation logic is written once and used both live in the browser and as the server-side source of truth.
+Field-level and cross-field validation rules live in `domain/form/validation/` as pure functions, dispatched through `Record<EnumType, fn>` lookup tables instead of switch statements — this gives compile-time exhaustiveness checking; adding a new validator type without handling it in every dispatch table fails to compile. `FormValidationService` (a Domain Service, not a Use Case) validates a whole form against submitted answers and is the authoritative check inside `SubmitFormUseCase`. Presentation-layer adapters bridge these same pure rules into Angular's `ValidatorFn` for real-time feedback in the form-renderer, so the validation logic is written once and used both live in the browser and as the server-side source of truth.
 
 **Known scope limit:** real-time cross-page validation isn't wired into the renderer, since a page's `FormGroup` can't see other pages' controls. `SubmitFormUseCase` remains the authoritative check for those rules at submit time.
-
----
 
 ## Tech stack
 
 | | |
 |---|---|
-| Framework | Angular 22 — standalone components, Zoneless change detection, Signals, `@Service()` + `inject()` |
-| UI | PrimeNG v22 (Aura theme) + Tailwind v4 via `tailwindcss-primeui` |
-| Forms | Reactive Forms (form-renderer, to integrate with the custom validation engine); plain signal-bound inputs elsewhere |
-| Testing | Vitest + `@angular/build:unit-test`, `happy-dom`, Playwright Chromium |
-| Backend | Custom Express server (ESM) for JWT auth (`jsonwebtoken`, `bcryptjs`, httpOnly refresh cookie) + `json-server` for CRUD |
-
----
+| **Framework** | Angular 22 — standalone components, Zoneless change detection, Signals, `@Service()` + `inject()` |
+| **UI** | PrimeNG v22 (Aura theme) + Tailwind v4 via `tailwindcss-primeui` |
+| **Forms** | Reactive Forms (form-renderer, to integrate with the custom validation engine); plain signal-bound inputs elsewhere |
+| **Testing** | Vitest + `@angular/build:unit-test`, happy-dom, Playwright Chromium |
+| **Backend** | Custom Express server (ESM) for JWT auth (`jsonwebtoken`, `bcryptjs`, httpOnly refresh cookie) + `json-server` for CRUD |
 
 ## Getting started
 
@@ -96,12 +90,12 @@ npm run mock-server   # Express + json-server, http://localhost:3000
 npm start              # Angular dev server, http://localhost:4200
 ```
 
-**Seeded accounts:**
+Seeded accounts:
 
 | Email | Password | Role |
 |---|---|---|
-| `admin@example.com` | `admin123` | Admin |
-| `user@example.com` | `user123` | Viewer |
+| admin@example.com | admin123 | Admin |
+| user@example.com | user123 | Viewer |
 
 ### Test
 
@@ -115,8 +109,6 @@ npm test
 npm run build-prod
 ```
 
----
-
 ## Project status
 
 Actively developed in phases, each scoped and closed before the next begins:
@@ -128,7 +120,9 @@ Actively developed in phases, each scoped and closed before the next begins:
 - ✅ Architecture cleanup, accessibility fixes, visual pass, dashboard
 - ⬜ Remaining component/facade test coverage (auth, form-designer, form-list, form-renderer)
 
----
+## Timeline
+
+Initial version built in 2024. Development paused for several months while I focused on an intensive German language program (B2, TELC — achieved May 2026) and a job search process. Resumed mid-2026 with a substantial rework: migration to Angular 22 (Zoneless, Signals), the Clean Architecture restructure described above, and the test suite. Actively developed since.
 
 ## Development notes
 
@@ -139,8 +133,6 @@ This project was built as a solo learning/portfolio effort, with Claude used as 
 - All file edits were applied manually; every suggested change was reviewed, and often adjusted, before being committed.
 
 Architectural decisions, trade-offs, and the final code are my own — Claude was a tool in the process, not the author of the design.
-
----
 
 ## License
 
