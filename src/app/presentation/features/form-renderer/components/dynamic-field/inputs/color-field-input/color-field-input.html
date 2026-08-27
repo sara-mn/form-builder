@@ -1,7 +1,35 @@
-<div class="mb-4 gap-1.5 flex flex-col">
+<div class="mb-4 flex flex-col gap-1.5">
     <label [for]="field().name" class="text-sm font-semibold text-surface-700 dark:text-surface-300">{{ field().label }}</label>
-    <input ColorFieldInput [id]="field().name" [formControl]="control()" class="rounded-md px-3 py-2 w-full border border-surface-300 text-[0.9375rem] focus:border-primary focus:outline-none dark:border-surface-600" />
+    <div class="flex items-center gap-2">
+        <p-inputcolor [formControl]="control()">
+            <p-inputcolor-swatch (click)="op.toggle($event)" style="cursor: pointer">
+                <p-inputcolor-transparency-grid />
+                <p-inputcolor-swatch-background />
+            </p-inputcolor-swatch>
+            <p-popover #op>
+                <div class="w-72 space-y-3 p-3">
+                    <p-inputcolor-area>
+                        <p-inputcolor-area-background />
+                        <p-inputcolor-area-handle />
+                    </p-inputcolor-area>
+                    <p-inputcolor-slider>
+                        <p-inputcolor-transparency-grid />
+                        <p-inputcolor-slider-track />
+                        <p-inputcolor-slider-handle />
+                    </p-inputcolor-slider>
+                    <p-inputcolor-slider channel="alpha">
+                        <p-inputcolor-transparency-grid />
+                        <p-inputcolor-slider-track />
+                        <p-inputcolor-slider-handle />
+                    </p-inputcolor-slider>
+                    <div class="flex items-center gap-2">
+                        <input pInputColorInput channel="hex" [id]="field().name" class="flex-1" />
+                    </div>
+                </div>
+            </p-popover>
+        </p-inputcolor>
+    </div>
     @if (control().invalid && control().touched) {
-    <span class="text-red-600 dark:text-red-400 text-[13px]"> @for (error of control().errors | keyvalue; track error.key) { {{ error.value }} } </span>
+    <span class="text-[13px] text-red-600 dark:text-red-400"> @for (error of control().errors | keyvalue; track error.key) { {{ error.value }} } </span>
     }
 </div>
