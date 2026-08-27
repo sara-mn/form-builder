@@ -1,18 +1,33 @@
 import { Service } from '@angular/core';
 import { FormControl, FormGroup, ValidatorFn } from '@angular/forms';
-import { FieldConfigModel, FormModel, FormPageModel } from '@app/domain';
+import { FormModel, FormPageModel, Guid } from '@app/domain';
 import { toCrossFieldValidatorFn } from '@app/presentation/shared/validators/cross-field-validator.factory';
 import { toFieldValidatorFn } from '@app/presentation/shared/validators/field-validator.factory';
 
 @Service()
 export class DynamicFormBuilderService {
     buildPageGroups(form: FormModel): FormGroup[] {
-        const allFields = form.pages.flatMap((page) => page.fields);
+        const groups = form.pages.map((page) => this.buildPageGroup(page));
 
-        return form.pages.map((page) => this.buildPageGroup(page, allFields, form));
+        const fieldIdToControl = new Map<Guid, FormControl>();
+        form.pages.forEach((page, pageIndex) => {
+            page.fields.forEach((field) => {
+                const control = groups[pageIndex].get(field.name) as FormControl;
+                fieldIdToControl.set(field.id, control);
+            });
+        });
+
+        const getFieldValue = (fieldId: Guid): unknown => fieldIdToControl.get(fieldId)?.value;
+
+        form.pages.forEach((page, pageIndex) => {
+            const crossFieldValidators: ValidatorFn[] = page.validators.map((validatorConfig) => toCrossFieldValidatorFn(validatorConfig, getFieldValue));
+            groups[pageIndex].setValidators(crossFieldValidators);
+        });
+
+        return groups;
     }
 
-    private buildPageGroup(page: FormPageModel, allFields: FieldConfigModel[], form: FormModel): FormGroup {
+    private buildPageGroup(page: FormPageModel): FormGroup {
         const controls: Record<string, FormControl> = {};
 
         for (const field of page.fields) {
@@ -20,12 +35,6 @@ export class DynamicFormBuilderService {
             controls[field.name] = new FormControl(null, fieldValidators);
         }
 
-        const formGroup = new FormGroup(controls);
-
-        const crossFieldValidators: ValidatorFn[] = page.validators.map((validatorConfig) => toCrossFieldValidatorFn(validatorConfig, allFields));
-
-        formGroup.setValidators(crossFieldValidators);
-
-        return formGroup;
+        return new FormGroup(controls);
     }
 }
