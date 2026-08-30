@@ -12,11 +12,6 @@ export interface MetadataChange {
     templateUrl: './form-metadata-panel.html'
 })
 export class FormMetadataPanel {
-    metaDataChanged = output<{ title: string; description: string }>();
-
-    onSubmit(event: any) {
-        this.metaDataChanged.emit({ title: event.title, description: event.description });
-    }
     title = input.required<string>();
     description = input.required<string>();
     disabled = input<boolean>(false);

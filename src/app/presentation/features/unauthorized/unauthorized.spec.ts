@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { provideRouter } from '@angular/router';
-import { NotFound } from './not-found';
+import { Unauthorized } from './unauthorized';
 
-describe('NotFound', () => {
-    let component: NotFound;
-    let fixture: ComponentFixture<NotFound>;
+describe('Unauthorized', () => {
+    let component: Unauthorized;
+    let fixture: ComponentFixture<Unauthorized>;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [NotFound],
+            imports: [Unauthorized],
             providers: [provideRouter([])]
         }).compileComponents();
 
-        fixture = TestBed.createComponent(NotFound);
+        fixture = TestBed.createComponent(Unauthorized);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });
@@ -22,11 +22,11 @@ describe('NotFound', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should display the 404 code and message', () => {
+    it('should display the 403 code and access-denied message', () => {
         const text = fixture.nativeElement.textContent;
-        expect(text).toContain('404');
-        expect(text).toContain('Not Found');
-        expect(text).toContain('Requested resource is not available.');
+        expect(text).toContain('403');
+        expect(text).toContain('Access Denied');
+        expect(text).toContain("You don't have permission to access this page.");
     });
 
     it('should link back to the dashboard', () => {
