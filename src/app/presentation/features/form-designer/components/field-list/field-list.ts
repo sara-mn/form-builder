@@ -1,16 +1,20 @@
-import { Component, input, output } from '@angular/core';
+import { Component, inject, input, output } from '@angular/core';
 import { FieldConfigModel } from '@app/domain';
 import { ButtonModule } from 'primeng/button';
+import { ConfirmationService } from 'primeng/api';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @Component({
     selector: 'app-field-list',
-    imports: [ButtonModule],
+    imports: [ButtonModule, ConfirmDialogModule],
+    providers: [ConfirmationService],
     templateUrl: './field-list.html'
 })
 export class FieldList {
+    private confirmationService = inject(ConfirmationService);
+
     fields = input.required<FieldConfigModel[]>();
     disabled = input<boolean>(false);
-
     fieldAddRequested = output<void>();
     fieldEditRequested = output<FieldConfigModel>();
     fieldDeleteRequested = output<FieldConfigModel>();
@@ -24,8 +28,13 @@ export class FieldList {
     }
 
     onDelete(field: FieldConfigModel): void {
-        if (confirm(`Delete field "${field.label}"?`)) {
-            this.fieldDeleteRequested.emit(field);
-        }
+        this.confirmationService.confirm({
+            message: `Delete field "${field.label}"?`,
+            header: 'Confirm Deletion',
+            icon: 'pi pi-exclamation-triangle',
+            accept: () => {
+                this.fieldDeleteRequested.emit(field);
+            }
+        });
     }
 }
