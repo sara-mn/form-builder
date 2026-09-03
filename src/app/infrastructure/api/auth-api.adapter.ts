@@ -6,7 +6,7 @@ import { User } from '@app/domain/user/models/user.model';
 import { environment } from '@env/environment';
 import { HttpClient } from '@angular/common/http';
 import { lastValueFrom, Observable, map } from 'rxjs';
-import { RegisterRequest } from '@app/domain';
+import { ConfirmPasswordResetPayload, RegisterRequest, RequestPasswordResetPayload } from '@app/domain';
 import { base64UrlToBase64 } from '../utils/base64-url.util';
 
 interface AuthServerResponse {
@@ -52,6 +52,16 @@ export class AuthApiAdapter implements AuthGateway {
 
     logout(): Promise<void> {
         const $res: Observable<void> = this.httpClient.post<void>(`${this.authUrl}/logout`, {}, { withCredentials: true });
+        return lastValueFrom($res);
+    }
+
+    requestPasswordReset(payload: RequestPasswordResetPayload): Promise<void> {
+        const $res: Observable<void> = this.httpClient.post<{ message: string }>(`${this.authUrl}/reset-password/request`, payload).pipe(map(() => undefined));
+        return lastValueFrom($res);
+    }
+
+    confirmPasswordReset(payload: ConfirmPasswordResetPayload): Promise<void> {
+        const $res: Observable<void> = this.httpClient.post<{ message: string }>(`${this.authUrl}/reset-password/confirm`, payload).pipe(map(() => undefined));
         return lastValueFrom($res);
     }
 
