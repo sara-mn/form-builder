@@ -1,12 +1,9 @@
-import { AuthGateway } from '@app/domain';
-import { StorageGateway } from '@domain/storage.gateway.abstract';
+import { ConfirmPasswordResetPayload, AuthGateway } from '@app/domain';
 
 export class ResetPasswordConfirmUseCase {
-  constructor(private authService: AuthGateway,
-              private tokenStorage: StorageGateway) {
-  }
+    constructor(private authService: AuthGateway) {}
 
-  async execute(): Promise<void> {
-
-  }
+    async execute(payload: ConfirmPasswordResetPayload): Promise<void> {
+        return this.authService.confirmPasswordReset(payload);
+    }
 }

@@ -1,12 +1,9 @@
-import { AuthGateway } from '@app/domain';
-import { StorageGateway } from '@domain/storage.gateway.abstract';
+import { UpdateProfileRequest, UserProfile, UserRepository } from '@app/domain';
 
 export class UpdateProfileUseCase {
-  constructor(private authService: AuthGateway,
-              private tokenStorage: StorageGateway) {
-  }
+    constructor(private userRepository: UserRepository) {}
 
-  async execute(): Promise<void> {
-
-  }
+    async execute(payload: UpdateProfileRequest): Promise<UserProfile> {
+        return this.userRepository.updateProfile(payload);
+    }
 }

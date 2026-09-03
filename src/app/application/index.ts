@@ -33,27 +33,27 @@ export const applicationProviders = [
     },
     {
         provide: UpdateProfileUseCase,
-        useFactory: (auth: AuthGateway, ts: StorageGateway) => new UpdateProfileUseCase(auth, ts),
-        deps: [AuthGateway, StorageGateway]
+        useFactory: (userRepo: UserRepository) => new UpdateProfileUseCase(userRepo),
+        deps: [UserRepository]
     },
     {
         provide: ResetPasswordUseCase,
-        useFactory: (auth: AuthGateway, ts: StorageGateway) => new ResetPasswordUseCase(auth, ts),
-        deps: [AuthGateway, StorageGateway]
+        useFactory: (auth: AuthGateway) => new ResetPasswordUseCase(auth),
+        deps: [AuthGateway]
     },
     {
         provide: ResetPasswordConfirmUseCase,
-        useFactory: (auth: AuthGateway, ts: StorageGateway) => new ResetPasswordConfirmUseCase(auth, ts),
-        deps: [AuthGateway, StorageGateway]
+        useFactory: (auth: AuthGateway) => new ResetPasswordConfirmUseCase(auth),
+        deps: [AuthGateway]
+    },
+    {
+        provide: ChangePasswordUseCase,
+        useFactory: (userRepo: UserRepository) => new ChangePasswordUseCase(userRepo),
+        deps: [UserRepository]
     },
     {
         provide: RefreshTokenUseCase,
         useFactory: (auth: AuthGateway, ts: StorageGateway) => new RefreshTokenUseCase(auth, ts),
-        deps: [AuthGateway, StorageGateway]
-    },
-    {
-        provide: ChangePasswordUseCase,
-        useFactory: (auth: AuthGateway, ts: StorageGateway) => new ChangePasswordUseCase(auth, ts),
         deps: [AuthGateway, StorageGateway]
     },
     {
