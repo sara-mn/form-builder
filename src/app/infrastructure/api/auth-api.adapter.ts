@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Service } from '@angular/core';
 import { AuthGateway } from '@domain/auth/abstracts/auth.gateway.abstract';
 import { LoginRequest } from '@app/domain/auth/models/login-request.model';
 import { LoginResponse } from '@app/domain/auth/models/login-response.model';
@@ -19,11 +19,10 @@ interface RegisterServerResponse {
     user: User;
 }
 
-@Injectable()
+@Service()
 export class AuthApiAdapter implements AuthGateway {
     private authUrl = environment.apiUrl + '/api/auth';
-
-    constructor(private httpClient: HttpClient) {}
+    private httpClient = inject(HttpClient);
 
     login(payload: LoginRequest): Promise<LoginResponse> {
         const body = {

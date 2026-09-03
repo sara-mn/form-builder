@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Service } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { lastValueFrom, Observable } from 'rxjs';
 import { FormRepository } from '@domain/form/abstracts/form.repository.abstract';
@@ -6,13 +6,11 @@ import { FormModel } from '@app/domain/form/models/form.model';
 import { environment } from '@env/environment';
 import { Guid } from '@app/domain';
 
-@Injectable({
-    providedIn: 'root'
-})
+@Service()
 export class FormApiAdapter implements FormRepository {
     private formsUrl = `${environment.apiUrl}/forms`;
+    private httpClient = inject(HttpClient);
 
-    constructor(private httpClient: HttpClient) {}
     getAllForms(): Promise<FormModel[]> {
         const $res: Observable<FormModel[]> = this.httpClient.get<FormModel[]>(this.formsUrl);
         return lastValueFrom($res);
