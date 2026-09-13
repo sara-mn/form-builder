@@ -1,11 +1,13 @@
 import { Service, inject } from '@angular/core';
-import { LoginRequest, RegisterRequest, User } from '@app/domain';
+import { ConfirmPasswordResetPayload, LoginRequest, RegisterRequest, RequestPasswordResetPayload, User } from '@app/domain';
 import { StorageGateway } from '@app/domain/storage.gateway.abstract';
 import { AuthState } from '@app/presentation/core/services/auth-state';
 import { LoginUseCase } from '@application/auth/login.use-case';
 import { LogoutUseCase } from '@application/auth/logout.use-case';
 import { RefreshTokenUseCase } from '@app/application/auth/refresh-token.use-case';
 import { RegisterUseCase } from '@application/auth/register.use-case';
+import { ResetPasswordConfirmUseCase } from '@app/application/auth/reset-password-confirm.use-case';
+import { ResetPasswordUseCase } from '@app/application/auth/reset-password.use-case';
 
 @Service()
 export class AuthFacade {
@@ -15,6 +17,8 @@ export class AuthFacade {
     private registerUseCase = inject(RegisterUseCase);
     private authState = inject(AuthState);
     private tokenStorage = inject(StorageGateway);
+    private resetPasswordUseCase = inject(ResetPasswordUseCase);
+    private resetPasswordConfirmUseCase = inject(ResetPasswordConfirmUseCase);
 
     login(data: LoginRequest): Promise<User> {
         return this.loginUseCase.execute(data).then((user) => {
@@ -53,5 +57,13 @@ export class AuthFacade {
         }
         this.authState.setUser(user);
         return this.tokenStorage.getItem('token');
+    }
+
+    requestPasswordReset(payload: RequestPasswordResetPayload): Promise<void> {
+        return this.resetPasswordUseCase.execute(payload);
+    }
+
+    confirmPasswordReset(payload: ConfirmPasswordResetPayload): Promise<void> {
+        return this.resetPasswordConfirmUseCase.execute(payload);
     }
 }
