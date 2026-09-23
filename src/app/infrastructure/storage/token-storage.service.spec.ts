@@ -37,14 +37,13 @@ describe('TokenStorageService', () => {
         expect(() => service.removeItem('non_existent_key')).not.toThrow();
     });
 
-    it('should clear all items from storage', () => {
-        service.setItem('access_token', 'fake-jwt-value');
-        service.setItem('user_id', 'fake-user-id');
+    it('should clear only the known auth keys, leaving unrelated localStorage entries untouched', () => {
+        service.setItem('token', 'fake-jwt-value');
+        localStorage.setItem('unrelated-app-preference', 'dark-mode');
+
         service.clear();
 
-        const result1 = service.getItem('access_token');
-        const result2 = service.getItem('user_id');
-        expect(result1).toBeNull();
-        expect(result2).toBeNull();
+        expect(service.getItem('token')).toBeNull();
+        expect(localStorage.getItem('unrelated-app-preference')).toBe('dark-mode');
     });
 });

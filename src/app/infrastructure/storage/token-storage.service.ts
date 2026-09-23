@@ -3,6 +3,8 @@ import { StorageGateway } from '@domain/storage.gateway.abstract';
 
 @Service()
 export class TokenStorageService implements StorageGateway {
+    private readonly authKeys: readonly string[] = ['token'];
+
     getItem(key: string): string | null {
         return localStorage.getItem(key);
     }
@@ -16,6 +18,6 @@ export class TokenStorageService implements StorageGateway {
     }
 
     clear(): void {
-        localStorage.clear();
+        this.authKeys.forEach((key) => localStorage.removeItem(key));
     }
 }
