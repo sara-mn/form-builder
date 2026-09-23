@@ -4,6 +4,8 @@ import { LoginUseCase } from '@application/auth/login.use-case';
 import { LogoutUseCase } from '@application/auth/logout.use-case';
 import { RefreshTokenUseCase } from '@application/auth/refresh-token.use-case';
 import { RegisterUseCase } from '@application/auth/register.use-case';
+import { ResetPasswordUseCase } from '@application/auth/reset-password.use-case';
+import { ResetPasswordConfirmUseCase } from '@application/auth/reset-password-confirm.use-case';
 import { StorageGateway } from '@app/domain/storage.gateway.abstract';
 import { AuthState } from '@app/presentation/core/services/auth-state';
 import { createFakeUser, createFakeRegisterRequest } from '@app/application/test-utils';
@@ -15,6 +17,8 @@ describe('AuthFacade', () => {
     let logoutUseCase: Pick<LogoutUseCase, 'execute'>;
     let refreshTokenUseCase: Pick<RefreshTokenUseCase, 'execute'>;
     let registerUseCase: Pick<RegisterUseCase, 'execute'>;
+    let resetPasswordUseCase: Pick<ResetPasswordUseCase, 'execute'>;
+    let resetPasswordConfirmUseCase: Pick<ResetPasswordConfirmUseCase, 'execute'>;
     let storageGateway: Pick<StorageGateway, 'getItem' | 'setItem' | 'removeItem'>;
 
     beforeEach(() => {
@@ -22,6 +26,8 @@ describe('AuthFacade', () => {
         logoutUseCase = { execute: vi.fn() };
         refreshTokenUseCase = { execute: vi.fn() };
         registerUseCase = { execute: vi.fn() };
+        resetPasswordUseCase = { execute: vi.fn() };
+        resetPasswordConfirmUseCase = { execute: vi.fn() };
         storageGateway = { getItem: vi.fn(), setItem: vi.fn(), removeItem: vi.fn() };
 
         TestBed.configureTestingModule({
@@ -31,6 +37,8 @@ describe('AuthFacade', () => {
                 { provide: LogoutUseCase, useValue: logoutUseCase },
                 { provide: RefreshTokenUseCase, useValue: refreshTokenUseCase },
                 { provide: RegisterUseCase, useValue: registerUseCase },
+                { provide: ResetPasswordUseCase, useValue: resetPasswordUseCase },
+                { provide: ResetPasswordConfirmUseCase, useValue: resetPasswordConfirmUseCase },
                 { provide: StorageGateway, useValue: storageGateway }
             ]
         });
@@ -136,6 +144,28 @@ describe('AuthFacade', () => {
 
             expect(authState.currentUser()).toBeNull();
             expect(token).toBeNull();
+        });
+    });
+
+    describe('requestPasswordReset', () => {
+        it('delegates to ResetPasswordUseCase with the exact payload provided', async () => {
+            (resetPasswordUseCase.execute as ReturnType<typeof vi.fn>).mockResolvedValue(undefined);
+            const payload = { email: 'user@example.com' };
+
+            await service.requestPasswordReset(payload);
+
+            expect(resetPasswordUseCase.execute).toHaveBeenCalledWith(payload);
+        });
+    });
+
+    describe('confirmPasswordReset', () => {
+        it('delegates to ResetPasswordConfirmUseCase with the exact payload provided', async () => {
+            (resetPasswordConfirmUseCase.execute as ReturnType<typeof vi.fn>).mockResolvedValue(undefined);
+            const payload = { token: 'tok-1', newPassword: 'New456!' };
+
+            await service.confirmPasswordReset(payload);
+
+            expect(resetPasswordConfirmUseCase.execute).toHaveBeenCalledWith(payload);
         });
     });
 });

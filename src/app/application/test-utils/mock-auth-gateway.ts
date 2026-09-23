@@ -6,6 +6,8 @@ export function createMockAuthGateway(): Mocked<AuthGateway> {
         login: vi.fn(),
         refreshToken: vi.fn(),
         logout: vi.fn(),
-        register: vi.fn()
+        register: vi.fn(),
+        requestPasswordReset: vi.fn(),
+        confirmPasswordReset: vi.fn()
     };
 }
