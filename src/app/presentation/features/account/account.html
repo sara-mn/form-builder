@@ -1,1 +1,59 @@
-<p>account works!</p>
+<div class="mx-auto max-w-2xl p-6 sm:p-10">
+    <h1 class="text-2xl font-medium text-surface-900 dark:text-surface-0">Account settings</h1>
+    <p class="mt-1 text-sm text-surface-500 dark:text-surface-400">Manage your profile and password.</p>
+
+    <p-tabs [(value)]="activeTab" class="mt-8 block">
+        <p-tablist>
+            <p-tab value="profile">Profile</p-tab>
+            <p-tab value="password">Change password</p-tab>
+        </p-tablist>
+        <p-tabpanels>
+            <p-tabpanel value="profile">
+                <form [formGroup]="profileForm" (ngSubmit)="onSubmitProfile()" class="flex flex-col gap-4 pt-6" data-testid="profile-form">
+                    <div class="flex flex-col gap-1.5">
+                        <label for="name" class="text-sm font-semibold text-surface-700 dark:text-surface-300">Name</label>
+                        <input id="name" pInputText class="w-full" formControlName="name" autocomplete="name" data-testid="profile-name-input" />
+                    </div>
+
+                    <div class="flex flex-col gap-1.5">
+                        <label for="mobile" class="text-sm font-semibold text-surface-700 dark:text-surface-300">Mobile</label>
+                        <input id="mobile" pInputText class="w-full" formControlName="mobile" autocomplete="tel" data-testid="profile-mobile-input" />
+                    </div>
+
+                    @if (profileSaved()) {
+                    <p class="text-sm text-green-600" data-testid="profile-saved-message">Profile updated.</p>
+                    }
+
+                    <button pButton type="submit" class="mt-2 w-fit" [disabled]="profileForm.invalid" data-testid="profile-submit-button">Save changes</button>
+                </form>
+            </p-tabpanel>
+
+            <p-tabpanel value="password">
+                <form [formGroup]="changePasswordForm" (ngSubmit)="onSubmitChangePassword()" class="flex flex-col gap-4 pt-6" data-testid="change-password-form">
+                    <div class="flex flex-col gap-1.5">
+                        <label for="currentPassword" class="text-sm font-semibold text-surface-700 dark:text-surface-300">Current password</label>
+                        <input pInputPassword inputId="currentPassword" id="currentPassword" class="w-full" formControlName="currentPassword" autocomplete="current-password" [(mask)]="mask" data-testid="change-password-current-input" />
+                    </div>
+
+                    <div class="flex flex-col gap-1.5">
+                        <label for="newPassword" class="text-sm font-semibold text-surface-700 dark:text-surface-300">New password</label>
+                        <input pInputPassword inputId="newPassword" id="newPassword" class="w-full" formControlName="newPassword" autocomplete="new-password" [(mask)]="mask" data-testid="change-password-new-input" />
+                    </div>
+
+                    <div class="flex flex-col gap-1.5">
+                        <label for="confirmPassword" class="text-sm font-semibold text-surface-700 dark:text-surface-300">Confirm new password</label>
+                        <input pInputPassword inputId="confirmPassword" id="confirmPassword" class="w-full" formControlName="confirmPassword" autocomplete="new-password" [(mask)]="mask" data-testid="change-password-confirm-input" />
+                    </div>
+
+                    @if (changePasswordForm.errors?.['passwordMismatch'] && changePasswordForm.get('confirmPassword')?.touched) {
+                    <p class="text-sm text-red-500">Passwords do not match.</p>
+                    } @if (passwordChanged()) {
+                    <p class="text-sm text-green-600" data-testid="password-changed-message">Password changed.</p>
+                    }
+
+                    <button pButton type="submit" class="mt-2 w-fit" [disabled]="changePasswordForm.invalid" data-testid="change-password-submit-button">Change password</button>
+                </form>
+            </p-tabpanel>
+        </p-tabpanels>
+    </p-tabs>
+</div>
