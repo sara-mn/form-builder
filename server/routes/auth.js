@@ -1,6 +1,7 @@
 import express from 'express';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
+import crypto from 'crypto';
 
 const ACCESS_TOKEN_SECRET = process.env.JWT_ACCESS_SECRET || 'dev-only-access-secret-change-me';
 const REFRESH_TOKEN_SECRET = process.env.JWT_REFRESH_SECRET || 'dev-only-refresh-secret-change-me';
@@ -14,7 +15,7 @@ export default function createAuthRouter(db) {
     const getUsers = () => db.get('users');
 
     const toSafeUser = (user) => {
-        const { password, ...safeUser } = user;
+        const { password, resetPasswordToken, resetPasswordExpiresAt, ...safeUser } = user;
         return safeUser;
     };
 
@@ -109,6 +110,92 @@ export default function createAuthRouter(db) {
             return res.status(401).json({ message: 'Invalid or expired access token' });
         }
     };
+
+    router.post('/reset-password/request', async (req, res) => {
+        const { email } = req.body;
+        const user = getUsers().find({ email }).value();
+
+        // Always respond 200 — never reveal whether the email exists
+        if (!user) {
+            return res.status(200).json({ message: 'If that email exists, a reset link has been sent' });
+        }
+
+        const token = crypto.randomBytes(32).toString('hex');
+        const expiresAt = Date.now() + 60 * 60 * 1000; // 1h
+
+        getUsers()
+            .find({ email })
+            .assign({
+                resetPasswordToken: token,
+                resetPasswordExpiresAt: expiresAt
+            })
+            .write();
+
+        // No real email service — log the link for manual testing (documented in README)
+        console.log(`[password-reset] Reset link for ${email}: http://localhost:4200/reset-password?token=${token}`);
+
+        res.status(200).json({ message: 'If that email exists, a reset link has been sent' });
+    });
+
+    router.post('/reset-password/confirm', async (req, res) => {
+        const { token, newPassword } = req.body;
+        if (!token || !newPassword) {
+            return res.status(400).json({ message: 'Token and new password are required' });
+        }
+
+        const user = getUsers().find({ resetPasswordToken: token }).value();
+        if (!user || !user.resetPasswordExpiresAt || user.resetPasswordExpiresAt < Date.now()) {
+            return res.status(400).json({ message: 'Invalid or expired reset token' });
+        }
+
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+        getUsers()
+            .find({ id: user.id })
+            .assign({
+                password: hashedPassword,
+                resetPasswordToken: null,
+                resetPasswordExpiresAt: null
+            })
+            .write();
+
+        res.status(200).json({ message: 'Password reset successfully' });
+    });
+
+    router.patch('/profile', authenticate, async (req, res) => {
+        const { name, mobile } = req.body;
+        const user = getUsers().find({ id: req.user.sub }).value();
+        if (!user) return res.status(404).json({ message: 'User not found' });
+
+        getUsers()
+            .find({ id: req.user.sub })
+            .assign({
+                ...(name !== undefined && { name }),
+                profile: { ...user.profile, ...(mobile !== undefined && { mobile }) }
+            })
+            .write();
+
+        res.json(toSafeUser(getUsers().find({ id: req.user.sub }).value()));
+    });
+
+    router.get('/profile', authenticate, (req, res) => {
+        const user = getUsers().find({ id: req.user.sub }).value();
+        if (!user) return res.status(404).json({ message: 'User not found' });
+        res.json(toSafeUser(user));
+    });
+
+    router.post('/change-password', authenticate, async (req, res) => {
+        const { currentPassword, newPassword } = req.body;
+        const user = getUsers().find({ id: req.user.sub }).value();
+        if (!user) return res.status(404).json({ message: 'User not found' });
+
+        const isMatch = await bcrypt.compare(currentPassword, user.password);
+        if (!isMatch) return res.status(400).json({ message: 'Current password is incorrect' });
+
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+        getUsers().find({ id: user.id }).assign({ password: hashedPassword }).write();
+
+        res.status(200).json({ message: 'Password changed successfully' });
+    });
 
     router.get('/protected', authenticate, (req, res) => {
         res.json({ message: 'Welcome to the protected route', user: req.user });

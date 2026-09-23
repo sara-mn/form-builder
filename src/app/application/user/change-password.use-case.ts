@@ -1,12 +1,9 @@
-import { AuthGateway } from '@app/domain';
-import { StorageGateway } from '@domain/storage.gateway.abstract';
+import { ChangePasswordRequest, UserRepository } from '@app/domain';
 
 export class ChangePasswordUseCase {
-  constructor(private authService: AuthGateway,
-              private tokenStorage: StorageGateway) {
-  }
+    constructor(private userRepository: UserRepository) {}
 
-  async execute(): Promise<void> {
-
-  }
+    async execute(payload: ChangePasswordRequest): Promise<void> {
+        return this.userRepository.changePassword(payload);
+    }
 }

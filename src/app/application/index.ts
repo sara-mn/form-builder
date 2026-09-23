@@ -19,6 +19,7 @@ import { GetSubmissionUseCase } from './form/get-submission.use-case';
 import { GetFormsWithSubmissionCountsUseCase } from './form/get-forms-with-submission-counts.use-case';
 import { GetSubmissionsByFormIdUseCase } from './form/get-submissions-by-form-id.use-case';
 import { RegisterUseCase } from './auth/register.use-case';
+import { GetProfileUseCase } from './user/get-profile.use-case';
 
 export const applicationProviders = [
     {
@@ -33,27 +34,27 @@ export const applicationProviders = [
     },
     {
         provide: UpdateProfileUseCase,
-        useFactory: (auth: AuthGateway, ts: StorageGateway) => new UpdateProfileUseCase(auth, ts),
-        deps: [AuthGateway, StorageGateway]
+        useFactory: (userRepo: UserRepository) => new UpdateProfileUseCase(userRepo),
+        deps: [UserRepository]
     },
     {
         provide: ResetPasswordUseCase,
-        useFactory: (auth: AuthGateway, ts: StorageGateway) => new ResetPasswordUseCase(auth, ts),
-        deps: [AuthGateway, StorageGateway]
+        useFactory: (auth: AuthGateway) => new ResetPasswordUseCase(auth),
+        deps: [AuthGateway]
     },
     {
         provide: ResetPasswordConfirmUseCase,
-        useFactory: (auth: AuthGateway, ts: StorageGateway) => new ResetPasswordConfirmUseCase(auth, ts),
-        deps: [AuthGateway, StorageGateway]
+        useFactory: (auth: AuthGateway) => new ResetPasswordConfirmUseCase(auth),
+        deps: [AuthGateway]
+    },
+    {
+        provide: ChangePasswordUseCase,
+        useFactory: (userRepo: UserRepository) => new ChangePasswordUseCase(userRepo),
+        deps: [UserRepository]
     },
     {
         provide: RefreshTokenUseCase,
         useFactory: (auth: AuthGateway, ts: StorageGateway) => new RefreshTokenUseCase(auth, ts),
-        deps: [AuthGateway, StorageGateway]
-    },
-    {
-        provide: ChangePasswordUseCase,
-        useFactory: (auth: AuthGateway, ts: StorageGateway) => new ChangePasswordUseCase(auth, ts),
         deps: [AuthGateway, StorageGateway]
     },
     {
@@ -110,6 +111,11 @@ export const applicationProviders = [
         provide: GetFormsWithSubmissionCountsUseCase,
         useFactory: (formRepo: FormRepository, subRepo: SubmissionRepository) => new GetFormsWithSubmissionCountsUseCase(formRepo, subRepo),
         deps: [FormRepository, SubmissionRepository]
+    },
+    {
+        provide: GetProfileUseCase,
+        useFactory: (userRepo: UserRepository) => new GetProfileUseCase(userRepo),
+        deps: [UserRepository]
     },
     FormValidationService
 ];

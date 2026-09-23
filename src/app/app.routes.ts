@@ -1,13 +1,9 @@
 import { Routes } from '@angular/router';
 import { authGuard } from '@core/guards/auth.guard';
 import { Dashboard } from '@features/dashboard/dashboard';
-import { NotFound } from '@features/not-found/not-found';
-import { Login } from '@app/presentation/features/auth/login/login';
 import { permissionGuard } from '@presentation/core/guards/permission-guard';
 import { UserPermissionEnum } from '@domain/user/enums/user-permission.enum';
-import { Unauthorized } from './presentation/features/unauthorized/unauthorized';
 import { Shell } from './presentation/shell/shell';
-import { Register } from './presentation/features/auth/register/register';
 
 export const routes: Routes = [
     {
@@ -19,25 +15,51 @@ export const routes: Routes = [
                 path: 'forms/:id/edit',
                 data: { permissions: [UserPermissionEnum.FormCreate, UserPermissionEnum.FormEdit, UserPermissionEnum.FormDelete] },
                 canActivate: [authGuard, permissionGuard],
-                loadComponent: () => import('./presentation/features/form-designer/form-designer').then((m) => m.FormDesigner)
+                loadComponent: () => import('@features/form-designer/form-designer').then((m) => m.FormDesigner)
             },
             {
                 path: 'form-list',
                 data: { permissions: [] },
                 canActivate: [authGuard, permissionGuard],
-                loadComponent: () => import('./presentation/features/form-list/form-list').then((m) => m.FormList)
+                loadComponent: () => import('@features/form-list/form-list').then((m) => m.FormList)
             },
             {
                 path: 'forms/:id/fill',
                 data: { permissions: [UserPermissionEnum.FormGenerate, UserPermissionEnum.FormCreate] },
                 canActivate: [authGuard, permissionGuard],
-                loadComponent: () => import('./presentation/features/form-renderer/form-renderer').then((m) => m.FormRenderer)
+                loadComponent: () => import('@features/form-renderer/form-renderer').then((m) => m.FormRenderer)
+            },
+            {
+                path: 'account',
+                data: { permissions: [] },
+                canActivate: [authGuard, permissionGuard],
+                loadComponent: () => import('@features/account/account').then((m) => m.Account)
             }
         ]
     },
-    { path: 'notfound', component: NotFound },
-    { path: 'login', component: Login },
-    { path: 'register', component: Register },
-    { path: 'unauthorized', component: Unauthorized },
+    {
+        path: 'login',
+        loadComponent: () => import('@features/auth/login/login').then((m) => m.Login)
+    },
+    {
+        path: 'register',
+        loadComponent: () => import('@features/auth/register/register').then((m) => m.Register)
+    },
+    {
+        path: 'forgot-password',
+        loadComponent: () => import('@features/auth/forgot-password/forgot-password').then((m) => m.ForgotPassword)
+    },
+    {
+        path: 'reset-password',
+        loadComponent: () => import('@features/auth/reset-password/reset-password').then((m) => m.ResetPassword)
+    },
+    {
+        path: 'unauthorized',
+        loadComponent: () => import('@features/unauthorized/unauthorized').then((m) => m.Unauthorized)
+    },
+    {
+        path: 'notfound',
+        loadComponent: () => import('@features/not-found/not-found').then((m) => m.NotFound)
+    },
     { path: '**', redirectTo: '/notfound' }
 ];

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Service } from '@angular/core';
 import { AuthGateway } from '@domain/auth/abstracts/auth.gateway.abstract';
 import { LoginRequest } from '@app/domain/auth/models/login-request.model';
 import { LoginResponse } from '@app/domain/auth/models/login-response.model';
@@ -6,7 +6,7 @@ import { User } from '@app/domain/user/models/user.model';
 import { environment } from '@env/environment';
 import { HttpClient } from '@angular/common/http';
 import { lastValueFrom, Observable, map } from 'rxjs';
-import { RegisterRequest } from '@app/domain';
+import { ConfirmPasswordResetPayload, RegisterRequest, RequestPasswordResetPayload } from '@app/domain';
 import { base64UrlToBase64 } from '../utils/base64-url.util';
 
 interface AuthServerResponse {
@@ -19,11 +19,10 @@ interface RegisterServerResponse {
     user: User;
 }
 
-@Injectable()
+@Service()
 export class AuthApiAdapter implements AuthGateway {
     private authUrl = environment.apiUrl + '/api/auth';
-
-    constructor(private httpClient: HttpClient) {}
+    private httpClient = inject(HttpClient);
 
     login(payload: LoginRequest): Promise<LoginResponse> {
         const body = {
@@ -53,6 +52,16 @@ export class AuthApiAdapter implements AuthGateway {
 
     logout(): Promise<void> {
         const $res: Observable<void> = this.httpClient.post<void>(`${this.authUrl}/logout`, {}, { withCredentials: true });
+        return lastValueFrom($res);
+    }
+
+    requestPasswordReset(payload: RequestPasswordResetPayload): Promise<void> {
+        const $res: Observable<void> = this.httpClient.post<{ message: string }>(`${this.authUrl}/reset-password/request`, payload).pipe(map(() => undefined));
+        return lastValueFrom($res);
+    }
+
+    confirmPasswordReset(payload: ConfirmPasswordResetPayload): Promise<void> {
+        const $res: Observable<void> = this.httpClient.post<{ message: string }>(`${this.authUrl}/reset-password/confirm`, payload).pipe(map(() => undefined));
         return lastValueFrom($res);
     }
 
