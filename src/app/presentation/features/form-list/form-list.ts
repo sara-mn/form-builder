@@ -3,16 +3,18 @@ import { Router } from '@angular/router';
 import { Guid } from '@app/domain/shared/types/guid.type';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
-import { FormStatusEnum } from '@app/domain';
+import { FormStatusEnum, UserPermissionEnum } from '@app/domain';
 import { NewFormData, NewFormDialog } from './components/new-form-dialog/new-form-dialog';
 import { StatusBadge } from './components/status-badge/status-badge';
 import { FormListFacade } from './services/form-list.facade';
 import { ConfirmationService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { AuthState } from '@app/presentation/core/services/auth-state';
+import { PIcon } from '@primeicons/angular';
 
 @Component({
     selector: 'app-form-list',
-    imports: [TableModule, ButtonModule, NewFormDialog, StatusBadge, ConfirmDialogModule],
+    imports: [TableModule, ButtonModule, NewFormDialog, StatusBadge, ConfirmDialogModule, PIcon],
     templateUrl: './form-list.html',
     providers: [ConfirmationService]
 })
@@ -20,11 +22,14 @@ export class FormList implements OnInit {
     private facade = inject(FormListFacade);
     private router = inject(Router);
     private confirmationService = inject(ConfirmationService);
+    readonly authState = inject(AuthState);
     readonly FormStatusEnum = FormStatusEnum;
+    readonly userPermissionEnum = UserPermissionEnum;
     items = this.facade.formListItems;
 
     isNewFormDialogOpen = signal<boolean>(false);
     cloningFormId = signal<Guid | null>(null);
+    deleteError = signal<string | null>(null);
 
     ngOnInit(): void {
         this.facade.loadForms();
@@ -52,9 +57,11 @@ export class FormList implements OnInit {
         this.confirmationService.confirm({
             message: `Delete form "${title}"? This cannot be undone.`,
             header: 'Confirm Deletion',
-            icon: 'pi pi-exclamation-triangle',
             accept: () => {
-                this.facade.deleteForm(formId);
+                this.deleteError.set(null);
+                this.facade.deleteForm(formId).catch(() => {
+                    this.deleteError.set(`Failed to delete "${title}". Please try again.`);
+                });
             }
         });
     }

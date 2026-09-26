@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
 import { provideRouter, Router } from '@angular/router';
 import { signal } from '@angular/core';
 import { ConfirmationService } from 'primeng/api';
@@ -7,7 +6,8 @@ import { FormList } from './form-list';
 import { FormListFacade } from './services/form-list.facade';
 import { FormListItem } from '@app/application/form/get-forms-with-submission-counts.use-case';
 import { FormModel } from '@app/domain/form/models/form.model';
-import { FormStatusEnum } from '@app/domain';
+import { FormStatusEnum, UserRoleEnum } from '@app/domain';
+import { AuthState } from '@app/presentation/core/services/auth-state';
 
 describe('FormList', () => {
     let component: FormList;
@@ -144,6 +144,55 @@ describe('FormList', () => {
             acceptCallback?.();
 
             expect(facade.deleteForm).toHaveBeenCalledWith('f1');
+        });
+
+        it('sets deleteError when facade.deleteForm rejects', async () => {
+            setup();
+            (facade.deleteForm as ReturnType<typeof vi.fn>).mockRejectedValue(new Error('network error'));
+            const confirmationService = fixture.debugElement.injector.get(ConfirmationService);
+            const confirmSpy = vi.spyOn(confirmationService, 'confirm');
+
+            component.onDelete('f1', 'Survey');
+            const acceptCallback = confirmSpy.mock.calls[0][0].accept;
+            acceptCallback?.();
+
+            await vi.waitFor(() => {
+                expect(component.deleteError()).toBe('Failed to delete "Survey". Please try again.');
+            });
+        });
+    });
+
+    describe('delete permission', () => {
+        it('disables the Delete button when the user lacks FormDelete permission', () => {
+            setup([mockItem]);
+            const authState = fixture.debugElement.injector.get(AuthState);
+            authState.setUser({
+                id: 'u1',
+                email: 'viewer@example.com',
+                name: 'Viewer',
+                roles: [UserRoleEnum.Viewer],
+                profile: { avatarUrl: '', bio: '' }
+            });
+            fixture.detectChanges();
+
+            const deleteButton = fixture.nativeElement.querySelector('button[severity="danger"]') as HTMLButtonElement;
+            expect(deleteButton.disabled).toBe(true);
+        });
+
+        it('enables the Delete button when the user has FormDelete permission', () => {
+            setup([mockItem]);
+            const authState = fixture.debugElement.injector.get(AuthState);
+            authState.setUser({
+                id: 'u1',
+                email: 'admin@example.com',
+                name: 'Admin',
+                roles: [UserRoleEnum.Admin],
+                profile: { avatarUrl: '', bio: '' }
+            });
+            fixture.detectChanges();
+
+            const deleteButton = fixture.nativeElement.querySelector('button[severity="danger"]') as HTMLButtonElement;
+            expect(deleteButton.disabled).toBe(false);
         });
     });
 
