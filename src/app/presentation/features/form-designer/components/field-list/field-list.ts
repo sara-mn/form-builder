@@ -3,10 +3,11 @@ import { FieldConfigModel } from '@app/domain';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmationService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { PIcon } from '@primeicons/angular';
 
 @Component({
     selector: 'app-field-list',
-    imports: [ButtonModule, ConfirmDialogModule],
+    imports: [ButtonModule, ConfirmDialogModule, PIcon],
     providers: [ConfirmationService],
     templateUrl: './field-list.html'
 })
@@ -31,7 +32,6 @@ export class FieldList {
         this.confirmationService.confirm({
             message: `Delete field "${field.label}"?`,
             header: 'Confirm Deletion',
-            icon: 'pi pi-exclamation-triangle',
             accept: () => {
                 this.fieldDeleteRequested.emit(field);
             }
