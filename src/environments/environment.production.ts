@@ -1,3 +1,3 @@
 export const environment = {
-    apiUrl: 'https://REPLACE-WITH-RENDER-URL.onrender.com'
+    apiUrl: 'https://form-builder-api-v652.onrender.com'
 };
