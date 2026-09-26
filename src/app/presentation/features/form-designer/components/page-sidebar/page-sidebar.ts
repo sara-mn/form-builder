@@ -4,10 +4,11 @@ import { ButtonModule } from 'primeng/button';
 import { ConfirmationService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { Trash } from '@primeicons/angular/trash';
+import { PIcon } from '@primeicons/angular';
 
 @Component({
     selector: 'app-page-sidebar',
-    imports: [ButtonModule, ConfirmDialogModule, Trash],
+    imports: [ButtonModule, ConfirmDialogModule, Trash, PIcon],
     providers: [ConfirmationService],
     templateUrl: './page-sidebar.html'
 })
@@ -35,7 +36,6 @@ export class PageSidebar {
         this.confirmationService.confirm({
             message: 'Delete this page and all its fields?',
             header: 'Confirm Deletion',
-            icon: 'pi pi-exclamation-triangle',
             accept: () => {
                 this.pageDeleted.emit(pageId);
             }
