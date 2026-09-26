@@ -5,12 +5,19 @@ import crypto from 'crypto';
 
 const ACCESS_TOKEN_SECRET = process.env.JWT_ACCESS_SECRET || 'dev-only-access-secret-change-me';
 const REFRESH_TOKEN_SECRET = process.env.JWT_REFRESH_SECRET || 'dev-only-refresh-secret-change-me';
+const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:4200';
 
 if (!process.env.JWT_ACCESS_SECRET || !process.env.JWT_REFRESH_SECRET) {
     console.warn('[auth] Using fallback dev secrets — set JWT_ACCESS_SECRET and JWT_REFRESH_SECRET env vars for anything beyond local dev.');
 }
-export default function createAuthRouter(db) {
+export default function createAuthRouter(db, isProduction = false) {
     const router = express.Router();
+
+    const cookieOptions = {
+        httpOnly: true,
+        sameSite: isProduction ? 'none' : 'strict',
+        secure: isProduction
+    };
 
     const getUsers = () => db.get('users');
 
@@ -64,7 +71,7 @@ export default function createAuthRouter(db) {
         const accessToken = jwt.sign(payload, ACCESS_TOKEN_SECRET, { expiresIn: '1h' });
         const refreshToken = jwt.sign(payload, REFRESH_TOKEN_SECRET, { expiresIn: '7d' });
 
-        res.cookie('refreshToken', refreshToken, { httpOnly: true, sameSite: 'strict' }).json({ accessToken, user: toSafeUser(user) });
+        res.cookie('refreshToken', refreshToken, cookieOptions).json({ accessToken, user: toSafeUser(user) });
     });
 
     router.post('/refresh', (req, res) => {
@@ -91,7 +98,7 @@ export default function createAuthRouter(db) {
     });
 
     router.post('/logout', (req, res) => {
-        res.clearCookie('refreshToken', { httpOnly: true, sameSite: 'strict' });
+        res.clearCookie('refreshToken', cookieOptions);
         res.status(200).json({ message: 'Logged out successfully' });
     });
 
@@ -132,8 +139,7 @@ export default function createAuthRouter(db) {
             .write();
 
         // No real email service — log the link for manual testing (documented in README)
-        console.log(`[password-reset] Reset link for ${email}: http://localhost:4200/reset-password?token=${token}`);
-
+        console.log(`[password-reset] Reset link for ${email}: ${FRONTEND_URL}/reset-password?token=${token}`);
         res.status(200).json({ message: 'If that email exists, a reset link has been sent' });
     });
 
