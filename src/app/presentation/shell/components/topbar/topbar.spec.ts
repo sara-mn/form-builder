@@ -103,4 +103,12 @@ describe('Topbar', () => {
         expect(authFacade.logout).toHaveBeenCalledTimes(1);
         expect(navigateSpy).toHaveBeenCalledWith(['/login']);
     });
+
+    it('should link to /account when user info is clicked', () => {
+        authState.setUser(createFakeUser());
+        fixture.detectChanges();
+
+        const userLink: HTMLAnchorElement = fixture.nativeElement.querySelector('[data-testid="user-info"]');
+        expect(userLink.getAttribute('href')).toContain('/account');
+    });
 });
