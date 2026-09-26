@@ -102,4 +102,9 @@ describe('Login', () => {
         const link = fixture.debugElement.query(By.css('a[routerLink="/register"]'));
         expect(link).toBeTruthy();
     });
+
+    it('should link to the forgot-password page', () => {
+        const link = fixture.debugElement.query(By.css('a[routerLink="/forgot-password"]'));
+        expect(link).toBeTruthy();
+    });
 });
