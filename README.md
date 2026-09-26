@@ -2,7 +2,12 @@
 
 A form-building application built with Angular 22 (Zoneless, Signals) and PrimeNG v22, structured around Clean Architecture and Domain-Driven Design. Admins design multi-page forms with field-level and cross-field validation rules; viewers fill and submit them. Built as a portfolio project targeting the German frontend job market — every architectural decision below is deliberate and documented as a trade-off, not a default.
 
-**Live demo** — UI/architecture only. The backend isn't deployed yet (tracked for a future phase), so login and API calls won't work there. Run locally (see below) for the full experience.
+**Live demo**: https://sara-mn.github.io/form-builder — frontend on GitHub Pages, backend on Render (free tier). Login and API calls work end-to-end. A few honest caveats:
+
+- **Access from Iran**: Render's free tier is unreachable from Iranian IP ranges (a sanctions-related restriction on the hosting side, not this app). The demo works normally from elsewhere; a VPN is needed to test it from Iran.
+- **Data resets**: the backend runs on an ephemeral filesystem — any registrations, profile edits, or password changes are lost whenever the service restarts or spins down from inactivity. The seeded accounts below always work regardless.
+- **Cold start**: the free-tier backend sleeps after ~15 minutes of inactivity; the first request afterward can take 30–50 seconds to wake it.
+- **Cross-site cookies**: browsers that block third-party cookies by default (e.g. Safari) may reject the cross-origin refresh-token cookie even when the server is configured correctly — this is a browser-level restriction on GitHub Pages ↔ Render specifically, not something server config can work around.
 
 ## Architecture
 
@@ -109,6 +114,19 @@ npm test
 npm run build-prod
 ```
 
+## Deployment
+
+- **Frontend**: GitHub Pages, via `npm run deploy-gh` (wraps `angular-cli-ghpages`). Production builds (`npm run build-prod`) resolve the API URL from `src/environments/environment.production.ts`, wired in via `angular.json`'s `production` `fileReplacements`.
+- **Backend**: Render (Node web service). Required environment variables, set in Render's dashboard (never committed):
+
+| Variable | Purpose |
+|---|---|
+| `JWT_ACCESS_SECRET` / `JWT_REFRESH_SECRET` | JWT signing secrets |
+| `FRONTEND_URL` | Builds the password-reset link logged server-side; must include the `/form-builder` base path |
+| `NODE_ENV=production` | Switches the refresh-token cookie to `sameSite: 'none'; secure: true` — required for it to survive a cross-site request between GitHub Pages and Render. Without it, the browser silently drops the cookie and session restore fails. |
+
+Worth noting for anyone reproducing this setup: this project's backend runtime dependencies (`express`, `cors`, `cookie-parser`, `json-server`, `jsonwebtoken`, `bcryptjs`, `dotenv`) were originally listed under `devDependencies`. `npm install` skips `devDependencies` when `NODE_ENV=production`, which broke the first deploy with `Cannot find package 'dotenv'` — they're now correctly under `dependencies`.
+
 ## Project status
 
 Actively developed in phases, each scoped and closed before the next begins:
@@ -116,9 +134,12 @@ Actively developed in phases, each scoped and closed before the next begins:
 - ✅ JWT + RBAC authentication
 - ✅ Standalone shell, Tailwind styling, dark mode
 - ✅ Form persistence, multi-page domain model, validation engine
-- ✅ Core test coverage (domain, application, infrastructure, shell)
+- ✅ Full test coverage across all layers — domain, application, infrastructure, and every presentation-layer component/facade (93 spec files, ~700 tests)
 - ✅ Architecture cleanup, accessibility fixes, visual pass, dashboard
-- ⬜ Remaining component/facade test coverage (auth, form-designer, form-list, form-renderer)
+- ✅ Account management: profile editing, change password, forgot/reset password
+- ✅ Backend deployed to Render, frontend to GitHub Pages, authenticated end-to-end across origins
+- ⬜ `npm audit` review (moderate/high advisories flagged, not yet triaged)
+- ⬜ `allowScripts` allowlist update for bumped `lmdb`/`esbuild` versions
 
 ## Timeline
 
