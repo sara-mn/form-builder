@@ -14,9 +14,13 @@ export const __dirname = dirname(__filename);
 
 const app = express();
 
+const isProduction = process.env.NODE_ENV === 'production';
+
+const allowedOrigins = ['http://localhost:4200', 'https://sara-mn.github.io'];
+
 app.use(
     cors({
-        origin: ['http://localhost:4200'],
+        origin: allowedOrigins,
         credentials: true,
         methods: ['GET', 'POST', 'DELETE', 'PUT', 'PATCH']
     })
@@ -28,7 +32,7 @@ app.use(cookieParser());
 const jsonServerRouter = jsonServer.router('db.json');
 const db = jsonServerRouter.db; // lowdb instance — shared with auth routes
 
-app.use('/api/auth', express.json(), createAuthRouter(db));
+app.use('/api/auth', express.json(), createAuthRouter(db, isProduction));
 app.use(jsonServerRouter);
 
 const port = process.env.PORT || 3000;
