@@ -7,7 +7,7 @@ import { NavItemModel } from '../nav-item.model';
 function createFakeNavItemModel(overrides: Partial<NavItemModel> = {}): NavItemModel {
     return {
         label: 'Dashboard',
-        icon: 'pi-home',
+        icon: 'home',
         routerLink: ['/dashboard'],
         ...overrides
     };
