@@ -1,3 +1,25 @@
-<div class="grid grid-cols-12 gap-8">
+<div class="mb-6 flex items-center justify-between">
+    <h1 class="text-2xl font-bold text-color">Dashboard</h1>
+    <button
+        pButton
+        type="button"
+        (click)="onNewFormClick()"
+        class="flex items-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-primary-contrast shadow-md shadow-primary-500/30 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-primary-500/40 active:translate-y-0"
+    >
+        <svg data-p-icon="plus" class="h-4 w-4"></svg>
+        <span>New Form</span>
+    </button>
+</div>
+
+<div class="grid grid-cols-12 gap-6">
     <app-stats-widget class="contents" [stats]="dashboardFacade.stats()" />
+</div>
+
+<div class="mt-6 grid grid-cols-12 gap-6">
+    <div class="col-span-12 lg:col-span-7">
+        <app-submissions-chart [items]="dashboardFacade.formListItems()" />
+    </div>
+    <div class="col-span-12 lg:col-span-5">
+        <app-recent-forms [items]="dashboardFacade.formListItems()" />
+    </div>
 </div>

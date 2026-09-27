@@ -1,0 +1,8 @@
+<div class="rounded-2xl border border-surface bg-surface-0 p-5 shadow-sm dark:bg-surface-900">
+    <h2 class="mb-4 text-lg font-semibold text-color">Submissions per Form</h2>
+    @if (items().length === 0) {
+    <p class="text-sm text-muted-color">No data yet.</p>
+    } @else {
+    <p-chart type="bar" [data]="chartData()" [options]="chartOptions" [style]="{ height: '260px' }" />
+    }
+</div>
