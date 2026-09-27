@@ -5,179 +5,763 @@
       "email": "admin@example.com",
       "password": "$2b$10$z6BXlJ/AxALo0HerbTmsUu9xZzFN6oGFLI2D7T8bUur4kcnUN9IQC",
       "name": "Admin User",
-      "roles": [
-        "admin"
-      ],
-      "profile": {
-        "avatarUrl": "",
-        "bio": "",
-        "mobile": ""
-      }
+      "roles": ["admin"],
+      "profile": { "avatarUrl": "", "bio": "", "mobile": "" }
     },
     {
       "id": "1784454571688",
       "email": "user@example.com",
       "password": "$2b$10$nw2YKUrfjn1vdv/79wnUIeka0/l8xiw/zc4Sq2Z1/QvXUtUvvhNoS",
       "name": "Regular User",
-      "roles": [
-        "viewer"
-      ],
-      "profile": {
-        "avatarUrl": "",
-        "bio": "",
-        "mobile": ""
-      }
+      "roles": ["viewer"],
+      "profile": { "avatarUrl": "", "bio": "", "mobile": "" }
     }
   ],
   "forms": [
     {
-      "id": "1",
-      "title": "form Id 1",
-      "description": "",
+      "id": "form-1",
+      "title": "Job Application Form",
+      "description": "Apply for an open engineering position — tell us about yourself and your experience.",
       "status": "published",
       "ownerId": "1784454563753",
       "pages": [
         {
-          "id": "page-1-1",
-          "title": "Page 1",
+          "id": "form-1-page-1",
+          "title": "Personal Information",
           "order": 0,
           "fields": [
             {
-              "id": "field-1-1",
-              "name": "firstName",
-              "label": "نام",
+              "id": "form-1-p1-f1",
+              "name": "fullName",
+              "label": "Full Name",
               "type": "text",
               "order": 0,
               "validators": [
-                {
-                  "id": "v-1",
-                  "type": "required",
-                  "message": "This field is required"
-                },
-                {
-                  "id": "v-2",
-                  "type": "minLength",
-                  "value": 3,
-                  "message": "Minimum length is 3"
-                },
-                {
-                  "id": "v-3",
-                  "type": "maxLength",
-                  "value": 15,
-                  "message": "Maximum length is 15"
-                }
+                { "id": "form-1-p1-f1-v1", "type": "required", "message": "Full name is required" },
+                { "id": "form-1-p1-f1-v2", "type": "minLength", "value": 2, "message": "Minimum length is 2" },
+                { "id": "form-1-p1-f1-v3", "type": "maxLength", "value": 100, "message": "Maximum length is 100" }
               ]
             },
             {
-              "name": "lastName",
-              "id": "field-1-2",
-              "label": "نام خانوادگی",
-              "type": "text",
+              "id": "form-1-p1-f2",
+              "name": "email",
+              "label": "Email Address",
+              "type": "email",
               "order": 1,
               "validators": [
-                {
-                  "id": "v-4",
-                  "type": "required",
-                  "message": "This field is required"
-                },
-                {
-                  "id": "v-5",
-                  "type": "minLength",
-                  "value": 3,
-                  "message": "Minimum length is 3"
-                },
-                {
-                  "id": "v-6",
-                  "type": "maxLength",
-                  "value": 15,
-                  "message": "Maximum length is 15"
-                }
-              ],
-              "access": [
-                "guest",
-                "user"
+                { "id": "form-1-p1-f2-v1", "type": "required", "message": "Email is required" },
+                { "id": "form-1-p1-f2-v2", "type": "email", "message": "Must be a valid email address" }
               ]
             },
             {
-              "name": "nationalCode",
-              "id": "field-1-3",
-              "label": "کد ملی",
-              "type": "number",
+              "id": "form-1-p1-f3",
+              "name": "phone",
+              "label": "Phone Number",
+              "type": "tel",
               "order": 2,
               "validators": [
-                {
-                  "id": "v-7",
-                  "type": "required",
-                  "message": "This field is required"
-                }
-              ],
-              "access": [
-                "guest",
-                "user"
+                { "id": "form-1-p1-f3-v1", "type": "required", "message": "Phone number is required" },
+                { "id": "form-1-p1-f3-v2", "type": "pattern", "value": "^\\+?[0-9\\s-]{7,15}$", "message": "Enter a valid phone number" }
               ]
             },
             {
-              "name": "gender",
-              "id": "field-1-4",
-              "label": "جنسیت",
-              "type": "select",
+              "id": "form-1-p1-f4",
+              "name": "dateOfBirth",
+              "label": "Date of Birth",
+              "type": "date",
               "order": 3,
-              "validators": [],
-              "access": [
-                "guest",
-                "user"
-              ],
-              "options": [
-                {
-                  "key": "male",
-                  "value": "مرد"
-                },
-                {
-                  "key": "female",
-                  "value": "زن"
-                }
-              ]
-            },
-            {
-              "id": "2880682d-1d20-42bf-87fb-39fb3927bb8f",
-              "name": "dkfkdgkjdg",
-              "label": "شماره شناسنامه",
-              "type": "text",
-              "order": 4,
               "validators": [
-                {
-                  "id": "ead3cff0-d36f-4719-963b-b51b17449152",
-                  "type": "required",
-                  "message": "This field is required"
-                },
-                {
-                  "id": "64a0917c-7dd4-4e20-b515-3bcb5f45e4fb",
-                  "type": "minLength",
-                  "message": "Minimum length is 7",
-                  "value": 7
-                },
-                {
-                  "id": "bb8608a7-3a34-4a08-9935-840090e32622",
-                  "type": "maxLength",
-                  "message": "Maximum length is 7",
-                  "value": 7
-                }
+                { "id": "form-1-p1-f4-v1", "type": "required", "message": "Date of birth is required" }
               ]
             }
           ],
           "validators": []
         },
         {
-          "id": "76772b71-99d5-4d29-a1eb-1c8da618d53d",
-          "title": "Page 2",
+          "id": "form-1-page-2",
+          "title": "Professional Details",
           "order": 1,
           "fields": [
             {
-              "id": "b1f966a6-7229-42db-91bd-82137a5ed979",
-              "name": "Job",
-              "label": "شغل",
+              "id": "form-1-p2-f1",
+              "name": "position",
+              "label": "Position Applying For",
+              "type": "select",
+              "order": 0,
+              "validators": [
+                { "id": "form-1-p2-f1-v1", "type": "required", "message": "Please select a position" }
+              ],
+              "options": [
+                { "key": "frontend", "value": "Frontend Developer" },
+                { "key": "backend", "value": "Backend Developer" },
+                { "key": "fullstack", "value": "Full Stack Developer" },
+                { "key": "devops", "value": "DevOps Engineer" }
+              ]
+            },
+            {
+              "id": "form-1-p2-f2",
+              "name": "yearsOfExperience",
+              "label": "Years of Experience",
+              "type": "number",
+              "order": 1,
+              "validators": [
+                { "id": "form-1-p2-f2-v1", "type": "required", "message": "This field is required" },
+                { "id": "form-1-p2-f2-v2", "type": "minValue", "value": 0, "message": "Must be 0 or greater" },
+                { "id": "form-1-p2-f2-v3", "type": "maxValue", "value": 50, "message": "Must be 50 or less" }
+              ]
+            },
+            {
+              "id": "form-1-p2-f3",
+              "name": "currentSalary",
+              "label": "Current Salary (optional)",
+              "type": "number",
+              "order": 2,
+              "validators": [
+                { "id": "form-1-p2-f3-v1", "type": "minValue", "value": 0, "message": "Must be 0 or greater" }
+              ]
+            },
+            {
+              "id": "form-1-p2-f4",
+              "name": "expectedSalary",
+              "label": "Expected Salary",
+              "type": "number",
+              "order": 3,
+              "validators": [
+                { "id": "form-1-p2-f4-v1", "type": "required", "message": "Expected salary is required" },
+                { "id": "form-1-p2-f4-v2", "type": "minValue", "value": 0, "message": "Must be 0 or greater" }
+              ]
+            },
+            {
+              "id": "form-1-p2-f5",
+              "name": "availableStartDate",
+              "label": "Available Start Date",
+              "type": "date",
+              "order": 4,
+              "validators": [
+                { "id": "form-1-p2-f5-v1", "type": "required", "message": "Start date is required" }
+              ]
+            }
+          ],
+          "validators": [
+            {
+              "id": "form-1-p2-cv1",
+              "type": "requiredIfFilled",
+              "message": "Current salary is required when an expected salary is provided",
+              "targetFieldId": "form-1-p2-f3",
+              "dependsOnFieldId": "form-1-p2-f4"
+            }
+          ]
+        },
+        {
+          "id": "form-1-page-3",
+          "title": "Additional Information",
+          "order": 2,
+          "fields": [
+            {
+              "id": "form-1-p3-f1",
+              "name": "coverLetter",
+              "label": "Cover Letter",
+              "type": "textarea",
+              "order": 0,
+              "validators": [
+                { "id": "form-1-p3-f1-v1", "type": "required", "message": "Cover letter is required" },
+                { "id": "form-1-p3-f1-v2", "type": "maxLength", "value": 2000, "message": "Maximum length is 2000" }
+              ]
+            },
+            {
+              "id": "form-1-p3-f2",
+              "name": "portfolioUrl",
+              "label": "Portfolio URL (optional)",
+              "type": "url",
+              "order": 1,
+              "validators": [
+                { "id": "form-1-p3-f2-v1", "type": "pattern", "value": "^https?:\\/\\/.+", "message": "Must be a valid URL starting with http:// or https://" }
+              ]
+            },
+            {
+              "id": "form-1-p3-f3",
+              "name": "relocate",
+              "label": "Willing to relocate",
+              "type": "checkbox",
+              "order": 2,
+              "validators": []
+            },
+            {
+              "id": "form-1-p3-f4",
+              "name": "referralSource",
+              "label": "How did you hear about us?",
+              "type": "radio",
+              "order": 3,
+              "validators": [],
+              "options": [
+                { "key": "jobBoard", "value": "Job Board" },
+                { "key": "companyWebsite", "value": "Company Website" },
+                { "key": "referral", "value": "Referral" },
+                { "key": "socialMedia", "value": "Social Media" },
+                { "key": "other", "value": "Other" }
+              ]
+            }
+          ],
+          "validators": []
+        }
+      ],
+      "validators": [
+        {
+          "id": "form-1-cv1",
+          "type": "dateAfter",
+          "message": "Available start date must be after your date of birth",
+          "targetFieldId": "form-1-p2-f5",
+          "dependsOnFieldId": "form-1-p1-f4"
+        }
+      ],
+      "createdAt": "2025-01-01T00:00:00.000Z",
+      "updatedAt": "2025-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "form-2",
+      "title": "Customer Feedback Survey",
+      "description": "Help us improve by sharing your recent experience with our product.",
+      "status": "published",
+      "ownerId": "1784454563753",
+      "pages": [
+        {
+          "id": "form-2-page-1",
+          "title": "About You",
+          "order": 0,
+          "fields": [
+            {
+              "id": "form-2-p1-f1",
+              "name": "customerName",
+              "label": "Your Name",
               "type": "text",
               "order": 0,
+              "validators": [
+                { "id": "form-2-p1-f1-v1", "type": "required", "message": "Name is required" },
+                { "id": "form-2-p1-f1-v2", "type": "maxLength", "value": 80, "message": "Maximum length is 80" }
+              ]
+            },
+            {
+              "id": "form-2-p1-f2",
+              "name": "customerEmail",
+              "label": "Email Address",
+              "type": "email",
+              "order": 1,
+              "validators": [
+                { "id": "form-2-p1-f2-v1", "type": "required", "message": "Email is required" },
+                { "id": "form-2-p1-f2-v2", "type": "email", "message": "Must be a valid email address" }
+              ]
+            },
+            {
+              "id": "form-2-p1-f3",
+              "name": "customerType",
+              "label": "Customer Type",
+              "type": "radio",
+              "order": 2,
+              "validators": [
+                { "id": "form-2-p1-f3-v1", "type": "required", "message": "Please select a customer type" }
+              ],
+              "options": [
+                { "key": "new", "value": "New Customer" },
+                { "key": "returning", "value": "Returning Customer" },
+                { "key": "prospective", "value": "Prospective Customer" }
+              ]
+            }
+          ],
+          "validators": []
+        },
+        {
+          "id": "form-2-page-2",
+          "title": "Your Feedback",
+          "order": 1,
+          "fields": [
+            {
+              "id": "form-2-p2-f1",
+              "name": "overallRating",
+              "label": "Overall Satisfaction",
+              "type": "select",
+              "order": 0,
+              "validators": [
+                { "id": "form-2-p2-f1-v1", "type": "required", "message": "Please select a rating" }
+              ],
+              "options": [
+                { "key": "1", "value": "1 - Very Dissatisfied" },
+                { "key": "2", "value": "2 - Dissatisfied" },
+                { "key": "3", "value": "3 - Neutral" },
+                { "key": "4", "value": "4 - Satisfied" },
+                { "key": "5", "value": "5 - Very Satisfied" }
+              ]
+            },
+            {
+              "id": "form-2-p2-f2",
+              "name": "productQuality",
+              "label": "Product Quality (1–10)",
+              "type": "range",
+              "order": 1,
+              "validators": [
+                { "id": "form-2-p2-f2-v1", "type": "minValue", "value": 1, "message": "Minimum is 1" },
+                { "id": "form-2-p2-f2-v2", "type": "maxValue", "value": 10, "message": "Maximum is 10" }
+              ]
+            },
+            {
+              "id": "form-2-p2-f3",
+              "name": "comments",
+              "label": "Additional Comments",
+              "type": "textarea",
+              "order": 2,
+              "validators": [
+                { "id": "form-2-p2-f3-v1", "type": "maxLength", "value": 1000, "message": "Maximum length is 1000" }
+              ]
+            },
+            {
+              "id": "form-2-p2-f4",
+              "name": "wouldRecommend",
+              "label": "I would recommend this product to others",
+              "type": "checkbox",
+              "order": 3,
+              "validators": []
+            },
+            {
+              "id": "form-2-p2-f5",
+              "name": "contactPreference",
+              "label": "Preferred Follow-up Contact",
+              "type": "select",
+              "order": 4,
+              "validators": [],
+              "options": [
+                { "key": "email", "value": "Email" },
+                { "key": "phone", "value": "Phone" },
+                { "key": "none", "value": "No Contact" }
+              ]
+            }
+          ],
+          "validators": [
+            {
+              "id": "form-2-p2-cv1",
+              "type": "requiredIfFilled",
+              "message": "Please select a follow-up preference if you'd like us to reach out",
+              "targetFieldId": "form-2-p2-f5",
+              "dependsOnFieldId": "form-2-p2-f3"
+            }
+          ]
+        }
+      ],
+      "validators": [],
+      "createdAt": "2025-02-10T09:15:00.000Z",
+      "updatedAt": "2025-02-10T09:15:00.000Z"
+    },
+    {
+      "id": "form-3",
+      "title": "Event Registration — Tech Conference 2026",
+      "description": "Register to attend the annual tech conference, choose your ticket type and sessions.",
+      "status": "published",
+      "ownerId": "1784454563753",
+      "pages": [
+        {
+          "id": "form-3-page-1",
+          "title": "Attendee Information",
+          "order": 0,
+          "fields": [
+            {
+              "id": "form-3-p1-f1",
+              "name": "attendeeName",
+              "label": "Full Name",
+              "type": "text",
+              "order": 0,
+              "validators": [
+                { "id": "form-3-p1-f1-v1", "type": "required", "message": "Name is required" },
+                { "id": "form-3-p1-f1-v2", "type": "minLength", "value": 2, "message": "Minimum length is 2" },
+                { "id": "form-3-p1-f1-v3", "type": "maxLength", "value": 80, "message": "Maximum length is 80" }
+              ]
+            },
+            {
+              "id": "form-3-p1-f2",
+              "name": "attendeeEmail",
+              "label": "Email Address",
+              "type": "email",
+              "order": 1,
+              "validators": [
+                { "id": "form-3-p1-f2-v1", "type": "required", "message": "Email is required" },
+                { "id": "form-3-p1-f2-v2", "type": "email", "message": "Must be a valid email address" }
+              ]
+            },
+            {
+              "id": "form-3-p1-f3",
+              "name": "company",
+              "label": "Company (optional)",
+              "type": "text",
+              "order": 2,
+              "validators": [
+                { "id": "form-3-p1-f3-v1", "type": "maxLength", "value": 100, "message": "Maximum length is 100" }
+              ]
+            },
+            {
+              "id": "form-3-p1-f4",
+              "name": "jobTitle",
+              "label": "Job Title (optional)",
+              "type": "text",
+              "order": 3,
+              "validators": [
+                { "id": "form-3-p1-f4-v1", "type": "maxLength", "value": 100, "message": "Maximum length is 100" }
+              ]
+            }
+          ],
+          "validators": []
+        },
+        {
+          "id": "form-3-page-2",
+          "title": "Session Preferences",
+          "order": 1,
+          "fields": [
+            {
+              "id": "form-3-p2-f1",
+              "name": "ticketType",
+              "label": "Ticket Type",
+              "type": "select",
+              "order": 0,
+              "validators": [
+                { "id": "form-3-p2-f1-v1", "type": "required", "message": "Please select a ticket type" }
+              ],
+              "options": [
+                { "key": "standard", "value": "Standard" },
+                { "key": "vip", "value": "VIP" },
+                { "key": "student", "value": "Student" }
+              ]
+            },
+            {
+              "id": "form-3-p2-f2",
+              "name": "sessionDate",
+              "label": "Session Date",
+              "type": "date",
+              "order": 1,
+              "validators": [
+                { "id": "form-3-p2-f2-v1", "type": "required", "message": "Please select a session date" }
+              ]
+            },
+            {
+              "id": "form-3-p2-f3",
+              "name": "checkInTime",
+              "label": "Preferred Check-in Time",
+              "type": "time",
+              "order": 2,
+              "validators": [
+                { "id": "form-3-p2-f3-v1", "type": "required", "message": "Please select a check-in time" }
+              ]
+            },
+            {
+              "id": "form-3-p2-f4",
+              "name": "dietaryRestrictions",
+              "label": "Dietary Restrictions",
+              "type": "select",
+              "order": 3,
+              "validators": [],
+              "options": [
+                { "key": "none", "value": "None" },
+                { "key": "vegetarian", "value": "Vegetarian" },
+                { "key": "vegan", "value": "Vegan" },
+                { "key": "glutenFree", "value": "Gluten-Free" },
+                { "key": "other", "value": "Other" }
+              ]
+            },
+            {
+              "id": "form-3-p2-f5",
+              "name": "specialRequests",
+              "label": "Special Requests (optional)",
+              "type": "textarea",
+              "order": 4,
+              "validators": [
+                { "id": "form-3-p2-f5-v1", "type": "maxLength", "value": 500, "message": "Maximum length is 500" }
+              ]
+            },
+            {
+              "id": "form-3-p2-f6",
+              "name": "agreeToTerms",
+              "label": "I agree to the event terms and conditions",
+              "type": "checkbox",
+              "order": 5,
+              "validators": [
+                { "id": "form-3-p2-f6-v1", "type": "required", "message": "You must agree to the terms to register" }
+              ]
+            }
+          ],
+          "validators": [
+            {
+              "id": "form-3-p2-cv1",
+              "type": "requiredIfFilled",
+              "message": "Please specify your dietary restriction details if 'Other' applies",
+              "targetFieldId": "form-3-p2-f5",
+              "dependsOnFieldId": "form-3-p2-f4"
+            }
+          ]
+        }
+      ],
+      "validators": [],
+      "createdAt": "2025-03-05T14:30:00.000Z",
+      "updatedAt": "2025-03-05T14:30:00.000Z"
+    },
+    {
+      "id": "form-4",
+      "title": "Employee Onboarding Form",
+      "description": "Internal onboarding form for new hires — collects personal, employment and access details.",
+      "status": "draft",
+      "ownerId": "1784454563753",
+      "pages": [
+        {
+          "id": "form-4-page-1",
+          "title": "Personal Details",
+          "order": 0,
+          "fields": [
+            {
+              "id": "form-4-p1-f1",
+              "name": "legalName",
+              "label": "Legal Full Name",
+              "type": "text",
+              "order": 0,
+              "validators": [
+                { "id": "form-4-p1-f1-v1", "type": "required", "message": "Legal name is required" },
+                { "id": "form-4-p1-f1-v2", "type": "minLength", "value": 2, "message": "Minimum length is 2" },
+                { "id": "form-4-p1-f1-v3", "type": "maxLength", "value": 100, "message": "Maximum length is 100" }
+              ]
+            },
+            {
+              "id": "form-4-p1-f2",
+              "name": "preferredName",
+              "label": "Preferred Name (optional)",
+              "type": "text",
+              "order": 1,
+              "validators": [
+                { "id": "form-4-p1-f2-v1", "type": "maxLength", "value": 50, "message": "Maximum length is 50" }
+              ]
+            },
+            {
+              "id": "form-4-p1-f3",
+              "name": "personalEmail",
+              "label": "Personal Email",
+              "type": "email",
+              "order": 2,
+              "validators": [
+                { "id": "form-4-p1-f3-v1", "type": "required", "message": "Personal email is required" },
+                { "id": "form-4-p1-f3-v2", "type": "email", "message": "Must be a valid email address" }
+              ]
+            },
+            {
+              "id": "form-4-p1-f4",
+              "name": "emergencyContactPhone",
+              "label": "Emergency Contact Phone",
+              "type": "tel",
+              "order": 3,
+              "validators": [
+                { "id": "form-4-p1-f4-v1", "type": "required", "message": "Emergency contact is required" },
+                { "id": "form-4-p1-f4-v2", "type": "pattern", "value": "^\\+?[0-9\\s-]{7,15}$", "message": "Enter a valid phone number" }
+              ]
+            }
+          ],
+          "validators": []
+        },
+        {
+          "id": "form-4-page-2",
+          "title": "Employment Details",
+          "order": 1,
+          "fields": [
+            {
+              "id": "form-4-p2-f1",
+              "name": "department",
+              "label": "Department",
+              "type": "select",
+              "order": 0,
+              "validators": [
+                { "id": "form-4-p2-f1-v1", "type": "required", "message": "Please select a department" }
+              ],
+              "options": [
+                { "key": "engineering", "value": "Engineering" },
+                { "key": "design", "value": "Design" },
+                { "key": "product", "value": "Product" },
+                { "key": "marketing", "value": "Marketing" },
+                { "key": "sales", "value": "Sales" },
+                { "key": "hr", "value": "HR" }
+              ]
+            },
+            {
+              "id": "form-4-p2-f2",
+              "name": "startDate",
+              "label": "Start Date",
+              "type": "date",
+              "order": 1,
+              "validators": [
+                { "id": "form-4-p2-f2-v1", "type": "required", "message": "Start date is required" }
+              ]
+            },
+            {
+              "id": "form-4-p2-f3",
+              "name": "employmentType",
+              "label": "Employment Type",
+              "type": "radio",
+              "order": 2,
+              "validators": [
+                { "id": "form-4-p2-f3-v1", "type": "required", "message": "Please select an employment type" }
+              ],
+              "options": [
+                { "key": "fullTime", "value": "Full-Time" },
+                { "key": "partTime", "value": "Part-Time" },
+                { "key": "contract", "value": "Contract" },
+                { "key": "intern", "value": "Intern" }
+              ]
+            },
+            {
+              "id": "form-4-p2-f4",
+              "name": "salary",
+              "label": "Annual Salary",
+              "type": "number",
+              "order": 3,
+              "validators": [
+                { "id": "form-4-p2-f4-v1", "type": "required", "message": "Salary is required" },
+                { "id": "form-4-p2-f4-v2", "type": "minValue", "value": 0, "message": "Must be 0 or greater" }
+              ],
+              "access": ["admin"]
+            }
+          ],
+          "validators": []
+        },
+        {
+          "id": "form-4-page-3",
+          "title": "Documents & Access",
+          "order": 2,
+          "fields": [
+            {
+              "id": "form-4-p3-f1",
+              "name": "laptopPreference",
+              "label": "Laptop Preference",
+              "type": "radio",
+              "order": 0,
+              "validators": [
+                { "id": "form-4-p3-f1-v1", "type": "required", "message": "Please select a laptop preference" }
+              ],
+              "options": [
+                { "key": "macbook", "value": "MacBook" },
+                { "key": "windows", "value": "Windows Laptop" },
+                { "key": "linux", "value": "Linux Laptop" }
+              ]
+            },
+            {
+              "id": "form-4-p3-f2",
+              "name": "accessLevel",
+              "label": "System Access Level",
+              "type": "select",
+              "order": 1,
+              "validators": [
+                { "id": "form-4-p3-f2-v1", "type": "required", "message": "Please select an access level" }
+              ],
+              "options": [
+                { "key": "standard", "value": "Standard" },
+                { "key": "admin", "value": "Admin" },
+                { "key": "restricted", "value": "Restricted" }
+              ],
+              "access": ["admin"]
+            },
+            {
+              "id": "form-4-p3-f3",
+              "name": "ndaSigned",
+              "label": "I confirm the NDA has been signed",
+              "type": "checkbox",
+              "order": 2,
+              "validators": [
+                { "id": "form-4-p3-f3-v1", "type": "required", "message": "NDA confirmation is required" }
+              ]
+            },
+            {
+              "id": "form-4-p3-f4",
+              "name": "additionalNotes",
+              "label": "Additional Notes (optional)",
+              "type": "textarea",
+              "order": 3,
+              "validators": [
+                { "id": "form-4-p3-f4-v1", "type": "maxLength", "value": 1000, "message": "Maximum length is 1000" }
+              ]
+            }
+          ],
+          "validators": []
+        }
+      ],
+      "validators": [
+        {
+          "id": "form-4-cv1",
+          "type": "requiredIfFilled",
+          "message": "Access level must be set when a department is assigned",
+          "targetFieldId": "form-4-p3-f2",
+          "dependsOnFieldId": "form-4-p2-f1"
+        }
+      ],
+      "createdAt": "2025-04-20T11:00:00.000Z",
+      "updatedAt": "2025-06-12T08:45:00.000Z"
+    },
+    {
+      "id": "form-5",
+      "title": "Quick Contact Form",
+      "description": "A short contact form for general inquiries.",
+      "status": "published",
+      "ownerId": "1784454563753",
+      "pages": [
+        {
+          "id": "form-5-page-1",
+          "title": "Contact",
+          "order": 0,
+          "fields": [
+            {
+              "id": "form-5-p1-f1",
+              "name": "name",
+              "label": "Your Name",
+              "type": "text",
+              "order": 0,
+              "validators": [
+                { "id": "form-5-p1-f1-v1", "type": "required", "message": "Name is required" },
+                { "id": "form-5-p1-f1-v2", "type": "minLength", "value": 2, "message": "Minimum length is 2" },
+                { "id": "form-5-p1-f1-v3", "type": "maxLength", "value": 50, "message": "Maximum length is 50" }
+              ]
+            },
+            {
+              "id": "form-5-p1-f2",
+              "name": "email",
+              "label": "Email Address",
+              "type": "email",
+              "order": 1,
+              "validators": [
+                { "id": "form-5-p1-f2-v1", "type": "required", "message": "Email is required" },
+                { "id": "form-5-p1-f2-v2", "type": "email", "message": "Must be a valid email address" }
+              ]
+            },
+            {
+              "id": "form-5-p1-f3",
+              "name": "subject",
+              "label": "Subject",
+              "type": "select",
+              "order": 2,
+              "validators": [
+                { "id": "form-5-p1-f3-v1", "type": "required", "message": "Please select a subject" }
+              ],
+              "options": [
+                { "key": "general", "value": "General Inquiry" },
+                { "key": "support", "value": "Support" },
+                { "key": "sales", "value": "Sales" },
+                { "key": "partnership", "value": "Partnership" }
+              ]
+            },
+            {
+              "id": "form-5-p1-f4",
+              "name": "message",
+              "label": "Message",
+              "type": "textarea",
+              "order": 3,
+              "validators": [
+                { "id": "form-5-p1-f4-v1", "type": "required", "message": "Message is required" },
+                { "id": "form-5-p1-f4-v2", "type": "minLength", "value": 10, "message": "Minimum length is 10" },
+                { "id": "form-5-p1-f4-v3", "type": "maxLength", "value": 1000, "message": "Maximum length is 1000" }
+              ]
+            },
+            {
+              "id": "form-5-p1-f5",
+              "name": "urgent",
+              "label": "This is urgent",
+              "type": "checkbox",
+              "order": 4,
               "validators": []
             }
           ],
@@ -185,71 +769,125 @@
         }
       ],
       "validators": [],
-      "createdAt": "2025-01-01T00:00:00.000Z",
-      "updatedAt": "2025-01-01T00:00:00.000Z"
-    },
-    {
-      "id": "2",
-      "title": "Contact Form",
-      "description": "",
-      "status": "published",
-      "ownerId": "1784454563753",
-      "pages": [
-        {
-          "id": "page-2-1",
-          "title": "Page 1",
-          "order": 0,
-          "fields": [
-            {
-              "name": "email",
-              "id": "field-2-1",
-              "label": "Email",
-              "type": "text",
-              "order": 0,
-              "validators": [
-                {
-                  "id": "v-8",
-                  "type": "required",
-                  "message": "This field is required"
-                },
-                {
-                  "id": "v-9",
-                  "type": "email",
-                  "message": "Must be a valid email"
-                }
-              ],
-              "access": [
-                "guest",
-                "user"
-              ]
-            },
-            {
-              "name": "message",
-              "id": "field-2-2",
-              "label": "Message",
-              "type": "textarea",
-              "order": 1,
-              "validators": [
-                {
-                  "id": "v-10",
-                  "type": "maxLength",
-                  "value": 500,
-                  "message": "Maximum length is 500"
-                }
-              ],
-              "access": [
-                "guest",
-                "user"
-              ]
-            }
-          ],
-          "validators": []
-        }
-      ],
-      "validators": [],
-      "createdAt": "2025-01-01T00:00:00.000Z",
-      "updatedAt": "2025-01-01T00:00:00.000Z"
+      "createdAt": "2025-05-18T16:20:00.000Z",
+      "updatedAt": "2025-05-18T16:20:00.000Z"
     }
   ],
-  "submissions": []
+  "submissions": [
+    {
+      "id": "sub-1",
+      "formId": "form-1",
+      "submittedBy": "1784454571688",
+      "submittedAt": "2025-06-01T09:12:00.000Z",
+      "answers": {
+        "form-1-p1-f1": "Elena Fischer",
+        "form-1-p1-f2": "elena.fischer@example.com",
+        "form-1-p1-f3": "+49 151 2345678",
+        "form-1-p1-f4": "1994-03-12",
+        "form-1-p2-f1": "frontend",
+        "form-1-p2-f2": 6,
+        "form-1-p2-f3": 62000,
+        "form-1-p2-f4": 68000,
+        "form-1-p2-f5": "2025-07-01",
+        "form-1-p3-f1": "6 years building Angular apps, most recently leading a design-system migration.",
+        "form-1-p3-f2": "https://elenafischer.dev",
+        "form-1-p3-f3": true,
+        "form-1-p3-f4": "referral"
+      }
+    },
+    {
+      "id": "sub-2",
+      "formId": "form-1",
+      "submittedBy": "1784454571688",
+      "submittedAt": "2025-06-03T14:40:00.000Z",
+      "answers": {
+        "form-1-p1-f1": "Tobias Wagner",
+        "form-1-p1-f2": "tobias.wagner@example.com",
+        "form-1-p1-f3": "+49 172 9988776",
+        "form-1-p1-f4": "1990-11-05",
+        "form-1-p2-f1": "fullstack",
+        "form-1-p2-f2": 9,
+        "form-1-p2-f4": 75000,
+        "form-1-p2-f5": "2025-08-15",
+        "form-1-p3-f1": "Full-stack developer with a focus on NestJS and Angular, looking for a new challenge.",
+        "form-1-p3-f3": false,
+        "form-1-p3-f4": "jobBoard"
+      }
+    },
+    {
+      "id": "sub-3",
+      "formId": "form-2",
+      "submittedBy": "1784454571688",
+      "submittedAt": "2025-06-05T10:00:00.000Z",
+      "answers": {
+        "form-2-p1-f1": "Markus Becker",
+        "form-2-p1-f2": "markus.becker@example.com",
+        "form-2-p1-f3": "returning",
+        "form-2-p2-f1": "5",
+        "form-2-p2-f2": 9,
+        "form-2-p2-f3": "Great product, the new dashboard is much faster.",
+        "form-2-p2-f4": true,
+        "form-2-p2-f5": "email"
+      }
+    },
+    {
+      "id": "sub-4",
+      "formId": "form-2",
+      "submittedBy": "1784454563753",
+      "submittedAt": "2025-06-06T17:22:00.000Z",
+      "answers": {
+        "form-2-p1-f1": "Julia Hoffmann",
+        "form-2-p1-f2": "julia.hoffmann@example.com",
+        "form-2-p1-f3": "new",
+        "form-2-p2-f1": "3",
+        "form-2-p2-f2": 6,
+        "form-2-p2-f3": "Onboarding was a bit confusing at first.",
+        "form-2-p2-f4": false,
+        "form-2-p2-f5": "phone"
+      }
+    },
+    {
+      "id": "sub-5",
+      "formId": "form-3",
+      "submittedBy": "1784454571688",
+      "submittedAt": "2025-06-10T08:30:00.000Z",
+      "answers": {
+        "form-3-p1-f1": "Nina Krüger",
+        "form-3-p1-f2": "nina.krueger@example.com",
+        "form-3-p1-f3": "TechNova GmbH",
+        "form-3-p1-f4": "Frontend Engineer",
+        "form-3-p2-f1": "vip",
+        "form-3-p2-f2": "2026-04-14",
+        "form-3-p2-f3": "08:30",
+        "form-3-p2-f4": "vegetarian",
+        "form-3-p2-f6": true
+      }
+    },
+    {
+      "id": "sub-6",
+      "formId": "form-5",
+      "submittedBy": "1784454571688",
+      "submittedAt": "2025-06-12T19:05:00.000Z",
+      "answers": {
+        "form-5-p1-f1": "Paul Zimmermann",
+        "form-5-p1-f2": "paul.zimmermann@example.com",
+        "form-5-p1-f3": "support",
+        "form-5-p1-f4": "My account was locked after the last update, could you help me regain access?",
+        "form-5-p1-f5": true
+      }
+    },
+    {
+      "id": "sub-7",
+      "formId": "form-5",
+      "submittedBy": "1784454563753",
+      "submittedAt": "2025-06-13T11:47:00.000Z",
+      "answers": {
+        "form-5-p1-f1": "Sophie Lang",
+        "form-5-p1-f2": "sophie.lang@example.com",
+        "form-5-p1-f3": "partnership",
+        "form-5-p1-f4": "We'd like to discuss an integration partnership with your platform.",
+        "form-5-p1-f5": false
+      }
+    }
+  ]
 }
