@@ -32,7 +32,9 @@ export const appConfig: ApplicationConfig = {
                     }
                 }
             },
-            ripple: true
+            ripple: true,
+            license:
+                'eyJpZCI6ImZlM2VmNWYxLTVlMzctNDNlNS05MmU5LTRmMTg4YjY1OTg3OSIsInByb2R1Y3QiOiJwcmltZXVpIiwidGllciI6ImNvbW11bml0eSIsInR5cGUiOiJkZXYiLCJpYXQiOjE3OTA1MDg4MTMsImV4cCI6MTgyMjA0NDgxM30.d4mT1LLGlt8aws-jGNErV47-ZeO2eBjhmIkvrWJ9FmlSl1qDdeu-tABWmmJAZ2xaCsyAl96QfLFtx2jDS7boBw'
         }),
         provideHttpClient(withInterceptors([authInterceptor])),
         ...infrastructureProviders,
