@@ -34,6 +34,12 @@ export const routes: Routes = [
                 data: { permissions: [] },
                 canActivate: [authGuard, permissionGuard],
                 loadComponent: () => import('@features/account/account').then((m) => m.Account)
+            },
+            {
+                path: 'forms/:id/submissions',
+                data: { permissions: [UserPermissionEnum.SubmissionView] },
+                canActivate: [authGuard, permissionGuard],
+                loadComponent: () => import('@features/submissions/submissions-viewer').then((m) => m.SubmissionsViewer)
             }
         ]
     },
