@@ -2,11 +2,12 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Dashboard } from './dashboard';
 import { signal } from '@angular/core';
 import { DashboardFacade, DashboardStats } from './services/dashboard.facade';
+import { FormListItem } from '@app/application/form/get-forms-with-submission-counts.use-case';
 
 describe('Dashboard', () => {
     let component: Dashboard;
     let fixture: ComponentFixture<Dashboard>;
-    let dashboardFacade: Pick<DashboardFacade, 'loadStats' | 'stats'>;
+    let dashboardFacade: Pick<DashboardFacade, 'loadStats' | 'stats' | 'formListItems'>;
 
     beforeEach(async () => {
         const statsSignal = signal<DashboardStats>({
@@ -16,10 +17,12 @@ describe('Dashboard', () => {
             lockedForms: 0,
             totalSubmissions: 0
         });
+        const formListItemsSignal = signal<FormListItem[]>([]);
 
         dashboardFacade = {
             loadStats: vi.fn().mockResolvedValue(undefined),
-            stats: statsSignal
+            stats: statsSignal,
+            formListItems: formListItemsSignal
         };
 
         await TestBed.configureTestingModule({
