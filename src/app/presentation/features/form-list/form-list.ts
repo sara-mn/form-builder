@@ -66,6 +66,10 @@ export class FormList implements OnInit {
         });
     }
 
+    onViewSubmissions(formId: Guid): void {
+        this.router.navigate(['/forms', formId, 'submissions']);
+    }
+
     async onClone(formId: Guid): Promise<void> {
         this.cloningFormId.set(formId);
         try {

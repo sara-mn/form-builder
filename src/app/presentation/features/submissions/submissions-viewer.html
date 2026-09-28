@@ -1,0 +1,46 @@
+<div class="mx-auto max-w-4xl p-6">
+    <div class="mb-6 flex items-center justify-between">
+        <div>
+            <h2 class="m-0 text-xl font-semibold text-surface-900 dark:text-surface-0">Submissions</h2>
+            @if (facade.form(); as form) {
+            <p class="mt-1 text-sm text-muted-color">{{ form.title }}</p>
+            }
+        </div>
+        <a routerLink="/form-list" pButton type="button" severity="secondary" [outlined]="true">Back to Forms</a>
+    </div>
+
+    <p-table [value]="facade.submissions()">
+        <ng-template #header>
+            <tr>
+                <th>Submitted At</th>
+                <th>Submitted By</th>
+                <th>Actions</th>
+            </tr>
+        </ng-template>
+        <ng-template #body let-submission>
+            <tr>
+                <td>{{ submission.submittedAt | date: 'medium' }}</td>
+                <td>{{ submission.submittedBy }}</td>
+                <td>
+                    <button pButton type="button" severity="secondary" [outlined]="true" size="small" (click)="onView(submission.id)">View</button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template #emptymessage>
+            <tr>
+                <td colspan="3" class="p-8 text-center text-surface-400 dark:text-surface-500">No submissions yet.</td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+    <p-dialog header="Submission Details" [visible]="selectedSubmissionId() !== null" (onHide)="onCloseDetail()" [modal]="true" [style]="{ width: '32rem' }">
+        <dl class="space-y-3">
+            @for (entry of selectedAnswers(); track entry.label) {
+            <div>
+                <dt class="text-xs font-medium text-muted-color uppercase">{{ entry.label }}</dt>
+                <dd class="mt-1 text-sm text-color">{{ entry.value }}</dd>
+            </div>
+            }
+        </dl>
+    </p-dialog>
+</div>
