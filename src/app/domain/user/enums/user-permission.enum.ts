@@ -4,5 +4,6 @@ export enum UserPermissionEnum {
     FormEdit = 'form:edit',
     FormDelete = 'form:delete',
     FormGenerate = 'form:generate',
+    SubmissionView = 'submission:view',
     UserManage = 'user:manage'
 }
