@@ -16,15 +16,15 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "^22.0.5",
+    "@angular/animations": "^22.2.0",
     "@angular/cdk": "^22.0.3",
-    "@angular/common": "^22.0.5",
-    "@angular/compiler": "^22.0.5",
-    "@angular/core": "^22.0.5",
-    "@angular/forms": "^22.0.5",
-    "@angular/platform-browser": "^22.0.5",
-    "@angular/platform-browser-dynamic": "^22.0.5",
-    "@angular/router": "^22.0.5",
+    "@angular/common": "^22.2.0",
+    "@angular/compiler": "^22.2.0",
+    "@angular/core": "^22.2.0",
+    "@angular/forms": "^22.2.0",
+    "@angular/platform-browser": "^22.2.0",
+    "@angular/platform-browser-dynamic": "^22.2.0",
+    "@angular/router": "^22.2.0",
     "@primeicons/angular": "^8.0.0",
     "@primeuix/themes": "^3.0.0-rc.1",
     "@tailwindcss/postcss": "^4.1.4",
@@ -34,7 +34,6 @@
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
-    "form-builder": "file:",
     "json-server": "^0.17.4",
     "jsonwebtoken": "^9.0.3",
     "postcss": "^8.5.3",
@@ -44,10 +43,11 @@
     "tailwindcss-primeui": "^0.6.1",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"
-},
-"devDependencies": {
+  },
+  "devDependencies": {
     "@angular-devkit/build-angular": "^22.0.5",
-    "@angular/compiler-cli": "^22.0.5",
+    "@angular/cli": "^22.2.0",
+    "@angular/compiler-cli": "^22.2.0",
     "@vitest/browser-playwright": "^4.1.10",
     "angular-cli-ghpages": "^3.1.0",
     "body-parser": "^2.3.0",
@@ -56,11 +56,12 @@
     "prettier-plugin-tailwindcss": "^0.6.14",
     "typescript": "^6.0.3",
     "vitest": "^4.1.10"
-},
+  },
   "allowScripts": {
     "esbuild@0.28.1": true,
-    "lmdb@3.4.2": true,
     "msgpackr-extract@3.0.4": true,
-    "@parcel/watcher@2.5.6": true
+    "@parcel/watcher@2.5.6": true,
+    "lmdb@3.5.4": true,
+    "esbuild@0.27.7": true
   }
 }
