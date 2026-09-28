@@ -25,7 +25,9 @@
                 <td>
                     <div class="flex gap-2">
                         <button pButton type="button" severity="secondary" [outlined]="true" size="small" (click)="onEdit(item.form.id)">Edit</button>
-                        @if (item.submissionCount > 0) {
+                        @if (authState.hasPermission(userPermissionEnum.SubmissionView)) {
+                        <button pButton type="button" severity="secondary" [outlined]="true" size="small" (click)="onViewSubmissions(item.form.id)">Submissions</button>
+                        } @if (item.submissionCount > 0) {
                         <button pButton type="button" severity="secondary" [outlined]="true" size="small" [disabled]="cloningFormId() === item.form.id" (click)="onClone(item.form.id)">
                             {{ cloningFormId() === item.form.id ? 'Cloning...' : 'Clone' }}
                         </button>
