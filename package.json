@@ -46,6 +46,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^22.0.5",
+    "@angular/cli": "^22.2.0",
     "@angular/compiler-cli": "^22.0.5",
     "@vitest/browser-playwright": "^4.1.10",
     "angular-cli-ghpages": "^3.1.0",
