@@ -5,16 +5,28 @@
       "email": "admin@example.com",
       "password": "$2b$10$z6BXlJ/AxALo0HerbTmsUu9xZzFN6oGFLI2D7T8bUur4kcnUN9IQC",
       "name": "Admin User",
-      "roles": ["admin"],
-      "profile": { "avatarUrl": "", "bio": "", "mobile": "" }
+      "roles": [
+        "admin"
+      ],
+      "profile": {
+        "avatarUrl": "",
+        "bio": "",
+        "mobile": ""
+      }
     },
     {
       "id": "1784454571688",
       "email": "user@example.com",
       "password": "$2b$10$nw2YKUrfjn1vdv/79wnUIeka0/l8xiw/zc4Sq2Z1/QvXUtUvvhNoS",
       "name": "Regular User",
-      "roles": ["viewer"],
-      "profile": { "avatarUrl": "", "bio": "", "mobile": "" }
+      "roles": [
+        "viewer"
+      ],
+      "profile": {
+        "avatarUrl": "",
+        "bio": "",
+        "mobile": ""
+      }
     }
   ],
   "forms": [
@@ -37,9 +49,23 @@
               "type": "text",
               "order": 0,
               "validators": [
-                { "id": "form-1-p1-f1-v1", "type": "required", "message": "Full name is required" },
-                { "id": "form-1-p1-f1-v2", "type": "minLength", "value": 2, "message": "Minimum length is 2" },
-                { "id": "form-1-p1-f1-v3", "type": "maxLength", "value": 100, "message": "Maximum length is 100" }
+                {
+                  "id": "form-1-p1-f1-v1",
+                  "type": "required",
+                  "message": "Full name is required"
+                },
+                {
+                  "id": "form-1-p1-f1-v2",
+                  "type": "minLength",
+                  "value": 2,
+                  "message": "Minimum length is 2"
+                },
+                {
+                  "id": "form-1-p1-f1-v3",
+                  "type": "maxLength",
+                  "value": 100,
+                  "message": "Maximum length is 100"
+                }
               ]
             },
             {
@@ -49,8 +75,16 @@
               "type": "email",
               "order": 1,
               "validators": [
-                { "id": "form-1-p1-f2-v1", "type": "required", "message": "Email is required" },
-                { "id": "form-1-p1-f2-v2", "type": "email", "message": "Must be a valid email address" }
+                {
+                  "id": "form-1-p1-f2-v1",
+                  "type": "required",
+                  "message": "Email is required"
+                },
+                {
+                  "id": "form-1-p1-f2-v2",
+                  "type": "email",
+                  "message": "Must be a valid email address"
+                }
               ]
             },
             {
@@ -60,8 +94,17 @@
               "type": "tel",
               "order": 2,
               "validators": [
-                { "id": "form-1-p1-f3-v1", "type": "required", "message": "Phone number is required" },
-                { "id": "form-1-p1-f3-v2", "type": "pattern", "value": "^\\+?[0-9\\s-]{7,15}$", "message": "Enter a valid phone number" }
+                {
+                  "id": "form-1-p1-f3-v1",
+                  "type": "required",
+                  "message": "Phone number is required"
+                },
+                {
+                  "id": "form-1-p1-f3-v2",
+                  "type": "pattern",
+                  "value": "^\\+?[0-9\\s-]{7,15}$",
+                  "message": "Enter a valid phone number"
+                }
               ]
             },
             {
@@ -71,7 +114,11 @@
               "type": "date",
               "order": 3,
               "validators": [
-                { "id": "form-1-p1-f4-v1", "type": "required", "message": "Date of birth is required" }
+                {
+                  "id": "form-1-p1-f4-v1",
+                  "type": "required",
+                  "message": "Date of birth is required"
+                }
               ]
             }
           ],
@@ -89,13 +136,29 @@
               "type": "select",
               "order": 0,
               "validators": [
-                { "id": "form-1-p2-f1-v1", "type": "required", "message": "Please select a position" }
+                {
+                  "id": "form-1-p2-f1-v1",
+                  "type": "required",
+                  "message": "Please select a position"
+                }
               ],
               "options": [
-                { "key": "frontend", "value": "Frontend Developer" },
-                { "key": "backend", "value": "Backend Developer" },
-                { "key": "fullstack", "value": "Full Stack Developer" },
-                { "key": "devops", "value": "DevOps Engineer" }
+                {
+                  "key": "frontend",
+                  "value": "Frontend Developer"
+                },
+                {
+                  "key": "backend",
+                  "value": "Backend Developer"
+                },
+                {
+                  "key": "fullstack",
+                  "value": "Full Stack Developer"
+                },
+                {
+                  "key": "devops",
+                  "value": "DevOps Engineer"
+                }
               ]
             },
             {
@@ -105,9 +168,23 @@
               "type": "number",
               "order": 1,
               "validators": [
-                { "id": "form-1-p2-f2-v1", "type": "required", "message": "This field is required" },
-                { "id": "form-1-p2-f2-v2", "type": "minValue", "value": 0, "message": "Must be 0 or greater" },
-                { "id": "form-1-p2-f2-v3", "type": "maxValue", "value": 50, "message": "Must be 50 or less" }
+                {
+                  "id": "form-1-p2-f2-v1",
+                  "type": "required",
+                  "message": "This field is required"
+                },
+                {
+                  "id": "form-1-p2-f2-v2",
+                  "type": "minValue",
+                  "value": 0,
+                  "message": "Must be 0 or greater"
+                },
+                {
+                  "id": "form-1-p2-f2-v3",
+                  "type": "maxValue",
+                  "value": 50,
+                  "message": "Must be 50 or less"
+                }
               ]
             },
             {
@@ -117,7 +194,12 @@
               "type": "number",
               "order": 2,
               "validators": [
-                { "id": "form-1-p2-f3-v1", "type": "minValue", "value": 0, "message": "Must be 0 or greater" }
+                {
+                  "id": "form-1-p2-f3-v1",
+                  "type": "minValue",
+                  "value": 0,
+                  "message": "Must be 0 or greater"
+                }
               ]
             },
             {
@@ -127,8 +209,17 @@
               "type": "number",
               "order": 3,
               "validators": [
-                { "id": "form-1-p2-f4-v1", "type": "required", "message": "Expected salary is required" },
-                { "id": "form-1-p2-f4-v2", "type": "minValue", "value": 0, "message": "Must be 0 or greater" }
+                {
+                  "id": "form-1-p2-f4-v1",
+                  "type": "required",
+                  "message": "Expected salary is required"
+                },
+                {
+                  "id": "form-1-p2-f4-v2",
+                  "type": "minValue",
+                  "value": 0,
+                  "message": "Must be 0 or greater"
+                }
               ]
             },
             {
@@ -138,7 +229,11 @@
               "type": "date",
               "order": 4,
               "validators": [
-                { "id": "form-1-p2-f5-v1", "type": "required", "message": "Start date is required" }
+                {
+                  "id": "form-1-p2-f5-v1",
+                  "type": "required",
+                  "message": "Start date is required"
+                }
               ]
             }
           ],
@@ -164,8 +259,17 @@
               "type": "textarea",
               "order": 0,
               "validators": [
-                { "id": "form-1-p3-f1-v1", "type": "required", "message": "Cover letter is required" },
-                { "id": "form-1-p3-f1-v2", "type": "maxLength", "value": 2000, "message": "Maximum length is 2000" }
+                {
+                  "id": "form-1-p3-f1-v1",
+                  "type": "required",
+                  "message": "Cover letter is required"
+                },
+                {
+                  "id": "form-1-p3-f1-v2",
+                  "type": "maxLength",
+                  "value": 2000,
+                  "message": "Maximum length is 2000"
+                }
               ]
             },
             {
@@ -175,7 +279,12 @@
               "type": "url",
               "order": 1,
               "validators": [
-                { "id": "form-1-p3-f2-v1", "type": "pattern", "value": "^https?:\\/\\/.+", "message": "Must be a valid URL starting with http:// or https://" }
+                {
+                  "id": "form-1-p3-f2-v1",
+                  "type": "pattern",
+                  "value": "^https?:\\/\\/.+",
+                  "message": "Must be a valid URL starting with http:// or https://"
+                }
               ]
             },
             {
@@ -194,11 +303,26 @@
               "order": 3,
               "validators": [],
               "options": [
-                { "key": "jobBoard", "value": "Job Board" },
-                { "key": "companyWebsite", "value": "Company Website" },
-                { "key": "referral", "value": "Referral" },
-                { "key": "socialMedia", "value": "Social Media" },
-                { "key": "other", "value": "Other" }
+                {
+                  "key": "jobBoard",
+                  "value": "Job Board"
+                },
+                {
+                  "key": "companyWebsite",
+                  "value": "Company Website"
+                },
+                {
+                  "key": "referral",
+                  "value": "Referral"
+                },
+                {
+                  "key": "socialMedia",
+                  "value": "Social Media"
+                },
+                {
+                  "key": "other",
+                  "value": "Other"
+                }
               ]
             }
           ],
@@ -236,8 +360,17 @@
               "type": "text",
               "order": 0,
               "validators": [
-                { "id": "form-2-p1-f1-v1", "type": "required", "message": "Name is required" },
-                { "id": "form-2-p1-f1-v2", "type": "maxLength", "value": 80, "message": "Maximum length is 80" }
+                {
+                  "id": "form-2-p1-f1-v1",
+                  "type": "required",
+                  "message": "Name is required"
+                },
+                {
+                  "id": "form-2-p1-f1-v2",
+                  "type": "maxLength",
+                  "value": 80,
+                  "message": "Maximum length is 80"
+                }
               ]
             },
             {
@@ -247,8 +380,16 @@
               "type": "email",
               "order": 1,
               "validators": [
-                { "id": "form-2-p1-f2-v1", "type": "required", "message": "Email is required" },
-                { "id": "form-2-p1-f2-v2", "type": "email", "message": "Must be a valid email address" }
+                {
+                  "id": "form-2-p1-f2-v1",
+                  "type": "required",
+                  "message": "Email is required"
+                },
+                {
+                  "id": "form-2-p1-f2-v2",
+                  "type": "email",
+                  "message": "Must be a valid email address"
+                }
               ]
             },
             {
@@ -258,12 +399,25 @@
               "type": "radio",
               "order": 2,
               "validators": [
-                { "id": "form-2-p1-f3-v1", "type": "required", "message": "Please select a customer type" }
+                {
+                  "id": "form-2-p1-f3-v1",
+                  "type": "required",
+                  "message": "Please select a customer type"
+                }
               ],
               "options": [
-                { "key": "new", "value": "New Customer" },
-                { "key": "returning", "value": "Returning Customer" },
-                { "key": "prospective", "value": "Prospective Customer" }
+                {
+                  "key": "new",
+                  "value": "New Customer"
+                },
+                {
+                  "key": "returning",
+                  "value": "Returning Customer"
+                },
+                {
+                  "key": "prospective",
+                  "value": "Prospective Customer"
+                }
               ]
             }
           ],
@@ -281,14 +435,33 @@
               "type": "select",
               "order": 0,
               "validators": [
-                { "id": "form-2-p2-f1-v1", "type": "required", "message": "Please select a rating" }
+                {
+                  "id": "form-2-p2-f1-v1",
+                  "type": "required",
+                  "message": "Please select a rating"
+                }
               ],
               "options": [
-                { "key": "1", "value": "1 - Very Dissatisfied" },
-                { "key": "2", "value": "2 - Dissatisfied" },
-                { "key": "3", "value": "3 - Neutral" },
-                { "key": "4", "value": "4 - Satisfied" },
-                { "key": "5", "value": "5 - Very Satisfied" }
+                {
+                  "key": "1",
+                  "value": "1 - Very Dissatisfied"
+                },
+                {
+                  "key": "2",
+                  "value": "2 - Dissatisfied"
+                },
+                {
+                  "key": "3",
+                  "value": "3 - Neutral"
+                },
+                {
+                  "key": "4",
+                  "value": "4 - Satisfied"
+                },
+                {
+                  "key": "5",
+                  "value": "5 - Very Satisfied"
+                }
               ]
             },
             {
@@ -298,8 +471,18 @@
               "type": "range",
               "order": 1,
               "validators": [
-                { "id": "form-2-p2-f2-v1", "type": "minValue", "value": 1, "message": "Minimum is 1" },
-                { "id": "form-2-p2-f2-v2", "type": "maxValue", "value": 10, "message": "Maximum is 10" }
+                {
+                  "id": "form-2-p2-f2-v1",
+                  "type": "minValue",
+                  "value": 1,
+                  "message": "Minimum is 1"
+                },
+                {
+                  "id": "form-2-p2-f2-v2",
+                  "type": "maxValue",
+                  "value": 10,
+                  "message": "Maximum is 10"
+                }
               ]
             },
             {
@@ -309,7 +492,12 @@
               "type": "textarea",
               "order": 2,
               "validators": [
-                { "id": "form-2-p2-f3-v1", "type": "maxLength", "value": 1000, "message": "Maximum length is 1000" }
+                {
+                  "id": "form-2-p2-f3-v1",
+                  "type": "maxLength",
+                  "value": 1000,
+                  "message": "Maximum length is 1000"
+                }
               ]
             },
             {
@@ -328,9 +516,18 @@
               "order": 4,
               "validators": [],
               "options": [
-                { "key": "email", "value": "Email" },
-                { "key": "phone", "value": "Phone" },
-                { "key": "none", "value": "No Contact" }
+                {
+                  "key": "email",
+                  "value": "Email"
+                },
+                {
+                  "key": "phone",
+                  "value": "Phone"
+                },
+                {
+                  "key": "none",
+                  "value": "No Contact"
+                }
               ]
             }
           ],
@@ -368,9 +565,23 @@
               "type": "text",
               "order": 0,
               "validators": [
-                { "id": "form-3-p1-f1-v1", "type": "required", "message": "Name is required" },
-                { "id": "form-3-p1-f1-v2", "type": "minLength", "value": 2, "message": "Minimum length is 2" },
-                { "id": "form-3-p1-f1-v3", "type": "maxLength", "value": 80, "message": "Maximum length is 80" }
+                {
+                  "id": "form-3-p1-f1-v1",
+                  "type": "required",
+                  "message": "Name is required"
+                },
+                {
+                  "id": "form-3-p1-f1-v2",
+                  "type": "minLength",
+                  "value": 2,
+                  "message": "Minimum length is 2"
+                },
+                {
+                  "id": "form-3-p1-f1-v3",
+                  "type": "maxLength",
+                  "value": 80,
+                  "message": "Maximum length is 80"
+                }
               ]
             },
             {
@@ -380,8 +591,16 @@
               "type": "email",
               "order": 1,
               "validators": [
-                { "id": "form-3-p1-f2-v1", "type": "required", "message": "Email is required" },
-                { "id": "form-3-p1-f2-v2", "type": "email", "message": "Must be a valid email address" }
+                {
+                  "id": "form-3-p1-f2-v1",
+                  "type": "required",
+                  "message": "Email is required"
+                },
+                {
+                  "id": "form-3-p1-f2-v2",
+                  "type": "email",
+                  "message": "Must be a valid email address"
+                }
               ]
             },
             {
@@ -391,7 +610,12 @@
               "type": "text",
               "order": 2,
               "validators": [
-                { "id": "form-3-p1-f3-v1", "type": "maxLength", "value": 100, "message": "Maximum length is 100" }
+                {
+                  "id": "form-3-p1-f3-v1",
+                  "type": "maxLength",
+                  "value": 100,
+                  "message": "Maximum length is 100"
+                }
               ]
             },
             {
@@ -401,7 +625,12 @@
               "type": "text",
               "order": 3,
               "validators": [
-                { "id": "form-3-p1-f4-v1", "type": "maxLength", "value": 100, "message": "Maximum length is 100" }
+                {
+                  "id": "form-3-p1-f4-v1",
+                  "type": "maxLength",
+                  "value": 100,
+                  "message": "Maximum length is 100"
+                }
               ]
             }
           ],
@@ -419,12 +648,25 @@
               "type": "select",
               "order": 0,
               "validators": [
-                { "id": "form-3-p2-f1-v1", "type": "required", "message": "Please select a ticket type" }
+                {
+                  "id": "form-3-p2-f1-v1",
+                  "type": "required",
+                  "message": "Please select a ticket type"
+                }
               ],
               "options": [
-                { "key": "standard", "value": "Standard" },
-                { "key": "vip", "value": "VIP" },
-                { "key": "student", "value": "Student" }
+                {
+                  "key": "standard",
+                  "value": "Standard"
+                },
+                {
+                  "key": "vip",
+                  "value": "VIP"
+                },
+                {
+                  "key": "student",
+                  "value": "Student"
+                }
               ]
             },
             {
@@ -434,7 +676,11 @@
               "type": "date",
               "order": 1,
               "validators": [
-                { "id": "form-3-p2-f2-v1", "type": "required", "message": "Please select a session date" }
+                {
+                  "id": "form-3-p2-f2-v1",
+                  "type": "required",
+                  "message": "Please select a session date"
+                }
               ]
             },
             {
@@ -444,7 +690,11 @@
               "type": "time",
               "order": 2,
               "validators": [
-                { "id": "form-3-p2-f3-v1", "type": "required", "message": "Please select a check-in time" }
+                {
+                  "id": "form-3-p2-f3-v1",
+                  "type": "required",
+                  "message": "Please select a check-in time"
+                }
               ]
             },
             {
@@ -455,11 +705,26 @@
               "order": 3,
               "validators": [],
               "options": [
-                { "key": "none", "value": "None" },
-                { "key": "vegetarian", "value": "Vegetarian" },
-                { "key": "vegan", "value": "Vegan" },
-                { "key": "glutenFree", "value": "Gluten-Free" },
-                { "key": "other", "value": "Other" }
+                {
+                  "key": "none",
+                  "value": "None"
+                },
+                {
+                  "key": "vegetarian",
+                  "value": "Vegetarian"
+                },
+                {
+                  "key": "vegan",
+                  "value": "Vegan"
+                },
+                {
+                  "key": "glutenFree",
+                  "value": "Gluten-Free"
+                },
+                {
+                  "key": "other",
+                  "value": "Other"
+                }
               ]
             },
             {
@@ -469,7 +734,12 @@
               "type": "textarea",
               "order": 4,
               "validators": [
-                { "id": "form-3-p2-f5-v1", "type": "maxLength", "value": 500, "message": "Maximum length is 500" }
+                {
+                  "id": "form-3-p2-f5-v1",
+                  "type": "maxLength",
+                  "value": 500,
+                  "message": "Maximum length is 500"
+                }
               ]
             },
             {
@@ -479,7 +749,11 @@
               "type": "checkbox",
               "order": 5,
               "validators": [
-                { "id": "form-3-p2-f6-v1", "type": "required", "message": "You must agree to the terms to register" }
+                {
+                  "id": "form-3-p2-f6-v1",
+                  "type": "required",
+                  "message": "You must agree to the terms to register"
+                }
               ]
             }
           ],
@@ -497,201 +771,6 @@
       "validators": [],
       "createdAt": "2025-03-05T14:30:00.000Z",
       "updatedAt": "2025-03-05T14:30:00.000Z"
-    },
-    {
-      "id": "form-4",
-      "title": "Employee Onboarding Form",
-      "description": "Internal onboarding form for new hires — collects personal, employment and access details.",
-      "status": "draft",
-      "ownerId": "1784454563753",
-      "pages": [
-        {
-          "id": "form-4-page-1",
-          "title": "Personal Details",
-          "order": 0,
-          "fields": [
-            {
-              "id": "form-4-p1-f1",
-              "name": "legalName",
-              "label": "Legal Full Name",
-              "type": "text",
-              "order": 0,
-              "validators": [
-                { "id": "form-4-p1-f1-v1", "type": "required", "message": "Legal name is required" },
-                { "id": "form-4-p1-f1-v2", "type": "minLength", "value": 2, "message": "Minimum length is 2" },
-                { "id": "form-4-p1-f1-v3", "type": "maxLength", "value": 100, "message": "Maximum length is 100" }
-              ]
-            },
-            {
-              "id": "form-4-p1-f2",
-              "name": "preferredName",
-              "label": "Preferred Name (optional)",
-              "type": "text",
-              "order": 1,
-              "validators": [
-                { "id": "form-4-p1-f2-v1", "type": "maxLength", "value": 50, "message": "Maximum length is 50" }
-              ]
-            },
-            {
-              "id": "form-4-p1-f3",
-              "name": "personalEmail",
-              "label": "Personal Email",
-              "type": "email",
-              "order": 2,
-              "validators": [
-                { "id": "form-4-p1-f3-v1", "type": "required", "message": "Personal email is required" },
-                { "id": "form-4-p1-f3-v2", "type": "email", "message": "Must be a valid email address" }
-              ]
-            },
-            {
-              "id": "form-4-p1-f4",
-              "name": "emergencyContactPhone",
-              "label": "Emergency Contact Phone",
-              "type": "tel",
-              "order": 3,
-              "validators": [
-                { "id": "form-4-p1-f4-v1", "type": "required", "message": "Emergency contact is required" },
-                { "id": "form-4-p1-f4-v2", "type": "pattern", "value": "^\\+?[0-9\\s-]{7,15}$", "message": "Enter a valid phone number" }
-              ]
-            }
-          ],
-          "validators": []
-        },
-        {
-          "id": "form-4-page-2",
-          "title": "Employment Details",
-          "order": 1,
-          "fields": [
-            {
-              "id": "form-4-p2-f1",
-              "name": "department",
-              "label": "Department",
-              "type": "select",
-              "order": 0,
-              "validators": [
-                { "id": "form-4-p2-f1-v1", "type": "required", "message": "Please select a department" }
-              ],
-              "options": [
-                { "key": "engineering", "value": "Engineering" },
-                { "key": "design", "value": "Design" },
-                { "key": "product", "value": "Product" },
-                { "key": "marketing", "value": "Marketing" },
-                { "key": "sales", "value": "Sales" },
-                { "key": "hr", "value": "HR" }
-              ]
-            },
-            {
-              "id": "form-4-p2-f2",
-              "name": "startDate",
-              "label": "Start Date",
-              "type": "date",
-              "order": 1,
-              "validators": [
-                { "id": "form-4-p2-f2-v1", "type": "required", "message": "Start date is required" }
-              ]
-            },
-            {
-              "id": "form-4-p2-f3",
-              "name": "employmentType",
-              "label": "Employment Type",
-              "type": "radio",
-              "order": 2,
-              "validators": [
-                { "id": "form-4-p2-f3-v1", "type": "required", "message": "Please select an employment type" }
-              ],
-              "options": [
-                { "key": "fullTime", "value": "Full-Time" },
-                { "key": "partTime", "value": "Part-Time" },
-                { "key": "contract", "value": "Contract" },
-                { "key": "intern", "value": "Intern" }
-              ]
-            },
-            {
-              "id": "form-4-p2-f4",
-              "name": "salary",
-              "label": "Annual Salary",
-              "type": "number",
-              "order": 3,
-              "validators": [
-                { "id": "form-4-p2-f4-v1", "type": "required", "message": "Salary is required" },
-                { "id": "form-4-p2-f4-v2", "type": "minValue", "value": 0, "message": "Must be 0 or greater" }
-              ],
-              "access": ["admin"]
-            }
-          ],
-          "validators": []
-        },
-        {
-          "id": "form-4-page-3",
-          "title": "Documents & Access",
-          "order": 2,
-          "fields": [
-            {
-              "id": "form-4-p3-f1",
-              "name": "laptopPreference",
-              "label": "Laptop Preference",
-              "type": "radio",
-              "order": 0,
-              "validators": [
-                { "id": "form-4-p3-f1-v1", "type": "required", "message": "Please select a laptop preference" }
-              ],
-              "options": [
-                { "key": "macbook", "value": "MacBook" },
-                { "key": "windows", "value": "Windows Laptop" },
-                { "key": "linux", "value": "Linux Laptop" }
-              ]
-            },
-            {
-              "id": "form-4-p3-f2",
-              "name": "accessLevel",
-              "label": "System Access Level",
-              "type": "select",
-              "order": 1,
-              "validators": [
-                { "id": "form-4-p3-f2-v1", "type": "required", "message": "Please select an access level" }
-              ],
-              "options": [
-                { "key": "standard", "value": "Standard" },
-                { "key": "admin", "value": "Admin" },
-                { "key": "restricted", "value": "Restricted" }
-              ],
-              "access": ["admin"]
-            },
-            {
-              "id": "form-4-p3-f3",
-              "name": "ndaSigned",
-              "label": "I confirm the NDA has been signed",
-              "type": "checkbox",
-              "order": 2,
-              "validators": [
-                { "id": "form-4-p3-f3-v1", "type": "required", "message": "NDA confirmation is required" }
-              ]
-            },
-            {
-              "id": "form-4-p3-f4",
-              "name": "additionalNotes",
-              "label": "Additional Notes (optional)",
-              "type": "textarea",
-              "order": 3,
-              "validators": [
-                { "id": "form-4-p3-f4-v1", "type": "maxLength", "value": 1000, "message": "Maximum length is 1000" }
-              ]
-            }
-          ],
-          "validators": []
-        }
-      ],
-      "validators": [
-        {
-          "id": "form-4-cv1",
-          "type": "requiredIfFilled",
-          "message": "Access level must be set when a department is assigned",
-          "targetFieldId": "form-4-p3-f2",
-          "dependsOnFieldId": "form-4-p2-f1"
-        }
-      ],
-      "createdAt": "2025-04-20T11:00:00.000Z",
-      "updatedAt": "2025-06-12T08:45:00.000Z"
     },
     {
       "id": "form-5",
@@ -712,9 +791,23 @@
               "type": "text",
               "order": 0,
               "validators": [
-                { "id": "form-5-p1-f1-v1", "type": "required", "message": "Name is required" },
-                { "id": "form-5-p1-f1-v2", "type": "minLength", "value": 2, "message": "Minimum length is 2" },
-                { "id": "form-5-p1-f1-v3", "type": "maxLength", "value": 50, "message": "Maximum length is 50" }
+                {
+                  "id": "form-5-p1-f1-v1",
+                  "type": "required",
+                  "message": "Name is required"
+                },
+                {
+                  "id": "form-5-p1-f1-v2",
+                  "type": "minLength",
+                  "value": 2,
+                  "message": "Minimum length is 2"
+                },
+                {
+                  "id": "form-5-p1-f1-v3",
+                  "type": "maxLength",
+                  "value": 50,
+                  "message": "Maximum length is 50"
+                }
               ]
             },
             {
@@ -724,8 +817,16 @@
               "type": "email",
               "order": 1,
               "validators": [
-                { "id": "form-5-p1-f2-v1", "type": "required", "message": "Email is required" },
-                { "id": "form-5-p1-f2-v2", "type": "email", "message": "Must be a valid email address" }
+                {
+                  "id": "form-5-p1-f2-v1",
+                  "type": "required",
+                  "message": "Email is required"
+                },
+                {
+                  "id": "form-5-p1-f2-v2",
+                  "type": "email",
+                  "message": "Must be a valid email address"
+                }
               ]
             },
             {
@@ -735,13 +836,29 @@
               "type": "select",
               "order": 2,
               "validators": [
-                { "id": "form-5-p1-f3-v1", "type": "required", "message": "Please select a subject" }
+                {
+                  "id": "form-5-p1-f3-v1",
+                  "type": "required",
+                  "message": "Please select a subject"
+                }
               ],
               "options": [
-                { "key": "general", "value": "General Inquiry" },
-                { "key": "support", "value": "Support" },
-                { "key": "sales", "value": "Sales" },
-                { "key": "partnership", "value": "Partnership" }
+                {
+                  "key": "general",
+                  "value": "General Inquiry"
+                },
+                {
+                  "key": "support",
+                  "value": "Support"
+                },
+                {
+                  "key": "sales",
+                  "value": "Sales"
+                },
+                {
+                  "key": "partnership",
+                  "value": "Partnership"
+                }
               ]
             },
             {
@@ -751,9 +868,23 @@
               "type": "textarea",
               "order": 3,
               "validators": [
-                { "id": "form-5-p1-f4-v1", "type": "required", "message": "Message is required" },
-                { "id": "form-5-p1-f4-v2", "type": "minLength", "value": 10, "message": "Minimum length is 10" },
-                { "id": "form-5-p1-f4-v3", "type": "maxLength", "value": 1000, "message": "Maximum length is 1000" }
+                {
+                  "id": "form-5-p1-f4-v1",
+                  "type": "required",
+                  "message": "Message is required"
+                },
+                {
+                  "id": "form-5-p1-f4-v2",
+                  "type": "minLength",
+                  "value": 10,
+                  "message": "Minimum length is 10"
+                },
+                {
+                  "id": "form-5-p1-f4-v3",
+                  "type": "maxLength",
+                  "value": 1000,
+                  "message": "Maximum length is 1000"
+                }
               ]
             },
             {
