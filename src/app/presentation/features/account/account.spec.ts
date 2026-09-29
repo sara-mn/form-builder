@@ -4,6 +4,7 @@ import { Account } from './account';
 import { AccountFacade } from './services/account.facade';
 import { AccountFormCreator } from './services/account-form-creator';
 import { createFakeUser } from '@app/application/test-utils/fixtures';
+import { By } from '@angular/platform-browser';
 
 describe('Account', () => {
     let component: Account;
@@ -128,5 +129,19 @@ describe('Account', () => {
         component.onSubmitChangePassword();
 
         expect(accountFacade.changePassword).not.toHaveBeenCalled();
+    });
+    it('should keep the profile submit button disabled while the profile is loading', () => {
+        (accountFacade.getProfile as ReturnType<typeof vi.fn>).mockReturnValue(new Promise(() => {}));
+        fixture = TestBed.createComponent(Account);
+        fixture.detectChanges();
+
+        const button = fixture.debugElement.query(By.css('[data-testid="profile-submit-button"]')).nativeElement as HTMLButtonElement;
+        expect(button.disabled).toBe(true);
+    });
+
+    it('should enable the profile submit button once a valid profile has loaded', async () => {
+        await createComponent(createFakeUser({ profile: { avatarUrl: '', bio: '', mobile: '09121234567' } }));
+        const button = fixture.debugElement.query(By.css('[data-testid="profile-submit-button"]')).nativeElement as HTMLButtonElement;
+        expect(button.disabled).toBe(false);
     });
 });

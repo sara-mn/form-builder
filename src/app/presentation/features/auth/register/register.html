@@ -60,8 +60,8 @@
                     <label for="password" class="text-sm font-semibold text-surface-700 dark:text-surface-300">Password</label>
                     <p-iconfield>
                         <input pInputPassword inputId="password" id="password" class="w-full" formControlName="password" autocomplete="new-password" [(mask)]="mask" placeholder="Password" data-testid="register-password-input" />
-                        <p-inputicon (click)="mask = !mask" (keydown.enter)="mask = !mask" tabindex="0" role="button" [attr.aria-label]="mask ? 'Show password' : 'Hide password'" style="cursor: pointer" data-testid="register-password-toggle">
-                            @if (mask) {
+                        <p-inputicon (click)="toggleMask()" (keydown.enter)="toggleMask()" tabindex="0" role="button" [attr.aria-label]="mask() ? 'Show password' : 'Hide password'" style="cursor: pointer" data-testid="register-password-toggle">
+                            @if (mask()) {
                             <svg data-p-icon="eye"></svg>
                             } @else {
                             <svg data-p-icon="eye-slash"></svg>
