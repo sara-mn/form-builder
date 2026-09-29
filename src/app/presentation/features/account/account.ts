@@ -31,14 +31,18 @@ export class Account implements OnInit {
     protected mask = signal(true);
     protected profileSaved = signal(false);
     protected passwordChanged = signal(false);
+    protected profileLoading = signal(true);
 
     ngOnInit(): void {
         this.profileForm = this.formCreator.createProfileForm();
         this.changePasswordForm = this.formCreator.createChangePasswordForm();
 
-        this.accountFacade.getProfile().then((user) => {
-            this.profileForm.patchValue({ name: user.name, mobile: user.profile.mobile });
-        });
+        this.accountFacade
+            .getProfile()
+            .then((user) => {
+                this.profileForm.patchValue({ name: user.name, mobile: user.profile.mobile });
+            })
+            .finally(() => this.profileLoading.set(false));
     }
 
     onSubmitProfile() {

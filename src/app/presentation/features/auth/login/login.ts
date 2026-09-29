@@ -26,10 +26,14 @@ export class Login implements OnInit {
     private router = inject(Router);
 
     form!: FormGroup<FormControls<LoginFormModel>>;
-    protected mask: boolean = true;
+    protected mask = signal(true);
 
     ngOnInit(): void {
         this.form = this.loginFormCreator.createForm();
+    }
+
+    protected toggleMask(): void {
+        this.mask.update((masked) => !masked);
     }
 
     onSubmit() {
