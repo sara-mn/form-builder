@@ -26,10 +26,14 @@ export class Register implements OnInit {
     private router = inject(Router);
 
     form!: FormGroup<FormControls<Required<RegisterFormModel>>>;
-    protected mask: boolean = true;
+    protected mask = signal(true);
 
     ngOnInit(): void {
         this.form = this.registerFormCreator.createForm();
+    }
+
+    protected toggleMask(): void {
+        this.mask.update((masked) => !masked);
     }
 
     onSubmit() {
