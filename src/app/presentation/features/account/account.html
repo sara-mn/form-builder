@@ -51,7 +51,7 @@
                     <p class="text-sm text-green-600" data-testid="password-changed-message">Password changed.</p>
                     }
 
-                    <button pButton type="submit" class="mt-2 w-fit" [disabled]="changePasswordForm.invalid" data-testid="change-password-submit-button">Change password</button>
+                    <button pButton type="submit" class="mt-2 w-fit" [disabled]="profileLoading() || profileForm.invalid" data-testid="profile-submit-button">Save changes</button>
                 </form>
             </p-tabpanel>
         </p-tabpanels>
