@@ -1,0 +1,28 @@
+name: CI
+
+on:
+  push:
+    branches: [develop, main]
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test-and-build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - name: Install Chromium for Vitest browser mode
+        run: npx playwright install --with-deps chromium
+      - name: Unit tests
+        run: npm test -- --watch=false
+      - name: Production build
+        run: npm run build-prod
