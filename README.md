@@ -1,3 +1,5 @@
+[![CI](https://github.com/sara-mn/form-builder/actions/workflows/ci.yml/badge.svg)](https://github.com/sara-mn/form-builder/actions/workflows/ci.yml)
+
 # Form Builder
 
 A form-building application built with Angular 22 (Zoneless, Signals) and PrimeNG v22, structured around Clean Architecture and Domain-Driven Design. Admins design multi-page forms with field-level and cross-field validation rules; viewers fill and submit them. Built as a portfolio project targeting the German frontend job market — every architectural decision below is deliberate and documented as a trade-off, not a default.
