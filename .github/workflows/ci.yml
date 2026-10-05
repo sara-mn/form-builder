@@ -25,6 +25,8 @@ jobs:
       - run: npm ci
       - name: Check formatting
         run: npm run format:check
+      - name: Lint
+        run: npm run lint
       - name: Install Chromium for Vitest browser mode
         run: npx playwright install --with-deps chromium
       - name: Unit tests
