@@ -3,6 +3,7 @@ import { AuthState } from './auth-state';
 import { User } from '@app/domain/user/models/user.model';
 import { UserRoleEnum } from '@domain/user/enums/user-role.enum';
 import { UserPermissionEnum } from '@app/domain/user/enums/user-permission.enum';
+import { UserProfile } from '@app/domain/user/models/user-profile.model';
 
 describe('AuthState', () => {
     let service: AuthState;
@@ -13,7 +14,7 @@ describe('AuthState', () => {
             email: 'user@example.com',
             name: 'Test User',
             roles,
-            profile: { mobile: '' } as any
+            profile: { mobile: '' } as UserProfile
         };
     }
 

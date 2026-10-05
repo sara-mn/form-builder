@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { HttpErrorResponse, HttpHandlerFn, HttpRequest } from '@angular/common/http';
+import { HttpErrorResponse, HttpHandlerFn, HttpRequest, HttpResponse } from '@angular/common/http';
 import { provideRouter, Router } from '@angular/router';
 import { of, throwError, firstValueFrom } from 'rxjs';
 import { authInterceptor } from './auth.interceptor';
@@ -33,7 +33,7 @@ describe('authInterceptor', () => {
 
     it('should attach an Authorization header when a token exists and the request is not an auth endpoint', async () => {
         const req = new HttpRequest('GET', '/api/forms');
-        const next: HttpHandlerFn = vi.fn().mockReturnValue(of({} as any));
+        const next: HttpHandlerFn = vi.fn().mockReturnValue(of(new HttpResponse()));
 
         await firstValueFrom(runInterceptor(req, next));
 
@@ -43,7 +43,7 @@ describe('authInterceptor', () => {
 
     it('should not attach an Authorization header for auth endpoints', async () => {
         const req = new HttpRequest('POST', '/api/auth/login', {});
-        const next: HttpHandlerFn = vi.fn().mockReturnValue(of({} as any));
+        const next: HttpHandlerFn = vi.fn().mockReturnValue(of(new HttpResponse()));
 
         await firstValueFrom(runInterceptor(req, next));
 
@@ -77,7 +77,7 @@ describe('authInterceptor', () => {
         let callCount = 0;
         const next: HttpHandlerFn = vi.fn().mockImplementation(() => {
             callCount++;
-            return callCount === 1 ? throwError(() => error) : of({ status: 200 } as any);
+            return callCount === 1 ? throwError(() => error) : of(new HttpResponse({ status: 200 }));
         });
 
         const result = await firstValueFrom(runInterceptor(req, next));

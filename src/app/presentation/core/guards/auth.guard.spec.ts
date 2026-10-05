@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { CanActivateFn, provideRouter } from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivateFn, provideRouter, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { authGuard } from './auth.guard';
 import { AuthState } from '../services/auth-state';
 import { AuthFacade } from '@app/presentation/features/auth/services/auth.facade';
@@ -30,7 +30,7 @@ describe('authGuard', () => {
         authState.setSessionRestored(true);
         authState.setUser({ id: 'u1' } as User);
 
-        const result = await executeGuard({} as any, {} as any);
+        const result = await executeGuard({} as ActivatedRouteSnapshot, {} as RouterStateSnapshot);
 
         expect(result).toBe(true);
         expect(authFacade.restoreSession).not.toHaveBeenCalled();
@@ -39,7 +39,7 @@ describe('authGuard', () => {
     it('should redirect to /login if session is restored but user is not authenticated', async () => {
         authState.setSessionRestored(true);
 
-        const result = await executeGuard({} as any, {} as any);
+        const result = await executeGuard({} as ActivatedRouteSnapshot, {} as RouterStateSnapshot);
 
         expect((result as any).toString()).toBe('/login');
     });
@@ -51,7 +51,7 @@ describe('authGuard', () => {
             authState.setSessionRestored(true);
         });
 
-        const result = await executeGuard({} as any, {} as any);
+        const result = await executeGuard({} as ActivatedRouteSnapshot, {} as RouterStateSnapshot);
 
         expect(authFacade.restoreSession).toHaveBeenCalled();
         expect(result).toBe(true);
@@ -63,8 +63,8 @@ describe('authGuard', () => {
             authState.setSessionRestored(true);
         });
 
-        const result = await executeGuard({} as any, {} as any);
+        const result = await executeGuard({} as ActivatedRouteSnapshot, {} as RouterStateSnapshot);
 
-        expect((result as any).toString()).toBe('/login');
+        expect((result as UrlTree).toString()).toBe('/login');
     });
 });
