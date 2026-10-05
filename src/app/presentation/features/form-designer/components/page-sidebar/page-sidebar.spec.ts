@@ -51,7 +51,7 @@ describe('PageSidebar', () => {
         component.pageSelected.subscribe(emitSpy);
 
         const items = fixture.nativeElement.querySelectorAll('li');
-        items[0].click();
+        items[0].firstElementChild.click();
 
         expect(emitSpy).toHaveBeenCalledWith('p1');
     });
