@@ -1,6 +1,15 @@
 import { Component, input, output, signal } from '@angular/core';
-import { FieldValidatorConfigModel, FieldValidatorTypeEnum, Guid, isValidNumericString, isValidRegexPattern } from '@app/domain';
-import { getValidatorConfigError, numericValidatorTypes } from '@app/domain/form/validation/validator-config-validation';
+import {
+    FieldValidatorConfigModel,
+    FieldValidatorTypeEnum,
+    Guid,
+    isValidNumericString,
+    isValidRegexPattern
+} from '@app/domain';
+import {
+    getValidatorConfigError,
+    numericValidatorTypes
+} from '@app/domain/form/validation/validator-config-validation';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
@@ -62,7 +71,9 @@ export class FieldValidatorEditor {
             id: crypto.randomUUID(),
             type: this.newType(),
             message: this.newMessage(),
-            ...(this.requiresValue ? { value: numericValidatorTypes.has(this.newType()) ? Number(this.newValue()) : this.newValue() } : {})
+            ...(this.requiresValue
+                ? { value: numericValidatorTypes.has(this.newType()) ? Number(this.newValue()) : this.newValue() }
+                : {})
         };
 
         this.validatorAdded.emit(validator);

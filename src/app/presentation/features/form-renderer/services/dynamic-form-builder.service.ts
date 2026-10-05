@@ -20,7 +20,9 @@ export class DynamicFormBuilderService {
         const getFieldValue = (fieldId: Guid): unknown => fieldIdToControl.get(fieldId)?.value;
 
         form.pages.forEach((page, pageIndex) => {
-            const crossFieldValidators: ValidatorFn[] = page.validators.map((validatorConfig) => toCrossFieldValidatorFn(validatorConfig, getFieldValue));
+            const crossFieldValidators: ValidatorFn[] = page.validators.map((validatorConfig) =>
+                toCrossFieldValidatorFn(validatorConfig, getFieldValue)
+            );
             groups[pageIndex].setValidators(crossFieldValidators);
         });
 

@@ -28,7 +28,10 @@ export class SubmissionsFacade {
     });
 
     async load(formId: Guid): Promise<void> {
-        const [form, submissions] = await Promise.all([this.getFormByIdUseCase.execute(formId), this.getSubmissionsByFormIdUseCase.execute(formId)]);
+        const [form, submissions] = await Promise.all([
+            this.getFormByIdUseCase.execute(formId),
+            this.getSubmissionsByFormIdUseCase.execute(formId)
+        ]);
         this._form.set(form);
         this._submissions.set(submissions);
     }

@@ -63,7 +63,9 @@ export function createFakePage(overrides: Partial<FormPageModel> = {}): FormPage
     };
 }
 
-export function createFakeFieldValidator(overrides: Partial<FieldValidatorConfigModel> = {}): FieldValidatorConfigModel {
+export function createFakeFieldValidator(
+    overrides: Partial<FieldValidatorConfigModel> = {}
+): FieldValidatorConfigModel {
     return {
         id: 'validator-1',
         type: FieldValidatorTypeEnum.Required,
@@ -72,7 +74,9 @@ export function createFakeFieldValidator(overrides: Partial<FieldValidatorConfig
     };
 }
 
-export function createFakeCrossFieldValidator(overrides: Partial<CrossFieldValidatorConfigModel> = {}): CrossFieldValidatorConfigModel {
+export function createFakeCrossFieldValidator(
+    overrides: Partial<CrossFieldValidatorConfigModel> = {}
+): CrossFieldValidatorConfigModel {
     return {
         id: 'cross-validator-1',
         type: CrossFieldValidatorTypeEnum.RequiredIfFilled,

@@ -37,17 +37,20 @@ describe('StatsWidget', () => {
     });
 
     it('should render the published forms count', () => {
-        const el = fixture.debugElement.query(By.css('[data-testid="stats-published-forms"]')).nativeElement as HTMLElement;
+        const el = fixture.debugElement.query(By.css('[data-testid="stats-published-forms"]'))
+            .nativeElement as HTMLElement;
         expect(el.textContent).toContain('6');
     });
 
     it('should render the locked forms count', () => {
-        const el = fixture.debugElement.query(By.css('[data-testid="stats-locked-forms"]')).nativeElement as HTMLElement;
+        const el = fixture.debugElement.query(By.css('[data-testid="stats-locked-forms"]'))
+            .nativeElement as HTMLElement;
         expect(el.textContent).toContain('3');
     });
 
     it('should render the total submissions count', () => {
-        const el = fixture.debugElement.query(By.css('[data-testid="stats-total-submissions"]')).nativeElement as HTMLElement;
+        const el = fixture.debugElement.query(By.css('[data-testid="stats-total-submissions"]'))
+            .nativeElement as HTMLElement;
         expect(el.textContent).toContain('27');
     });
 });

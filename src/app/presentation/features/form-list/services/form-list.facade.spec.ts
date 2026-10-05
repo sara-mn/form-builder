@@ -1,6 +1,9 @@
 import { TestBed } from '@angular/core/testing';
 import { FormListFacade } from './form-list.facade';
-import { GetFormsWithSubmissionCountsUseCase, FormListItem } from '@app/application/form/get-forms-with-submission-counts.use-case';
+import {
+    GetFormsWithSubmissionCountsUseCase,
+    FormListItem
+} from '@app/application/form/get-forms-with-submission-counts.use-case';
 import { CreateFormUseCase } from '@app/application/form/create-form.use-case';
 import { DeleteFormUseCase } from '@app/application/form/delete-form.use-case';
 import { CloneFormUseCase } from '@app/application/form/clone-form.use-case';
@@ -110,7 +113,10 @@ describe('FormListFacade', () => {
             authState.setUser({ id: 'user1' } as User);
             const clonedForm = { ...mockForm, id: 'f2' };
             cloneFormUseCase.execute.mockResolvedValue(clonedForm);
-            getFormsWithSubmissionCountsUseCase.execute.mockResolvedValue([mockListItem, { form: clonedForm, submissionCount: 0 }]);
+            getFormsWithSubmissionCountsUseCase.execute.mockResolvedValue([
+                mockListItem,
+                { form: clonedForm, submissionCount: 0 }
+            ]);
 
             const result = await service.cloneForm('f1');
 

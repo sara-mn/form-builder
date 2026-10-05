@@ -21,14 +21,32 @@ describe('SubmissionsFacade', () => {
                 id: 'page-1',
                 title: 'Personal Info',
                 order: 0,
-                fields: [{ id: 'field-1', name: 'fullName', label: 'Full Name', type: FieldTypeEnum.Text, order: 0, validators: [] }],
+                fields: [
+                    {
+                        id: 'field-1',
+                        name: 'fullName',
+                        label: 'Full Name',
+                        type: FieldTypeEnum.Text,
+                        order: 0,
+                        validators: []
+                    }
+                ],
                 validators: []
             },
             {
                 id: 'page-2',
                 title: 'Details',
                 order: 1,
-                fields: [{ id: 'field-2', name: 'email', label: 'Email Address', type: FieldTypeEnum.Email, order: 0, validators: [] }],
+                fields: [
+                    {
+                        id: 'field-2',
+                        name: 'email',
+                        label: 'Email Address',
+                        type: FieldTypeEnum.Email,
+                        order: 0,
+                        validators: []
+                    }
+                ],
                 validators: []
             }
         ],
@@ -39,10 +57,16 @@ describe('SubmissionsFacade', () => {
 
     beforeEach(() => {
         getFormByIdUseCase = { execute: vi.fn().mockResolvedValue(fakeForm) };
-        getSubmissionsByFormIdUseCase = { execute: vi.fn().mockResolvedValue([createFakeSubmission({ formId: 'form-1' })]) };
+        getSubmissionsByFormIdUseCase = {
+            execute: vi.fn().mockResolvedValue([createFakeSubmission({ formId: 'form-1' })])
+        };
 
         TestBed.configureTestingModule({
-            providers: [SubmissionsFacade, { provide: GetFormByIdUseCase, useValue: getFormByIdUseCase }, { provide: GetSubmissionsByFormIdUseCase, useValue: getSubmissionsByFormIdUseCase }]
+            providers: [
+                SubmissionsFacade,
+                { provide: GetFormByIdUseCase, useValue: getFormByIdUseCase },
+                { provide: GetSubmissionsByFormIdUseCase, useValue: getSubmissionsByFormIdUseCase }
+            ]
         });
 
         facade = TestBed.inject(SubmissionsFacade);

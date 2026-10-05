@@ -26,38 +26,52 @@ describe('toFieldValidatorFn', () => {
     });
 
     it('should dispatch to the correct checker for MinLength and pass the config value', () => {
-        const validatorFn = toFieldValidatorFn(makeConfig({ type: FieldValidatorTypeEnum.MinLength, value: 5, message: 'Too short' }));
+        const validatorFn = toFieldValidatorFn(
+            makeConfig({ type: FieldValidatorTypeEnum.MinLength, value: 5, message: 'Too short' })
+        );
         expect(validatorFn(new FormControl('abc'))).toEqual({ [FieldValidatorTypeEnum.MinLength]: 'Too short' });
         expect(validatorFn(new FormControl('abcde'))).toBeNull();
     });
 
     it('should dispatch to the correct checker for MaxLength and pass the config value', () => {
-        const validatorFn = toFieldValidatorFn(makeConfig({ type: FieldValidatorTypeEnum.MaxLength, value: 3, message: 'Too long' }));
+        const validatorFn = toFieldValidatorFn(
+            makeConfig({ type: FieldValidatorTypeEnum.MaxLength, value: 3, message: 'Too long' })
+        );
         expect(validatorFn(new FormControl('abcd'))).toEqual({ [FieldValidatorTypeEnum.MaxLength]: 'Too long' });
         expect(validatorFn(new FormControl('ab'))).toBeNull();
     });
 
     it('should dispatch to the correct checker for Pattern and pass the config value', () => {
-        const validatorFn = toFieldValidatorFn(makeConfig({ type: FieldValidatorTypeEnum.Pattern, value: '^[0-9]+$', message: 'Digits only' }));
+        const validatorFn = toFieldValidatorFn(
+            makeConfig({ type: FieldValidatorTypeEnum.Pattern, value: '^[0-9]+$', message: 'Digits only' })
+        );
         expect(validatorFn(new FormControl('abc'))).toEqual({ [FieldValidatorTypeEnum.Pattern]: 'Digits only' });
         expect(validatorFn(new FormControl('123'))).toBeNull();
     });
 
     it('should dispatch to the correct checker for MinValue and pass the config value', () => {
-        const validatorFn = toFieldValidatorFn(makeConfig({ type: FieldValidatorTypeEnum.MinValue, value: 10, message: 'Too low' }));
+        const validatorFn = toFieldValidatorFn(
+            makeConfig({ type: FieldValidatorTypeEnum.MinValue, value: 10, message: 'Too low' })
+        );
         expect(validatorFn(new FormControl(5))).toEqual({ [FieldValidatorTypeEnum.MinValue]: 'Too low' });
         expect(validatorFn(new FormControl(15))).toBeNull();
     });
 
     it('should dispatch to the correct checker for MaxValue and pass the config value', () => {
-        const validatorFn = toFieldValidatorFn(makeConfig({ type: FieldValidatorTypeEnum.MaxValue, value: 100, message: 'Too high' }));
+        const validatorFn = toFieldValidatorFn(
+            makeConfig({ type: FieldValidatorTypeEnum.MaxValue, value: 100, message: 'Too high' })
+        );
         expect(validatorFn(new FormControl(150))).toEqual({ [FieldValidatorTypeEnum.MaxValue]: 'Too high' });
         expect(validatorFn(new FormControl(50))).toBeNull();
     });
 
     it('should dispatch to the Email checker', () => {
-        const validatorFn = toFieldValidatorFn(makeConfig({ type: FieldValidatorTypeEnum.Email, message: 'Invalid email' }));
-        expect(validatorFn(new FormControl('not-an-email'))).toEqual({ [FieldValidatorTypeEnum.Email]: 'Invalid email' });
+        const validatorFn = toFieldValidatorFn(
+            makeConfig({ type: FieldValidatorTypeEnum.Email, message: 'Invalid email' })
+        );
+        expect(validatorFn(new FormControl('not-an-email'))).toEqual({
+            [FieldValidatorTypeEnum.Email]: 'Invalid email'
+        });
         expect(validatorFn(new FormControl('user@example.com'))).toBeNull();
     });
 });

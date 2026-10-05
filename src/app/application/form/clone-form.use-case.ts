@@ -1,4 +1,12 @@
-import { FormModel, FormRepository, FormStatusEnum, FormPageModel, FieldConfigModel, CrossFieldValidatorConfigModel, Guid } from '@app/domain';
+import {
+    FormModel,
+    FormRepository,
+    FormStatusEnum,
+    FormPageModel,
+    FieldConfigModel,
+    CrossFieldValidatorConfigModel,
+    Guid
+} from '@app/domain';
 
 function generateId(): Guid {
     return crypto.randomUUID();
@@ -20,7 +28,10 @@ function cloneField(field: FieldConfigModel): ClonedFieldResult {
     return { clonedField, oldId: field.id, newId };
 }
 
-function remapCrossFieldValidator(validator: CrossFieldValidatorConfigModel, fieldIdMap: Map<Guid, Guid>): CrossFieldValidatorConfigModel {
+function remapCrossFieldValidator(
+    validator: CrossFieldValidatorConfigModel,
+    fieldIdMap: Map<Guid, Guid>
+): CrossFieldValidatorConfigModel {
     return {
         ...validator,
         id: generateId(),

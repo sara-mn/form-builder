@@ -59,7 +59,9 @@ describe('FormRenderer', () => {
         };
 
         formBuilder = {
-            buildPageGroups: vi.fn().mockReturnValue([new FormGroup({ name: new FormControl(null) }), new FormGroup({})])
+            buildPageGroups: vi
+                .fn()
+                .mockReturnValue([new FormGroup({ name: new FormControl(null) }), new FormGroup({})])
         };
 
         TestBed.configureTestingModule({

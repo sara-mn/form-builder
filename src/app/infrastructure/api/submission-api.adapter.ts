@@ -12,7 +12,9 @@ export class SubmissionApiAdapter implements SubmissionRepository {
     private httpClient = inject(HttpClient);
 
     getSubmission(formId: Guid, userId: Guid): Promise<FormSubmissionModel | null> {
-        const $res: Observable<FormSubmissionModel | null> = this.httpClient.get<FormSubmissionModel[]>(this.submissionsUrl, { params: { formId, submittedBy: userId } }).pipe(map((results) => results[0] ?? null));
+        const $res: Observable<FormSubmissionModel | null> = this.httpClient
+            .get<FormSubmissionModel[]>(this.submissionsUrl, { params: { formId, submittedBy: userId } })
+            .pipe(map((results) => results[0] ?? null));
         return lastValueFrom($res);
     }
 
@@ -22,13 +24,19 @@ export class SubmissionApiAdapter implements SubmissionRepository {
     }
 
     getSubmissionsByFormId(formId: Guid): Promise<FormSubmissionModel[]> {
-        const $res: Observable<FormSubmissionModel[]> = this.httpClient.get<FormSubmissionModel[]>(this.submissionsUrl, { params: { formId } });
+        const $res: Observable<FormSubmissionModel[]> = this.httpClient.get<FormSubmissionModel[]>(
+            this.submissionsUrl,
+            { params: { formId } }
+        );
         return lastValueFrom($res);
     }
 
     createSubmission(submission: Omit<FormSubmissionModel, 'id' | 'submittedAt'>): Promise<FormSubmissionModel> {
         const payload = { ...submission, submittedAt: new Date().toISOString() };
-        const $res: Observable<FormSubmissionModel> = this.httpClient.post<FormSubmissionModel>(this.submissionsUrl, payload);
+        const $res: Observable<FormSubmissionModel> = this.httpClient.post<FormSubmissionModel>(
+            this.submissionsUrl,
+            payload
+        );
         return lastValueFrom($res);
     }
 }

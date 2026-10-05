@@ -18,7 +18,17 @@ import { TabPanel } from 'primeng/tabs';
 
 @Component({
     selector: 'app-account',
-    imports: [ReactiveFormsModule, ButtonModule, InputTextModule, InputPasswordModule, TabsModule, TabList, Tab, TabPanels, TabPanel],
+    imports: [
+        ReactiveFormsModule,
+        ButtonModule,
+        InputTextModule,
+        InputPasswordModule,
+        TabsModule,
+        TabList,
+        Tab,
+        TabPanels,
+        TabPanel
+    ],
     templateUrl: './account.html'
 })
 export class Account implements OnInit {

@@ -1,6 +1,11 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { LoginUseCase } from './login.use-case';
-import { createMockAuthGateway, createMockStorageGateway, createFakeUser, createFakeLoginResponse } from '../test-utils';
+import {
+    createMockAuthGateway,
+    createMockStorageGateway,
+    createFakeUser,
+    createFakeLoginResponse
+} from '../test-utils';
 import { LoginRequest, UserRoleEnum } from '@app/domain';
 
 describe('LoginUseCase', () => {

@@ -18,18 +18,18 @@
     "target": "ES2022",
     "module": "ES2022",
     "paths": {
-      "@app/*":["./src/app/*"],
+      "@app/*": ["./src/app/*"],
 
       "@domain/*": ["./src/app/domain/*"],
       "@infrastructure/*": ["./src/app/infrastructure/*"],
       "@application/*": ["./src/app/application/*"],
       "@presentation/*": ["./src/app/presentation/*"],
       "@features/*": ["./src/app/presentation/features/*"],
-      "@core/*":["./src/app/presentation/core/*"],
-      "@shared/*":["./src/app/presentation/shared/*"],
+      "@core/*": ["./src/app/presentation/core/*"],
+      "@shared/*": ["./src/app/presentation/shared/*"],
 
-      "@env/*":["./src/environments/*"],
-      "@assets/*":["./src/assets/*"]
+      "@env/*": ["./src/environments/*"],
+      "@assets/*": ["./src/assets/*"]
     },
     "types": ["vitest/globals"]
   },

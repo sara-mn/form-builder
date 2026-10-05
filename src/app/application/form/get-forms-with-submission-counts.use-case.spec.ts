@@ -1,6 +1,11 @@
 import { describe, it, expect } from 'vitest';
 import { GetFormsWithSubmissionCountsUseCase } from './get-forms-with-submission-counts.use-case';
-import { createMockFormRepository, createMockSubmissionRepository, createFakeForm, createFakeSubmission } from '../test-utils';
+import {
+    createMockFormRepository,
+    createMockSubmissionRepository,
+    createFakeForm,
+    createFakeSubmission
+} from '../test-utils';
 
 describe('GetFormsWithSubmissionCountsUseCase', () => {
     function setup() {
@@ -17,7 +22,11 @@ describe('GetFormsWithSubmissionCountsUseCase', () => {
         const formB = createFakeForm({ id: 'form-b' });
         formRepository.getAllForms.mockResolvedValue([formA, formB]);
 
-        submissionRepository.getAllSubmissions.mockResolvedValue([createFakeSubmission({ id: 's1', formId: 'form-a' }), createFakeSubmission({ id: 's2', formId: 'form-a' }), createFakeSubmission({ id: 's3', formId: 'form-b' })]);
+        submissionRepository.getAllSubmissions.mockResolvedValue([
+            createFakeSubmission({ id: 's1', formId: 'form-a' }),
+            createFakeSubmission({ id: 's2', formId: 'form-a' }),
+            createFakeSubmission({ id: 's3', formId: 'form-b' })
+        ]);
 
         const result = await useCase.execute();
 

@@ -28,7 +28,12 @@ describe('SubmissionApiAdapter', () => {
 
         const resultPromise = adapter.getSubmission('f1', 'user-1');
 
-        const req = httpMock.expectOne((request) => request.url === submissionsUrl && request.params.get('formId') === 'f1' && request.params.get('submittedBy') === 'user-1');
+        const req = httpMock.expectOne(
+            (request) =>
+                request.url === submissionsUrl &&
+                request.params.get('formId') === 'f1' &&
+                request.params.get('submittedBy') === 'user-1'
+        );
         expect(req.request.method).toBe('GET');
 
         req.flush([fakeSubmission]);
@@ -40,7 +45,12 @@ describe('SubmissionApiAdapter', () => {
     it('should return null when no submission matches formId and submittedBy', async () => {
         const resultPromise = adapter.getSubmission('f1', 'user-1');
 
-        const req = httpMock.expectOne((request) => request.url === submissionsUrl && request.params.get('formId') === 'f1' && request.params.get('submittedBy') === 'user-1');
+        const req = httpMock.expectOne(
+            (request) =>
+                request.url === submissionsUrl &&
+                request.params.get('formId') === 'f1' &&
+                request.params.get('submittedBy') === 'user-1'
+        );
 
         req.flush([]);
 
@@ -67,7 +77,9 @@ describe('SubmissionApiAdapter', () => {
 
         const resultPromise = adapter.getSubmissionsByFormId('f1');
 
-        const req = httpMock.expectOne((request) => request.url === submissionsUrl && request.params.get('formId') === 'f1');
+        const req = httpMock.expectOne(
+            (request) => request.url === submissionsUrl && request.params.get('formId') === 'f1'
+        );
         expect(req.request.method).toBe('GET');
 
         req.flush(fakeSubmissions);

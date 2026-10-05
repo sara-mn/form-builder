@@ -9,7 +9,8 @@ describe('permissionGuard', () => {
     let authState: AuthState;
     let authFacade: Pick<AuthFacade, 'restoreSession'>;
 
-    const executeGuard: CanActivateFn = (...guardParameters) => TestBed.runInInjectionContext(() => permissionGuard(...guardParameters));
+    const executeGuard: CanActivateFn = (...guardParameters) =>
+        TestBed.runInInjectionContext(() => permissionGuard(...guardParameters));
 
     beforeEach(() => {
         authFacade = { restoreSession: vi.fn().mockResolvedValue(undefined) };
@@ -62,9 +63,14 @@ describe('permissionGuard', () => {
 
     it('should require every listed permission, not just one', async () => {
         authState.setSessionRestored(true);
-        vi.spyOn(authState, 'hasPermission').mockImplementation((p: UserPermissionEnum) => p === UserPermissionEnum.FormView);
+        vi.spyOn(authState, 'hasPermission').mockImplementation(
+            (p: UserPermissionEnum) => p === UserPermissionEnum.FormView
+        );
 
-        const result = await executeGuard(makeRoute([UserPermissionEnum.FormView, UserPermissionEnum.FormDelete]), {} as RouterStateSnapshot);
+        const result = await executeGuard(
+            makeRoute([UserPermissionEnum.FormView, UserPermissionEnum.FormDelete]),
+            {} as RouterStateSnapshot
+        );
 
         expect((result as any).toString()).toBe('/unauthorized');
     });

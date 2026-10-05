@@ -54,7 +54,11 @@ describe('AuthApiAdapter', () => {
     });
 
     it('should POST credentials to /register and map the response', async () => {
-        let fakeRegisterRequest = createFakeRegisterRequest({ firstName: 'Sara', lastName: 'Mn', email: 'admin@example.com' });
+        let fakeRegisterRequest = createFakeRegisterRequest({
+            firstName: 'Sara',
+            lastName: 'Mn',
+            email: 'admin@example.com'
+        });
         let payload = {
             email: fakeRegisterRequest.email,
             password: fakeRegisterRequest.password,
@@ -69,7 +73,10 @@ describe('AuthApiAdapter', () => {
         expect(req.request.withCredentials).toBeFalsy();
         expect(req.request.body).toEqual(payload);
 
-        req.flush({ message: 'User registered successfully', user: createFakeUser({ id: '1', email: 'admin@example.com' }) });
+        req.flush({
+            message: 'User registered successfully',
+            user: createFakeUser({ id: '1', email: 'admin@example.com' })
+        });
 
         const result = await resultPromise;
 

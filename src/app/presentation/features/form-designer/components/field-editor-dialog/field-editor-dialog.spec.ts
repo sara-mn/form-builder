@@ -253,7 +253,11 @@ describe('FieldEditorDialog', () => {
     describe('validator management', () => {
         it('should add a validator via onValidatorAdded', () => {
             setup();
-            const validator: FieldValidatorConfigModel = { id: 'v1', type: FieldValidatorTypeEnum.Required, message: 'Required' };
+            const validator: FieldValidatorConfigModel = {
+                id: 'v1',
+                type: FieldValidatorTypeEnum.Required,
+                message: 'Required'
+            };
             component.onValidatorAdded(validator);
             expect(component.validators()).toEqual([validator]);
         });

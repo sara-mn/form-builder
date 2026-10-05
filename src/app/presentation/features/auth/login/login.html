@@ -1,6 +1,10 @@
 <div class="grid min-h-screen grid-cols-1 lg:grid-cols-2">
     <div class="relative hidden flex-col justify-between overflow-hidden bg-primary p-12 text-primary-contrast lg:flex">
-        <svg class="pointer-events-none absolute inset-0 h-full w-full opacity-10" viewBox="0 0 480 640" preserveAspectRatio="xMidYMid slice">
+        <svg
+            class="pointer-events-none absolute inset-0 h-full w-full opacity-10"
+            viewBox="0 0 480 640"
+            preserveAspectRatio="xMidYMid slice"
+        >
             <defs>
                 <g id="field-motif">
                     <rect x="0" y="0" width="120" height="12" rx="6" fill="currentColor" />
@@ -32,35 +36,82 @@
     <div class="flex items-center justify-center p-6 sm:p-10">
         <div class="w-full max-w-sm">
             <h1 class="text-2xl font-medium text-surface-900 dark:text-surface-0">Sign in</h1>
-            <p class="mt-1 text-sm text-surface-500 dark:text-surface-400">Enter your email and password to continue.</p>
+            <p class="mt-1 text-sm text-surface-500 dark:text-surface-400">
+                Enter your email and password to continue.
+            </p>
 
             <form [formGroup]="form" (ngSubmit)="onSubmit()" class="mt-8 flex flex-col gap-4" data-testid="login-form">
                 <div class="flex flex-col gap-1.5">
-                    <label for="email" class="text-sm font-semibold text-surface-700 dark:text-surface-300">Email</label>
-                    <input id="email" type="email" pInputText class="w-full" formControlName="email" autocomplete="username" data-testid="login-email-input" />
+                    <label for="email" class="text-sm font-semibold text-surface-700 dark:text-surface-300"
+                        >Email</label
+                    >
+                    <input
+                        id="email"
+                        type="email"
+                        pInputText
+                        class="w-full"
+                        formControlName="email"
+                        autocomplete="username"
+                        data-testid="login-email-input"
+                    />
                 </div>
 
                 <div class="flex flex-col gap-1.5">
                     <div class="flex items-center justify-between">
-                        <label for="password" class="text-sm font-semibold text-surface-700 dark:text-surface-300">Password</label>
-                        <a routerLink="/forgot-password" class="text-sm font-medium text-primary" data-testid="login-forgot-password-link">Forgot password?</a>
+                        <label for="password" class="text-sm font-semibold text-surface-700 dark:text-surface-300"
+                            >Password</label
+                        >
+                        <a
+                            routerLink="/forgot-password"
+                            class="text-sm font-medium text-primary"
+                            data-testid="login-forgot-password-link"
+                            >Forgot password?</a
+                        >
                     </div>
                     <p-iconfield>
-                        <input pInputPassword inputId="password" id="password" class="w-full" formControlName="password" autocomplete="current-password" [(mask)]="mask" placeholder="Password" data-testid="login-password-input" />
-                        <p-inputicon (click)="toggleMask()" (keydown.enter)="toggleMask()" tabindex="0" role="button" [attr.aria-label]="mask() ? 'Show password' : 'Hide password'" style="cursor: pointer" data-testid="login-password-toggle">
+                        <input
+                            pInputPassword
+                            inputId="password"
+                            id="password"
+                            class="w-full"
+                            formControlName="password"
+                            autocomplete="current-password"
+                            [(mask)]="mask"
+                            placeholder="Password"
+                            data-testid="login-password-input"
+                        />
+                        <p-inputicon
+                            (click)="toggleMask()"
+                            (keydown.enter)="toggleMask()"
+                            tabindex="0"
+                            role="button"
+                            [attr.aria-label]="mask() ? 'Show password' : 'Hide password'"
+                            style="cursor: pointer"
+                            data-testid="login-password-toggle"
+                        >
                             @if (mask()) {
-                            <svg data-p-icon="eye"></svg>
+                                <svg data-p-icon="eye"></svg>
                             } @else {
-                            <svg data-p-icon="eye-slash"></svg>
+                                <svg data-p-icon="eye-slash"></svg>
                             }
                         </p-inputicon>
                     </p-iconfield>
                 </div>
 
-                <button pButton type="submit" class="mt-2 w-full" [disabled]="form.invalid" data-testid="login-submit-button">Sign in</button>
+                <button
+                    pButton
+                    type="submit"
+                    class="mt-2 w-full"
+                    [disabled]="form.invalid"
+                    data-testid="login-submit-button"
+                >
+                    Sign in
+                </button>
             </form>
 
-            <p class="mt-6 text-sm text-surface-500 dark:text-surface-400">Don't have an account? <a routerLink="/register" class="font-medium text-primary">Create one</a></p>
+            <p class="mt-6 text-sm text-surface-500 dark:text-surface-400">
+                Don't have an account? <a routerLink="/register" class="font-medium text-primary">Create one</a>
+            </p>
         </div>
     </div>
 </div>

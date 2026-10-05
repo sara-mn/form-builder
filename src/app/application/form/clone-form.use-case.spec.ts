@@ -1,6 +1,13 @@
 import { describe, it, expect } from 'vitest';
 import { CloneFormUseCase } from './clone-form.use-case';
-import { createMockFormRepository, createFakeForm, createFakePage, createFakeField, createFakeFieldValidator, createFakeCrossFieldValidator } from '../test-utils';
+import {
+    createMockFormRepository,
+    createFakeForm,
+    createFakePage,
+    createFakeField,
+    createFakeFieldValidator,
+    createFakeCrossFieldValidator
+} from '../test-utils';
 import { FormStatusEnum, FieldValidatorTypeEnum, CrossFieldValidatorTypeEnum } from '@app/domain';
 
 describe('CloneFormUseCase', () => {
@@ -14,7 +21,9 @@ describe('CloneFormUseCase', () => {
         const { useCase, formRepository } = setup();
         const original = createFakeForm({ id: 'original-id', title: 'My Form', status: FormStatusEnum.Published });
         formRepository.getFormById.mockResolvedValue(original);
-        formRepository.createForm.mockImplementation(async (form) => ({ ...form, id: 'new-id', createdAt: '', updatedAt: '' }) as any);
+        formRepository.createForm.mockImplementation(
+            async (form) => ({ ...form, id: 'new-id', createdAt: '', updatedAt: '' }) as any
+        );
 
         await useCase.execute('original-id', 'owner-2');
 
@@ -32,7 +41,9 @@ describe('CloneFormUseCase', () => {
         const page = createFakePage({ id: 'page-old', fields: [field] });
         const original = createFakeForm({ id: 'f1', pages: [page] });
         formRepository.getFormById.mockResolvedValue(original);
-        formRepository.createForm.mockImplementation(async (form) => ({ ...form, id: 'new-id', createdAt: '', updatedAt: '' }) as any);
+        formRepository.createForm.mockImplementation(
+            async (form) => ({ ...form, id: 'new-id', createdAt: '', updatedAt: '' }) as any
+        );
 
         await useCase.execute('f1', 'owner-1');
 
@@ -54,7 +65,9 @@ describe('CloneFormUseCase', () => {
         const page = createFakePage({ fields: [field] });
         const original = createFakeForm({ pages: [page] });
         formRepository.getFormById.mockResolvedValue(original);
-        formRepository.createForm.mockImplementation(async (form) => ({ ...form, id: 'new-id', createdAt: '', updatedAt: '' }) as any);
+        formRepository.createForm.mockImplementation(
+            async (form) => ({ ...form, id: 'new-id', createdAt: '', updatedAt: '' }) as any
+        );
 
         await useCase.execute('f1', 'owner-1');
 
@@ -78,7 +91,9 @@ describe('CloneFormUseCase', () => {
         const page = createFakePage({ fields: [fieldA, fieldB], validators: [pageValidator] });
         const original = createFakeForm({ pages: [page] });
         formRepository.getFormById.mockResolvedValue(original);
-        formRepository.createForm.mockImplementation(async (form) => ({ ...form, id: 'new-id', createdAt: '', updatedAt: '' }) as any);
+        formRepository.createForm.mockImplementation(
+            async (form) => ({ ...form, id: 'new-id', createdAt: '', updatedAt: '' }) as any
+        );
 
         await useCase.execute('f1', 'owner-1');
 
@@ -110,7 +125,9 @@ describe('CloneFormUseCase', () => {
 
         const original = createFakeForm({ pages: [page1, page2], validators: [formLevelValidator] });
         formRepository.getFormById.mockResolvedValue(original);
-        formRepository.createForm.mockImplementation(async (form) => ({ ...form, id: 'new-id', createdAt: '', updatedAt: '' }) as any);
+        formRepository.createForm.mockImplementation(
+            async (form) => ({ ...form, id: 'new-id', createdAt: '', updatedAt: '' }) as any
+        );
 
         await useCase.execute('f1', 'owner-1');
 
@@ -126,16 +143,24 @@ describe('CloneFormUseCase', () => {
     it('generates unique ids across all cloned pages and fields (no collisions)', async () => {
         const { useCase, formRepository } = setup();
 
-        const page1 = createFakePage({ id: 'p1', fields: [createFakeField({ id: 'f1' }), createFakeField({ id: 'f2' })] });
+        const page1 = createFakePage({
+            id: 'p1',
+            fields: [createFakeField({ id: 'f1' }), createFakeField({ id: 'f2' })]
+        });
         const page2 = createFakePage({ id: 'p2', order: 1, fields: [createFakeField({ id: 'f3' })] });
         const original = createFakeForm({ pages: [page1, page2] });
         formRepository.getFormById.mockResolvedValue(original);
-        formRepository.createForm.mockImplementation(async (form) => ({ ...form, id: 'new-id', createdAt: '', updatedAt: '' }) as any);
+        formRepository.createForm.mockImplementation(
+            async (form) => ({ ...form, id: 'new-id', createdAt: '', updatedAt: '' }) as any
+        );
 
         await useCase.execute('f1', 'owner-1');
 
         const createdArg = formRepository.createForm.mock.calls[0][0];
-        const allIds = [...createdArg.pages.map((p: any) => p.id), ...createdArg.pages.flatMap((p: any) => p.fields.map((f: any) => f.id))];
+        const allIds = [
+            ...createdArg.pages.map((p: any) => p.id),
+            ...createdArg.pages.flatMap((p: any) => p.fields.map((f: any) => f.id))
+        ];
 
         expect(new Set(allIds).size).toBe(allIds.length);
     });

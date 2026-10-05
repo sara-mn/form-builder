@@ -1,7 +1,10 @@
 import { LoginRequest } from '@app/domain/auth/models/login-request.model';
 import { LoginResponse } from '@app/domain/auth/models/login-response.model';
 import { RegisterRequest } from '@app/domain/auth/models/register-request.model';
-import { ConfirmPasswordResetPayload, RequestPasswordResetPayload } from '@app/domain/auth/models/reset-password-request.model';
+import {
+    ConfirmPasswordResetPayload,
+    RequestPasswordResetPayload
+} from '@app/domain/auth/models/reset-password-request.model';
 
 export abstract class AuthGateway {
     abstract login(payload: LoginRequest): Promise<LoginResponse>;

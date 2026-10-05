@@ -2,9 +2,17 @@ import { FieldValidatorTypeEnum } from '../enums/field-validator-type.enum';
 import { isValidRegexPattern } from './field-validators';
 import { isValidNumericString } from './field-validators';
 
-export const numericValidatorTypes: Set<FieldValidatorTypeEnum> = new Set<FieldValidatorTypeEnum>([FieldValidatorTypeEnum.MinLength, FieldValidatorTypeEnum.MaxLength, FieldValidatorTypeEnum.MinValue, FieldValidatorTypeEnum.MaxValue]);
+export const numericValidatorTypes: Set<FieldValidatorTypeEnum> = new Set<FieldValidatorTypeEnum>([
+    FieldValidatorTypeEnum.MinLength,
+    FieldValidatorTypeEnum.MaxLength,
+    FieldValidatorTypeEnum.MinValue,
+    FieldValidatorTypeEnum.MaxValue
+]);
 
-export function getValidatorConfigError(type: FieldValidatorTypeEnum, value: string | number | undefined): string | null {
+export function getValidatorConfigError(
+    type: FieldValidatorTypeEnum,
+    value: string | number | undefined
+): string | null {
     if (type === FieldValidatorTypeEnum.Pattern) {
         return isValidRegexPattern(value as string) ? null : 'Invalid regular expression';
     }

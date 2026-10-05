@@ -10,7 +10,15 @@ import { ButtonModule } from 'primeng/button';
 
 @Component({
     selector: 'app-field-editor-dialog',
-    imports: [DialogModule, FieldValidatorEditor, FormsModule, SelectModule, InputTextModule, TextareaModule, ButtonModule],
+    imports: [
+        DialogModule,
+        FieldValidatorEditor,
+        FormsModule,
+        SelectModule,
+        InputTextModule,
+        TextareaModule,
+        ButtonModule
+    ],
     templateUrl: './field-editor-dialog.html'
 })
 export class FieldEditorDialog {

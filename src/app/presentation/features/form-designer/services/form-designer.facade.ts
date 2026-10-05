@@ -80,19 +80,24 @@ export class FormDesignerFacade {
     }
 
     updateField(pageId: Guid, field: FieldConfigModel): void {
-        this._form.update((form) => this.mutatePageFields(form, pageId, (fields) => fields.map((f) => (f.id === field.id ? field : f))));
+        this._form.update((form) =>
+            this.mutatePageFields(form, pageId, (fields) => fields.map((f) => (f.id === field.id ? field : f)))
+        );
     }
 
     deleteField(pageId: Guid, fieldId: Guid): void {
         this._form.update((form) => {
             if (!form) return form;
-            const withoutField = this.mutatePageFields(form, pageId, (fields) => fields.filter((f) => f.id !== fieldId));
+            const withoutField = this.mutatePageFields(form, pageId, (fields) =>
+                fields.filter((f) => f.id !== fieldId)
+            );
             return withoutField ? this.removeOrphanedCrossFieldValidators(withoutField, fieldId) : withoutField;
         });
     }
 
     private removeOrphanedCrossFieldValidators(form: FormModel, fieldId: Guid): FormModel {
-        const referencesField = (v: { targetFieldId: Guid; dependsOnFieldId: Guid }) => v.targetFieldId === fieldId || v.dependsOnFieldId === fieldId;
+        const referencesField = (v: { targetFieldId: Guid; dependsOnFieldId: Guid }) =>
+            v.targetFieldId === fieldId || v.dependsOnFieldId === fieldId;
 
         return {
             ...form,
@@ -122,7 +127,11 @@ export class FormDesignerFacade {
         );
     }
 
-    private mutatePageFields(form: FormModel | null, pageId: Guid, mutate: (fields: FieldConfigModel[]) => FieldConfigModel[]): FormModel | null {
+    private mutatePageFields(
+        form: FormModel | null,
+        pageId: Guid,
+        mutate: (fields: FieldConfigModel[]) => FieldConfigModel[]
+    ): FormModel | null {
         if (!form) return form;
         return {
             ...form,
@@ -130,7 +139,12 @@ export class FormDesignerFacade {
         };
     }
 
-    private mutateField(form: FormModel | null, pageId: Guid, fieldId: Guid, mutate: (field: FieldConfigModel) => FieldConfigModel): FormModel | null {
+    private mutateField(
+        form: FormModel | null,
+        pageId: Guid,
+        fieldId: Guid,
+        mutate: (field: FieldConfigModel) => FieldConfigModel
+    ): FormModel | null {
         return this.mutatePageFields(form, pageId, (fields) => fields.map((f) => (f.id === fieldId ? mutate(f) : f)));
     }
 }

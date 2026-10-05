@@ -24,35 +24,88 @@
                 <td>{{ item.submissionCount }}</td>
                 <td>
                     <div class="flex gap-2">
-                        <button pButton type="button" severity="secondary" [outlined]="true" size="small" (click)="onEdit(item.form.id)">Edit</button>
-                        @if (authState.hasPermission(userPermissionEnum.SubmissionView)) {
-                        <button pButton type="button" severity="secondary" [outlined]="true" size="small" (click)="onViewSubmissions(item.form.id)">Submissions</button>
-                        } @if (item.submissionCount > 0) {
-                        <button pButton type="button" severity="secondary" [outlined]="true" size="small" [disabled]="cloningFormId() === item.form.id" (click)="onClone(item.form.id)">
-                            {{ cloningFormId() === item.form.id ? 'Cloning...' : 'Clone' }}
+                        <button
+                            pButton
+                            type="button"
+                            severity="secondary"
+                            [outlined]="true"
+                            size="small"
+                            (click)="onEdit(item.form.id)"
+                        >
+                            Edit
                         </button>
-                        } @if (item.form.status === FormStatusEnum.Published) {
-                        <button pButton type="button" severity="secondary" [outlined]="true" size="small" (click)="onFill(item.form.id)">Fill</button>
+                        @if (authState.hasPermission(userPermissionEnum.SubmissionView)) {
+                            <button
+                                pButton
+                                type="button"
+                                severity="secondary"
+                                [outlined]="true"
+                                size="small"
+                                (click)="onViewSubmissions(item.form.id)"
+                            >
+                                Submissions
+                            </button>
                         }
-                        <button pButton type="button" severity="danger" [outlined]="true" size="small" [disabled]="!authState.hasPermission(userPermissionEnum.FormDelete)" (click)="onDelete(item.form.id, item.form.title)">Delete</button>
+                        @if (item.submissionCount > 0) {
+                            <button
+                                pButton
+                                type="button"
+                                severity="secondary"
+                                [outlined]="true"
+                                size="small"
+                                [disabled]="cloningFormId() === item.form.id"
+                                (click)="onClone(item.form.id)"
+                            >
+                                {{ cloningFormId() === item.form.id ? 'Cloning...' : 'Clone' }}
+                            </button>
+                        }
+                        @if (item.form.status === FormStatusEnum.Published) {
+                            <button
+                                pButton
+                                type="button"
+                                severity="secondary"
+                                [outlined]="true"
+                                size="small"
+                                (click)="onFill(item.form.id)"
+                            >
+                                Fill
+                            </button>
+                        }
+                        <button
+                            pButton
+                            type="button"
+                            severity="danger"
+                            [outlined]="true"
+                            size="small"
+                            [disabled]="!authState.hasPermission(userPermissionEnum.FormDelete)"
+                            (click)="onDelete(item.form.id, item.form.title)"
+                        >
+                            Delete
+                        </button>
                     </div>
                 </td>
             </tr>
         </ng-template>
         <ng-template #emptymessage>
             <tr>
-                <td colspan="5" class="p-8 text-center text-surface-400 dark:text-surface-500">No forms yet. Create your first one.</td>
+                <td colspan="5" class="p-8 text-center text-surface-400 dark:text-surface-500">
+                    No forms yet. Create your first one.
+                </td>
             </tr>
         </ng-template>
     </p-table>
 
-    <app-new-form-dialog [isOpen]="isNewFormDialogOpen()" (closed)="onNewFormDialogClosed()" (saved)="onNewFormSaved($event)" />
+    <app-new-form-dialog
+        [isOpen]="isNewFormDialogOpen()"
+        (closed)="onNewFormDialogClosed()"
+        (saved)="onNewFormSaved($event)"
+    />
     <p-confirmdialog>
         <ng-template #icon>
             <svg [pIcon]="'exclamation-triangle'" class="h-4 w-4"></svg>
         </ng-template>
     </p-confirmdialog>
     @if (deleteError()) {
-    <p class="mt-4 text-sm text-red-500" data-testid="delete-error-message">{{ deleteError() }}</p>
+        <p class="mt-4 text-sm text-red-500" data-testid="delete-error-message">{{ deleteError() }}</p>
     }
 </div>
