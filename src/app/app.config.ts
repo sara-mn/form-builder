@@ -11,7 +11,7 @@ import Aura from '@primeuix/themes/aura';
 import { providePrimeNG } from 'primeng/config';
 import { infrastructureProviders } from '@app/infrastructure';
 import { applicationProviders } from '@app/application';
-import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { AuthFacade } from './presentation/features/auth/services/auth.facade';
 import { authInterceptor } from './presentation/core/interceptors/auth.interceptor';
 

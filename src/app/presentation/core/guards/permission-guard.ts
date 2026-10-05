@@ -4,7 +4,7 @@ import { inject } from '@angular/core';
 import { UserPermissionEnum } from '@app/domain/user/enums/user-permission.enum';
 import { AuthFacade } from '@app/presentation/features/auth/services/auth.facade';
 
-export const permissionGuard: CanActivateFn = async (route, state) => {
+export const permissionGuard: CanActivateFn = async (route) => {
     const authState = inject(AuthState);
     const router = inject(Router);
     const authFacade = inject(AuthFacade);
