@@ -10,5 +10,10 @@ node_modules
 .angular
 *.md
 *.yml
-/tsconfig.json
-*.json
+
+# Generated or tool-owned files:
+package-lock.json
+db.json
+
+# Third-party assets:
+src/assets
