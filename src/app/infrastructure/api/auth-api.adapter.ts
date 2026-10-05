@@ -9,6 +9,10 @@ import { lastValueFrom, Observable, map } from 'rxjs';
 import { ConfirmPasswordResetPayload, RegisterRequest, RequestPasswordResetPayload } from '@app/domain';
 import { base64UrlToBase64 } from '../utils/base64-url.util';
 
+interface JwtPayload {
+    exp?: number;
+}
+
 interface AuthServerResponse {
     accessToken: string;
     user: User;
@@ -98,7 +102,7 @@ export class AuthApiAdapter implements AuthGateway {
         }
     }
 
-    private decodeToken(token: string): any {
+    private decodeToken(token: string): JwtPayload {
         return JSON.parse(atob(base64UrlToBase64(token.split('.')[1])));
     }
 }

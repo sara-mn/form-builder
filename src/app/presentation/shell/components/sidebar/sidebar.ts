@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { NavItem } from './nav-item/nav-item';
 import { NAV_ITEMS } from './nav-items';
 import { ShellState } from '../../shell-state';

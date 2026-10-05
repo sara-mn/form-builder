@@ -50,7 +50,8 @@ describe('RadioFieldInput', () => {
 
     it('should render the field label', () => {
         setup(stringOptionsField, new FormControl(''));
-        const labelEl = fixture.nativeElement.querySelector('label');
+        const group = fixture.nativeElement.querySelector('[role="radiogroup"]');
+        const labelEl = fixture.nativeElement.querySelector(`[id="${group.getAttribute('aria-labelledby')}"]`);
         expect(labelEl.textContent.trim()).toBe('Favorite Color');
     });
 

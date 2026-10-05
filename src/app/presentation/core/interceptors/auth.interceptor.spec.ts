@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { HttpErrorResponse, HttpHandlerFn, HttpRequest } from '@angular/common/http';
+import { HttpErrorResponse, HttpHandlerFn, HttpRequest, HttpResponse } from '@angular/common/http';
 import { provideRouter, Router } from '@angular/router';
 import { of, throwError, firstValueFrom } from 'rxjs';
 import { authInterceptor } from './auth.interceptor';
@@ -33,7 +33,7 @@ describe('authInterceptor', () => {
 
     it('should attach an Authorization header when a token exists and the request is not an auth endpoint', async () => {
         const req = new HttpRequest('GET', '/api/forms');
-        const next: HttpHandlerFn = vi.fn().mockReturnValue(of({} as any));
+        const next: HttpHandlerFn = vi.fn().mockReturnValue(of(new HttpResponse()));
 
         await firstValueFrom(runInterceptor(req, next));
 
@@ -43,7 +43,7 @@ describe('authInterceptor', () => {
 
     it('should not attach an Authorization header for auth endpoints', async () => {
         const req = new HttpRequest('POST', '/api/auth/login', {});
-        const next: HttpHandlerFn = vi.fn().mockReturnValue(of({} as any));
+        const next: HttpHandlerFn = vi.fn().mockReturnValue(of(new HttpResponse()));
 
         await firstValueFrom(runInterceptor(req, next));
 
@@ -75,9 +75,10 @@ describe('authInterceptor', () => {
         (authFacade.refreshAccessToken as ReturnType<typeof vi.fn>).mockResolvedValue('newToken456');
 
         let callCount = 0;
+        const retriedResponse = new HttpResponse({ status: 200 });
         const next: HttpHandlerFn = vi.fn().mockImplementation(() => {
             callCount++;
-            return callCount === 1 ? throwError(() => error) : of({ status: 200 } as any);
+            return callCount === 1 ? throwError(() => error) : of(retriedResponse);
         });
 
         const result = await firstValueFrom(runInterceptor(req, next));
@@ -86,7 +87,7 @@ describe('authInterceptor', () => {
         expect(callCount).toBe(2);
         const retriedReq = (next as ReturnType<typeof vi.fn>).mock.calls[1][0] as HttpRequest<unknown>;
         expect(retriedReq.headers.get('Authorization')).toBe('Bearer newToken456');
-        expect(result).toEqual({ status: 200 });
+        expect(result).toBe(retriedResponse);
     });
 
     it('should log out and navigate to /login on a 401 when refresh fails', async () => {

@@ -11,7 +11,7 @@ import { NavItemModel } from '../nav-item.model';
 })
 export class NavItem {
     @Input({ required: true }) item!: NavItemModel;
-    @Input() root: boolean = false;
+    @Input() root = false;
 
     protected readonly expanded = signal(false);
 

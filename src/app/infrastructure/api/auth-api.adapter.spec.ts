@@ -54,19 +54,19 @@ describe('AuthApiAdapter', () => {
     });
 
     it('should POST credentials to /register and map the response', async () => {
-        let fakeRegisterRequest = createFakeRegisterRequest({
+        const fakeRegisterRequest = createFakeRegisterRequest({
             firstName: 'Sara',
             lastName: 'Mn',
             email: 'admin@example.com'
         });
-        let payload = {
+        const payload = {
             email: fakeRegisterRequest.email,
             password: fakeRegisterRequest.password,
             mobile: fakeRegisterRequest.mobile,
             name: 'Sara Mn'
         };
 
-        let resultPromise = adapter.register(fakeRegisterRequest);
+        const resultPromise = adapter.register(fakeRegisterRequest);
 
         const req = httpMock.expectOne(`${authUrl}/register`);
         expect(req.request.method).toBe('POST');

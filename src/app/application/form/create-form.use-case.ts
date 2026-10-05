@@ -1,11 +1,4 @@
-import {
-    CrossFieldValidatorConfigModel,
-    FormModel,
-    FormPageModel,
-    FormRepository,
-    FormStatusEnum,
-    Guid
-} from '@app/domain';
+import { FormModel, FormRepository, FormStatusEnum, Guid } from '@app/domain';
 
 export class CreateFormUseCase {
     constructor(private formRepository: FormRepository) {}

@@ -11,7 +11,7 @@ import Aura from '@primeuix/themes/aura';
 import { providePrimeNG } from 'primeng/config';
 import { infrastructureProviders } from '@app/infrastructure';
 import { applicationProviders } from '@app/application';
-import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { AuthFacade } from './presentation/features/auth/services/auth.facade';
 import { authInterceptor } from './presentation/core/interceptors/auth.interceptor';
 
@@ -28,7 +28,7 @@ export const appConfig: ApplicationConfig = {
             withEnabledBlockingInitialNavigation(),
             withComponentInputBinding()
         ),
-        // eslint-disable-next-line @typescript-eslint/no-deprecated -- PrimeNG's Dialog/ConfirmDialog/Tooltip still depend on @angular/animations; blocked on PrimeNG's own migration (see primefaces/primeng#18863)
+        // PrimeNG's Dialog/ConfirmDialog/Tooltip still depend on @angular/animations; blocked on PrimeNG's own migration (see primefaces/primeng#18863)
         provideAnimationsAsync(),
         providePrimeNG({
             theme: {
