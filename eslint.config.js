@@ -1,10 +1,11 @@
 // @ts-check
 import eslint from '@eslint/js';
-import { defineConfig } from 'eslint/config';
+import { defineConfig, globalIgnores } from 'eslint/config';
 import tseslint from 'typescript-eslint';
 import angular from 'angular-eslint';
 
 export default defineConfig([
+    globalIgnores(['src/assets/**']),
     {
         files: ['**/*.ts'],
         extends: [
@@ -29,6 +30,13 @@ export default defineConfig([
                     type: 'element',
                     prefix: 'app',
                     style: 'kebab-case'
+                }
+            ],
+            '@typescript-eslint/no-unused-vars': [
+                'error',
+                {
+                    argsIgnorePattern: '^_',
+                    ignoreRestSiblings: true
                 }
             ]
         }
