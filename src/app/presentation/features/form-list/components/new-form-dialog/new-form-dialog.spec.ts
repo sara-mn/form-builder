@@ -121,9 +121,9 @@ describe('NewFormDialog', () => {
             component.title.set('Valid Title');
             fixture.detectChanges();
 
-            const buttons = fixture.nativeElement.querySelectorAll('button');
+            const buttons: HTMLButtonElement[] = fixture.nativeElement.querySelectorAll('button');
             const createButton = Array.from(buttons).find(
-                (b: any) => b.textContent.trim() === 'Create'
+                (b: Element) => b.textContent.trim() === 'Create'
             ) as HTMLButtonElement;
             createButton.click();
 
@@ -134,9 +134,9 @@ describe('NewFormDialog', () => {
             setup();
             const hideSpy = vi.spyOn(component, 'onDialogHide');
 
-            const buttons = fixture.nativeElement.querySelectorAll('button');
+            const buttons: HTMLButtonElement[] = fixture.nativeElement.querySelectorAll('button');
             const cancelButton = Array.from(buttons).find(
-                (b: any) => b.textContent.trim() === 'Cancel'
+                (b: Element) => b.textContent?.trim() === 'Cancel'
             ) as HTMLButtonElement;
             cancelButton.click();
 

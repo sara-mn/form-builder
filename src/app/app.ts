@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { PrimeNG } from 'primeng/config';
 
@@ -10,7 +10,7 @@ import { PrimeNG } from 'primeng/config';
 export class App implements OnInit {
     title = 'form-builder';
 
-    constructor(private primeng: PrimeNG) {}
+    private readonly primeng = inject(PrimeNG);
 
     ngOnInit() {
         this.primeng.ripple.set(true);

@@ -1,11 +1,5 @@
 import { Component, input, output, signal } from '@angular/core';
-import {
-    FieldValidatorConfigModel,
-    FieldValidatorTypeEnum,
-    Guid,
-    isValidNumericString,
-    isValidRegexPattern
-} from '@app/domain';
+import { FieldValidatorConfigModel, FieldValidatorTypeEnum, Guid } from '@app/domain';
 import {
     getValidatorConfigError,
     numericValidatorTypes

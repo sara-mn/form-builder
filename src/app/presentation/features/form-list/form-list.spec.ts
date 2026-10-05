@@ -6,7 +6,7 @@ import { FormList } from './form-list';
 import { FormListFacade } from './services/form-list.facade';
 import { FormListItem } from '@app/application/form/get-forms-with-submission-counts.use-case';
 import { FormModel } from '@app/domain/form/models/form.model';
-import { FormStatusEnum, UserRoleEnum } from '@app/domain';
+import { FormPageModel, FormStatusEnum, UserRoleEnum } from '@app/domain';
 import { AuthState } from '@app/presentation/core/services/auth-state';
 
 describe('FormList', () => {
@@ -21,7 +21,7 @@ describe('FormList', () => {
         description: '',
         status: FormStatusEnum.Draft,
         ownerId: 'u1',
-        pages: [{ id: 'p1' } as any],
+        pages: [{ id: 'p1' } as FormPageModel],
         validators: [],
         createdAt: '',
         updatedAt: ''

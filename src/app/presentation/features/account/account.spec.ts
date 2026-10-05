@@ -131,7 +131,11 @@ describe('Account', () => {
         expect(accountFacade.changePassword).not.toHaveBeenCalled();
     });
     it('should keep the profile submit button disabled while the profile is loading', () => {
-        (accountFacade.getProfile as ReturnType<typeof vi.fn>).mockReturnValue(new Promise(() => {}));
+        (accountFacade.getProfile as ReturnType<typeof vi.fn>).mockReturnValue(
+            new Promise(() => {
+                // never settles: keeps the component in its loading state
+            })
+        );
         fixture = TestBed.createComponent(Account);
         fixture.detectChanges();
 

@@ -1,4 +1,4 @@
-import { AuthGateway, LoginRequest, LoginResponse, User } from '@app/domain';
+import { AuthGateway, LoginResponse, User } from '@app/domain';
 import { StorageGateway } from '@domain/storage.gateway.abstract';
 
 export class RefreshTokenUseCase {

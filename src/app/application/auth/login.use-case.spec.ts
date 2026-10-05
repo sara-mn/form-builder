@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import { LoginUseCase } from './login.use-case';
 import {
     createMockAuthGateway,

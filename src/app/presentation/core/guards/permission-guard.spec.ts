@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { ActivatedRouteSnapshot, CanActivateFn, provideRouter, RouterStateSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivateFn, provideRouter, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { permissionGuard } from './permission-guard';
 import { AuthState } from '../services/auth-state';
 import { AuthFacade } from '@app/presentation/features/auth/services/auth.facade';
@@ -58,7 +58,7 @@ describe('permissionGuard', () => {
 
         const result = await executeGuard(makeRoute([UserPermissionEnum.UserManage]), {} as RouterStateSnapshot);
 
-        expect((result as any).toString()).toBe('/unauthorized');
+        expect((result as UrlTree).toString()).toBe('/unauthorized');
     });
 
     it('should require every listed permission, not just one', async () => {
@@ -72,7 +72,7 @@ describe('permissionGuard', () => {
             {} as RouterStateSnapshot
         );
 
-        expect((result as any).toString()).toBe('/unauthorized');
+        expect((result as UrlTree).toString()).toBe('/unauthorized');
     });
 
     it('awaits restoreSession before checking permissions when the session has not been restored yet', async () => {
