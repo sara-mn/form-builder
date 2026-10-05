@@ -41,7 +41,7 @@ describe('authGuard', () => {
 
         const result = await executeGuard({} as ActivatedRouteSnapshot, {} as RouterStateSnapshot);
 
-        expect((result as any).toString()).toBe('/login');
+        expect((result as UrlTree).toString()).toBe('/login');
     });
 
     it('should call restoreSession if the session has not been restored yet', async () => {

@@ -75,9 +75,10 @@ describe('authInterceptor', () => {
         (authFacade.refreshAccessToken as ReturnType<typeof vi.fn>).mockResolvedValue('newToken456');
 
         let callCount = 0;
+        const retriedResponse = new HttpResponse({ status: 200 });
         const next: HttpHandlerFn = vi.fn().mockImplementation(() => {
             callCount++;
-            return callCount === 1 ? throwError(() => error) : of(new HttpResponse({ status: 200 }));
+            return callCount === 1 ? throwError(() => error) : of(retriedResponse);
         });
 
         const result = await firstValueFrom(runInterceptor(req, next));
@@ -86,7 +87,7 @@ describe('authInterceptor', () => {
         expect(callCount).toBe(2);
         const retriedReq = (next as ReturnType<typeof vi.fn>).mock.calls[1][0] as HttpRequest<unknown>;
         expect(retriedReq.headers.get('Authorization')).toBe('Bearer newToken456');
-        expect(result).toEqual({ status: 200 });
+        expect(result).toBe(retriedResponse);
     });
 
     it('should log out and navigate to /login on a 401 when refresh fails', async () => {
