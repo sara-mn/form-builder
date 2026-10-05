@@ -12,7 +12,8 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
         isAuthEndpoint = SKIP_AUTH_HEADER_FOR.some((url) => req.url.includes(url)),
         accessToken = authFacade.getAccessToken();
 
-    const authReq = !isAuthEndpoint && accessToken ? req.clone({ setHeaders: { Authorization: `Bearer ${accessToken}` } }) : req;
+    const authReq =
+        !isAuthEndpoint && accessToken ? req.clone({ setHeaders: { Authorization: `Bearer ${accessToken}` } }) : req;
 
     return next(authReq).pipe(
         catchError((error: HttpErrorResponse) => {

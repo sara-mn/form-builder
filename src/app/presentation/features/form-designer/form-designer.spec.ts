@@ -11,7 +11,20 @@ import { FieldTypeEnum } from '@domain/form/enums/field-type.enum';
 describe('FormDesigner', () => {
     let component: FormDesigner;
     let fixture: ComponentFixture<FormDesigner>;
-    let facade: Pick<FormDesignerFacade, 'form' | 'isLocked' | 'loadForm' | 'saveForm' | 'cloneForm' | 'updateMetadata' | 'addPage' | 'deletePage' | 'addField' | 'updateField' | 'deleteField'>;
+    let facade: Pick<
+        FormDesignerFacade,
+        | 'form'
+        | 'isLocked'
+        | 'loadForm'
+        | 'saveForm'
+        | 'cloneForm'
+        | 'updateMetadata'
+        | 'addPage'
+        | 'deletePage'
+        | 'addField'
+        | 'updateField'
+        | 'deleteField'
+    >;
     let router: Router;
     let formSignal: WritableSignal<FormModel | null>;
 

@@ -1,4 +1,10 @@
-import { FormRepository, FormSubmissionModel, FormValidationService, SubmissionRepository, ValidationResult } from '@app/domain';
+import {
+    FormRepository,
+    FormSubmissionModel,
+    FormValidationService,
+    SubmissionRepository,
+    ValidationResult
+} from '@app/domain';
 
 export class SubmitFormUseCase {
     constructor(

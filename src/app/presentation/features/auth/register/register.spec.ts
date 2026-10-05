@@ -44,7 +44,8 @@ describe('Register', () => {
     });
 
     it('should disable the submit button while the form is invalid', () => {
-        const button = fixture.debugElement.query(By.css('[data-testid="register-submit-button"]')).nativeElement as HTMLButtonElement;
+        const button = fixture.debugElement.query(By.css('[data-testid="register-submit-button"]'))
+            .nativeElement as HTMLButtonElement;
         expect(button.disabled).toBe(true);
     });
 
@@ -77,7 +78,8 @@ describe('Register', () => {
         component.form.setValue(validValue);
         fixture.detectChanges();
 
-        const button = fixture.debugElement.query(By.css('[data-testid="register-submit-button"]')).nativeElement as HTMLButtonElement;
+        const button = fixture.debugElement.query(By.css('[data-testid="register-submit-button"]'))
+            .nativeElement as HTMLButtonElement;
         expect(button.disabled).toBe(false);
     });
 

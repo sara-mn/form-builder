@@ -1,6 +1,14 @@
 import { AbstractControl, ValidatorFn, ValidationErrors } from '@angular/forms';
 import { FieldValidatorConfigModel } from '@app/domain';
-import { checkRequired, checkMinLength, checkMaxLength, checkPattern, checkMinValue, checkMaxValue, checkEmail } from '@domain/form/validation/field-validators';
+import {
+    checkRequired,
+    checkMinLength,
+    checkMaxLength,
+    checkPattern,
+    checkMinValue,
+    checkMaxValue,
+    checkEmail
+} from '@domain/form/validation/field-validators';
 import { FieldValidatorTypeEnum } from '@app/domain';
 
 const checkers: Record<FieldValidatorTypeEnum, (value: unknown, configValue?: string | number) => boolean> = {

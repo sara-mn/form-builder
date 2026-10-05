@@ -32,7 +32,12 @@ export class FormValidationService {
         return { isValid: errors.length === 0, errors };
     }
 
-    private runCrossValidators(validators: CrossFieldValidatorConfigModel[], allFields: FieldConfigModel[], answers: Record<string, unknown>, errors: FieldValidationError[]): void {
+    private runCrossValidators(
+        validators: CrossFieldValidatorConfigModel[],
+        allFields: FieldConfigModel[],
+        answers: Record<string, unknown>,
+        errors: FieldValidationError[]
+    ): void {
         for (const validator of validators) {
             const targetField = allFields.find((f) => f.id === validator.targetFieldId);
             const dependsOnField = allFields.find((f) => f.id === validator.dependsOnFieldId);

@@ -135,13 +135,15 @@ describe('Account', () => {
         fixture = TestBed.createComponent(Account);
         fixture.detectChanges();
 
-        const button = fixture.debugElement.query(By.css('[data-testid="profile-submit-button"]')).nativeElement as HTMLButtonElement;
+        const button = fixture.debugElement.query(By.css('[data-testid="profile-submit-button"]'))
+            .nativeElement as HTMLButtonElement;
         expect(button.disabled).toBe(true);
     });
 
     it('should enable the profile submit button once a valid profile has loaded', async () => {
         await createComponent(createFakeUser({ profile: { avatarUrl: '', bio: '', mobile: '09121234567' } }));
-        const button = fixture.debugElement.query(By.css('[data-testid="profile-submit-button"]')).nativeElement as HTMLButtonElement;
+        const button = fixture.debugElement.query(By.css('[data-testid="profile-submit-button"]'))
+            .nativeElement as HTMLButtonElement;
         expect(button.disabled).toBe(false);
     });
 });

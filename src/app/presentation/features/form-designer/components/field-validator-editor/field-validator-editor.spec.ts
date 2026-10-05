@@ -213,7 +213,9 @@ describe('FieldValidatorEditor', () => {
         });
 
         it('should emit validatorRemoved when the remove button is clicked', () => {
-            const validators: FieldValidatorConfigModel[] = [{ id: 'v1', type: FieldValidatorTypeEnum.Required, message: 'Required' }];
+            const validators: FieldValidatorConfigModel[] = [
+                { id: 'v1', type: FieldValidatorTypeEnum.Required, message: 'Required' }
+            ];
             setup(validators);
             const emitSpy = vi.fn();
             component.validatorRemoved.subscribe(emitSpy);

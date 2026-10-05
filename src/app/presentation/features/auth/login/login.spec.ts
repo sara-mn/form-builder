@@ -34,7 +34,8 @@ describe('Login', () => {
     });
 
     it('should disable the submit button while the form is invalid', () => {
-        const button = fixture.debugElement.query(By.css('[data-testid="login-submit-button"]')).nativeElement as HTMLButtonElement;
+        const button = fixture.debugElement.query(By.css('[data-testid="login-submit-button"]'))
+            .nativeElement as HTMLButtonElement;
         expect(button.disabled).toBe(true);
     });
 
@@ -42,7 +43,8 @@ describe('Login', () => {
         component.form.setValue({ email: 'user@example.com', password: 'secret123' });
         fixture.detectChanges();
 
-        const button = fixture.debugElement.query(By.css('[data-testid="login-submit-button"]')).nativeElement as HTMLButtonElement;
+        const button = fixture.debugElement.query(By.css('[data-testid="login-submit-button"]'))
+            .nativeElement as HTMLButtonElement;
         expect(button.disabled).toBe(false);
     });
 
@@ -74,12 +76,14 @@ describe('Login', () => {
     });
 
     it('should default the password field to masked (aria-label reflects hidden state)', () => {
-        const toggle = fixture.debugElement.query(By.css('[data-testid="login-password-toggle"]')).nativeElement as HTMLElement;
+        const toggle = fixture.debugElement.query(By.css('[data-testid="login-password-toggle"]'))
+            .nativeElement as HTMLElement;
         expect(toggle.getAttribute('aria-label')).toBe('Show password');
     });
 
     it('should toggle the aria-label when the password visibility icon is clicked', () => {
-        const toggle = fixture.debugElement.query(By.css('[data-testid="login-password-toggle"]')).nativeElement as HTMLElement;
+        const toggle = fixture.debugElement.query(By.css('[data-testid="login-password-toggle"]'))
+            .nativeElement as HTMLElement;
 
         toggle.click();
         fixture.detectChanges();
@@ -88,7 +92,8 @@ describe('Login', () => {
     });
 
     it('should toggle back to masked on a second click', () => {
-        const toggle = fixture.debugElement.query(By.css('[data-testid="login-password-toggle"]')).nativeElement as HTMLElement;
+        const toggle = fixture.debugElement.query(By.css('[data-testid="login-password-toggle"]'))
+            .nativeElement as HTMLElement;
 
         toggle.click();
         fixture.detectChanges();

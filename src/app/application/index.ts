@@ -79,12 +79,14 @@ export const applicationProviders = [
     },
     {
         provide: UpdateFormUseCase,
-        useFactory: (formRepo: FormRepository, subRepo: SubmissionRepository) => new UpdateFormUseCase(formRepo, subRepo),
+        useFactory: (formRepo: FormRepository, subRepo: SubmissionRepository) =>
+            new UpdateFormUseCase(formRepo, subRepo),
         deps: [FormRepository, SubmissionRepository]
     },
     {
         provide: DeleteFormUseCase,
-        useFactory: (formRepo: FormRepository, subRepo: SubmissionRepository) => new DeleteFormUseCase(formRepo, subRepo),
+        useFactory: (formRepo: FormRepository, subRepo: SubmissionRepository) =>
+            new DeleteFormUseCase(formRepo, subRepo),
         deps: [FormRepository, SubmissionRepository]
     },
     {
@@ -94,7 +96,11 @@ export const applicationProviders = [
     },
     {
         provide: SubmitFormUseCase,
-        useFactory: (subRepo: SubmissionRepository, formRepo: FormRepository, validationService: FormValidationService) => new SubmitFormUseCase(subRepo, formRepo, validationService),
+        useFactory: (
+            subRepo: SubmissionRepository,
+            formRepo: FormRepository,
+            validationService: FormValidationService
+        ) => new SubmitFormUseCase(subRepo, formRepo, validationService),
         deps: [SubmissionRepository, FormRepository, FormValidationService]
     },
     {
@@ -109,7 +115,8 @@ export const applicationProviders = [
     },
     {
         provide: GetFormsWithSubmissionCountsUseCase,
-        useFactory: (formRepo: FormRepository, subRepo: SubmissionRepository) => new GetFormsWithSubmissionCountsUseCase(formRepo, subRepo),
+        useFactory: (formRepo: FormRepository, subRepo: SubmissionRepository) =>
+            new GetFormsWithSubmissionCountsUseCase(formRepo, subRepo),
         deps: [FormRepository, SubmissionRepository]
     },
     {

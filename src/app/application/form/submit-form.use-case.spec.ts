@@ -1,6 +1,14 @@
 import { describe, it, expect } from 'vitest';
 import { SubmitFormUseCase } from './submit-form.use-case';
-import { createMockFormRepository, createMockSubmissionRepository, createFakeForm, createFakePage, createFakeField, createFakeFieldValidator, createFakeSubmission } from '../test-utils';
+import {
+    createMockFormRepository,
+    createMockSubmissionRepository,
+    createFakeForm,
+    createFakePage,
+    createFakeField,
+    createFakeFieldValidator,
+    createFakeSubmission
+} from '../test-utils';
 import { FormValidationService } from '@app/domain';
 import { FieldValidatorTypeEnum } from '@app/domain';
 
@@ -26,7 +34,9 @@ describe('SubmitFormUseCase', () => {
 
         const requiredField = createFakeField({
             name: 'email',
-            validators: [createFakeFieldValidator({ type: FieldValidatorTypeEnum.Required, message: 'Email is required' })]
+            validators: [
+                createFakeFieldValidator({ type: FieldValidatorTypeEnum.Required, message: 'Email is required' })
+            ]
         });
         const form = createFakeForm({ pages: [createFakePage({ fields: [requiredField] })] });
         formRepository.getFormById.mockResolvedValue(form);
@@ -41,7 +51,9 @@ describe('SubmitFormUseCase', () => {
 
         const requiredField = createFakeField({
             name: 'email',
-            validators: [createFakeFieldValidator({ type: FieldValidatorTypeEnum.Required, message: 'Email is required' })]
+            validators: [
+                createFakeFieldValidator({ type: FieldValidatorTypeEnum.Required, message: 'Email is required' })
+            ]
         });
         const form = createFakeForm({ pages: [createFakePage({ fields: [requiredField] })] });
         formRepository.getFormById.mockResolvedValue(form);

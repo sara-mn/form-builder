@@ -22,7 +22,9 @@ export class UserApiAdapter implements UserRepository {
     }
 
     changePassword(payload: ChangePasswordRequest): Promise<void> {
-        const $res: Observable<void> = this.httpClient.post<{ message: string }>(`${this.authUrl}/change-password`, payload).pipe(map(() => undefined));
+        const $res: Observable<void> = this.httpClient
+            .post<{ message: string }>(`${this.authUrl}/change-password`, payload)
+            .pipe(map(() => undefined));
         return lastValueFrom($res);
     }
 }

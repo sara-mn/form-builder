@@ -1,5 +1,15 @@
 import { describe, it, expect } from 'vitest';
-import { checkRequired, checkMinLength, checkMaxLength, checkPattern, checkMinValue, checkMaxValue, checkEmail, isValidRegexPattern, isValidNumericString } from './field-validators';
+import {
+    checkRequired,
+    checkMinLength,
+    checkMaxLength,
+    checkPattern,
+    checkMinValue,
+    checkMaxValue,
+    checkEmail,
+    isValidRegexPattern,
+    isValidNumericString
+} from './field-validators';
 
 describe('checkRequired', () => {
     it('should return false for null', () => {

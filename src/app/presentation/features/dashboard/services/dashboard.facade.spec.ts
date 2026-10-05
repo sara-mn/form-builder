@@ -1,6 +1,9 @@
 import { TestBed } from '@angular/core/testing';
 import { DashboardFacade } from './dashboard.facade';
-import { GetFormsWithSubmissionCountsUseCase, FormListItem } from '@app/application/form/get-forms-with-submission-counts.use-case';
+import {
+    GetFormsWithSubmissionCountsUseCase,
+    FormListItem
+} from '@app/application/form/get-forms-with-submission-counts.use-case';
 import { FormStatusEnum } from '@app/domain';
 import { createFakeForm } from '@app/application/test-utils';
 

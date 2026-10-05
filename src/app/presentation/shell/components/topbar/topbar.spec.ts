@@ -60,7 +60,9 @@ describe('Topbar', () => {
     it('should toggle dark mode class on document when dark-mode button is clicked', () => {
         expect(document.documentElement.classList.contains('app-dark')).toBe(false);
 
-        const darkModeButton: HTMLButtonElement = fixture.nativeElement.querySelector('button[aria-label="Toggle dark mode"]');
+        const darkModeButton: HTMLButtonElement = fixture.nativeElement.querySelector(
+            'button[aria-label="Toggle dark mode"]'
+        );
         darkModeButton.click();
         fixture.detectChanges();
 
@@ -71,7 +73,9 @@ describe('Topbar', () => {
     it('should toggle mobile sidebar when hamburger button is clicked', () => {
         expect(shellState.mobileSidebarOpen()).toBe(false);
 
-        const hamburgerButton: HTMLButtonElement = fixture.nativeElement.querySelector('button[aria-label="Toggle menu"]');
+        const hamburgerButton: HTMLButtonElement = fixture.nativeElement.querySelector(
+            'button[aria-label="Toggle menu"]'
+        );
         hamburgerButton.click();
         fixture.detectChanges();
 

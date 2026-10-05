@@ -9,7 +9,8 @@ describe('authGuard', () => {
     let authState: AuthState;
     let authFacade: Pick<AuthFacade, 'restoreSession'>;
 
-    const executeGuard: CanActivateFn = (...guardParameters) => TestBed.runInInjectionContext(() => authGuard(...guardParameters));
+    const executeGuard: CanActivateFn = (...guardParameters) =>
+        TestBed.runInInjectionContext(() => authGuard(...guardParameters));
 
     beforeEach(() => {
         authFacade = { restoreSession: vi.fn().mockResolvedValue(undefined) };

@@ -1,5 +1,8 @@
 import { computed, inject, Service, Signal, signal } from '@angular/core';
-import { FormListItem, GetFormsWithSubmissionCountsUseCase } from '@app/application/form/get-forms-with-submission-counts.use-case';
+import {
+    FormListItem,
+    GetFormsWithSubmissionCountsUseCase
+} from '@app/application/form/get-forms-with-submission-counts.use-case';
 import { FormStatusEnum } from '@app/domain';
 
 export interface DashboardStats {

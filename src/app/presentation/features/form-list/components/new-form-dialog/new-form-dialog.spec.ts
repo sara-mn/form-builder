@@ -122,7 +122,9 @@ describe('NewFormDialog', () => {
             fixture.detectChanges();
 
             const buttons = fixture.nativeElement.querySelectorAll('button');
-            const createButton = Array.from(buttons).find((b: any) => b.textContent.trim() === 'Create') as HTMLButtonElement;
+            const createButton = Array.from(buttons).find(
+                (b: any) => b.textContent.trim() === 'Create'
+            ) as HTMLButtonElement;
             createButton.click();
 
             expect(saveSpy).toHaveBeenCalled();
@@ -133,7 +135,9 @@ describe('NewFormDialog', () => {
             const hideSpy = vi.spyOn(component, 'onDialogHide');
 
             const buttons = fixture.nativeElement.querySelectorAll('button');
-            const cancelButton = Array.from(buttons).find((b: any) => b.textContent.trim() === 'Cancel') as HTMLButtonElement;
+            const cancelButton = Array.from(buttons).find(
+                (b: any) => b.textContent.trim() === 'Cancel'
+            ) as HTMLButtonElement;
             cancelButton.click();
 
             expect(hideSpy).toHaveBeenCalled();
