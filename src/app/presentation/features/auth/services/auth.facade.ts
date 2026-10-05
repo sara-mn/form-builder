@@ -1,5 +1,11 @@
 import { Service, inject } from '@angular/core';
-import { ConfirmPasswordResetPayload, LoginRequest, RegisterRequest, RequestPasswordResetPayload, User } from '@app/domain';
+import {
+    ConfirmPasswordResetPayload,
+    LoginRequest,
+    RegisterRequest,
+    RequestPasswordResetPayload,
+    User
+} from '@app/domain';
 import { StorageGateway } from '@app/domain/storage.gateway.abstract';
 import { AuthState } from '@app/presentation/core/services/auth-state';
 import { LoginUseCase } from '@application/auth/login.use-case';

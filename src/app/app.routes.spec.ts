@@ -16,12 +16,20 @@ describe('app routes', () => {
 
     it('should require FormCreate, FormEdit, or FormDelete permissions for the form designer route', () => {
         const designerRoute = children.find((r) => r.path === 'forms/:id/edit');
-        expect(designerRoute?.data?.['permissions']).toEqual(expect.arrayContaining([UserPermissionEnum.FormCreate, UserPermissionEnum.FormEdit, UserPermissionEnum.FormDelete]));
+        expect(designerRoute?.data?.['permissions']).toEqual(
+            expect.arrayContaining([
+                UserPermissionEnum.FormCreate,
+                UserPermissionEnum.FormEdit,
+                UserPermissionEnum.FormDelete
+            ])
+        );
     });
 
     it('should require FormGenerate or FormCreate permissions for the form renderer route', () => {
         const rendererRoute = children.find((r) => r.path === 'forms/:id/fill');
-        expect(rendererRoute?.data?.['permissions']).toEqual(expect.arrayContaining([UserPermissionEnum.FormGenerate, UserPermissionEnum.FormCreate]));
+        expect(rendererRoute?.data?.['permissions']).toEqual(
+            expect.arrayContaining([UserPermissionEnum.FormGenerate, UserPermissionEnum.FormCreate])
+        );
     });
 
     it('should require no specific permissions for the dashboard route (any authenticated user)', () => {

@@ -21,7 +21,13 @@ describe('AccountFacade', () => {
         changePasswordUseCase = { execute: vi.fn() };
 
         TestBed.configureTestingModule({
-            providers: [AccountFacade, AuthState, { provide: GetProfileUseCase, useValue: getProfileUseCase }, { provide: UpdateProfileUseCase, useValue: updateProfileUseCase }, { provide: ChangePasswordUseCase, useValue: changePasswordUseCase }]
+            providers: [
+                AccountFacade,
+                AuthState,
+                { provide: GetProfileUseCase, useValue: getProfileUseCase },
+                { provide: UpdateProfileUseCase, useValue: updateProfileUseCase },
+                { provide: ChangePasswordUseCase, useValue: changePasswordUseCase }
+            ]
         });
 
         facade = TestBed.inject(AccountFacade);

@@ -72,7 +72,9 @@ describe('FormValidationService', () => {
                                 name: 'email',
                                 type: FieldTypeEnum.Email,
                                 order: 0,
-                                validators: [{ id: 'v1', type: FieldValidatorTypeEnum.Required, message: 'Email is required' }]
+                                validators: [
+                                    { id: 'v1', type: FieldValidatorTypeEnum.Required, message: 'Email is required' }
+                                ]
                             }
                         ]
                     }
@@ -82,7 +84,9 @@ describe('FormValidationService', () => {
             const result = service.validateForm(form, { email: '' });
 
             expect(result.isValid).toBe(false);
-            expect(result.errors).toEqual([{ fieldId: 'field-1', validatorType: FieldValidatorTypeEnum.Required, message: 'Email is required' }]);
+            expect(result.errors).toEqual([
+                { fieldId: 'field-1', validatorType: FieldValidatorTypeEnum.Required, message: 'Email is required' }
+            ]);
         });
 
         it('should collect multiple errors across multiple fields and pages', () => {
@@ -100,7 +104,9 @@ describe('FormValidationService', () => {
                                 name: 'name',
                                 type: FieldTypeEnum.Text,
                                 order: 0,
-                                validators: [{ id: 'v1', type: FieldValidatorTypeEnum.Required, message: 'Name required' }]
+                                validators: [
+                                    { id: 'v1', type: FieldValidatorTypeEnum.Required, message: 'Name required' }
+                                ]
                             }
                         ]
                     },
@@ -116,7 +122,9 @@ describe('FormValidationService', () => {
                                 name: 'age',
                                 type: FieldTypeEnum.Number,
                                 order: 0,
-                                validators: [{ id: 'v2', type: FieldValidatorTypeEnum.MinValue, message: 'Too young', value: 18 }]
+                                validators: [
+                                    { id: 'v2', type: FieldValidatorTypeEnum.MinValue, message: 'Too young', value: 18 }
+                                ]
                             }
                         ]
                     }
@@ -145,8 +153,18 @@ describe('FormValidationService', () => {
                                 type: FieldTypeEnum.Text,
                                 order: 0,
                                 validators: [
-                                    { id: 'v1', type: FieldValidatorTypeEnum.MinLength, message: 'Too short', value: 5 },
-                                    { id: 'v2', type: FieldValidatorTypeEnum.Pattern, message: 'Invalid format', value: '^[0-9]+$' }
+                                    {
+                                        id: 'v1',
+                                        type: FieldValidatorTypeEnum.MinLength,
+                                        message: 'Too short',
+                                        value: 5
+                                    },
+                                    {
+                                        id: 'v2',
+                                        type: FieldValidatorTypeEnum.Pattern,
+                                        message: 'Invalid format',
+                                        value: '^[0-9]+$'
+                                    }
                                 ]
                             }
                         ]
@@ -178,8 +196,22 @@ describe('FormValidationService', () => {
                             }
                         ],
                         fields: [
-                            { id: 'field-start', label: 'Start Date', name: 'startDate', type: FieldTypeEnum.Date, order: 0, validators: [] },
-                            { id: 'field-end', label: 'End Date', name: 'endDate', type: FieldTypeEnum.Date, order: 1, validators: [] }
+                            {
+                                id: 'field-start',
+                                label: 'Start Date',
+                                name: 'startDate',
+                                type: FieldTypeEnum.Date,
+                                order: 0,
+                                validators: []
+                            },
+                            {
+                                id: 'field-end',
+                                label: 'End Date',
+                                name: 'endDate',
+                                type: FieldTypeEnum.Date,
+                                order: 1,
+                                validators: []
+                            }
                         ]
                     }
                 ]
@@ -207,8 +239,22 @@ describe('FormValidationService', () => {
                             }
                         ],
                         fields: [
-                            { id: 'field-start', label: 'Start Date', name: 'startDate', type: FieldTypeEnum.Date, order: 0, validators: [] },
-                            { id: 'field-end', label: 'End Date', name: 'endDate', type: FieldTypeEnum.Date, order: 1, validators: [] }
+                            {
+                                id: 'field-start',
+                                label: 'Start Date',
+                                name: 'startDate',
+                                type: FieldTypeEnum.Date,
+                                order: 0,
+                                validators: []
+                            },
+                            {
+                                id: 'field-end',
+                                label: 'End Date',
+                                name: 'endDate',
+                                type: FieldTypeEnum.Date,
+                                order: 1,
+                                validators: []
+                            }
                         ]
                     }
                 ]
@@ -238,8 +284,22 @@ describe('FormValidationService', () => {
                         order: 0,
                         validators: [],
                         fields: [
-                            { id: 'field-status', label: 'Status', name: 'status', type: FieldTypeEnum.Text, order: 0, validators: [] },
-                            { id: 'field-reason', label: 'Reason', name: 'reason', type: FieldTypeEnum.Text, order: 1, validators: [] }
+                            {
+                                id: 'field-status',
+                                label: 'Status',
+                                name: 'status',
+                                type: FieldTypeEnum.Text,
+                                order: 0,
+                                validators: []
+                            },
+                            {
+                                id: 'field-reason',
+                                label: 'Reason',
+                                name: 'reason',
+                                type: FieldTypeEnum.Text,
+                                order: 1,
+                                validators: []
+                            }
                         ]
                     }
                 ]
@@ -266,7 +326,16 @@ describe('FormValidationService', () => {
                                 dependsOnFieldId: 'field-start'
                             }
                         ],
-                        fields: [{ id: 'field-start', label: 'Start Date', name: 'startDate', type: FieldTypeEnum.Date, order: 0, validators: [] }]
+                        fields: [
+                            {
+                                id: 'field-start',
+                                label: 'Start Date',
+                                name: 'startDate',
+                                type: FieldTypeEnum.Date,
+                                order: 0,
+                                validators: []
+                            }
+                        ]
                     }
                 ]
             });

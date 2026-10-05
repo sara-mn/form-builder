@@ -8,7 +8,10 @@ const checkers: Record<CrossFieldValidatorTypeEnum, (targetValue: unknown, depen
     [CrossFieldValidatorTypeEnum.DateBefore]: checkDateBefore
 };
 
-export function toCrossFieldValidatorFn(config: CrossFieldValidatorConfigModel, getFieldValue: (fieldId: Guid) => unknown): ValidatorFn {
+export function toCrossFieldValidatorFn(
+    config: CrossFieldValidatorConfigModel,
+    getFieldValue: (fieldId: Guid) => unknown
+): ValidatorFn {
     return (_group: AbstractControl): ValidationErrors | null => {
         const targetValue = getFieldValue(config.targetFieldId);
         const dependsOnValue = getFieldValue(config.dependsOnFieldId);

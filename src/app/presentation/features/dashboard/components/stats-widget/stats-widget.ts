@@ -25,10 +25,38 @@ export class StatsWidget {
     protected readonly tiles = computed<StatTile[]>(() => {
         const s = this.stats();
         return [
-            { label: 'Total Forms', value: s.totalForms, sublabel: `${s.draftForms} draft`, icon: 'file', colorClasses: '...', testId: 'stats-total-forms' },
-            { label: 'Published', value: s.publishedForms, sublabel: 'visible to viewers', icon: 'check-circle', colorClasses: '...', testId: 'stats-published-forms' },
-            { label: 'Locked', value: s.lockedForms, sublabel: 'have submissions', icon: 'lock', colorClasses: '...', testId: 'stats-locked-forms' },
-            { label: 'Submissions', value: s.totalSubmissions, sublabel: 'across all forms', icon: 'inbox', colorClasses: '...', testId: 'stats-total-submissions' }
+            {
+                label: 'Total Forms',
+                value: s.totalForms,
+                sublabel: `${s.draftForms} draft`,
+                icon: 'file',
+                colorClasses: '...',
+                testId: 'stats-total-forms'
+            },
+            {
+                label: 'Published',
+                value: s.publishedForms,
+                sublabel: 'visible to viewers',
+                icon: 'check-circle',
+                colorClasses: '...',
+                testId: 'stats-published-forms'
+            },
+            {
+                label: 'Locked',
+                value: s.lockedForms,
+                sublabel: 'have submissions',
+                icon: 'lock',
+                colorClasses: '...',
+                testId: 'stats-locked-forms'
+            },
+            {
+                label: 'Submissions',
+                value: s.totalSubmissions,
+                sublabel: 'across all forms',
+                icon: 'inbox',
+                colorClasses: '...',
+                testId: 'stats-total-submissions'
+            }
         ];
     });
 }

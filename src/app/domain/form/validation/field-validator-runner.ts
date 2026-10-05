@@ -1,8 +1,19 @@
 import { FieldValidatorTypeEnum } from '../enums/field-validator-type.enum';
 import { FieldValidatorConfigModel } from '../models/field-validator-config.model';
-import { checkRequired, checkMinLength, checkMaxLength, checkPattern, checkMinValue, checkMaxValue, checkEmail } from './field-validators';
+import {
+    checkRequired,
+    checkMinLength,
+    checkMaxLength,
+    checkPattern,
+    checkMinValue,
+    checkMaxValue,
+    checkEmail
+} from './field-validators';
 
-const fieldValidatorRunners: Record<FieldValidatorTypeEnum, (value: unknown, configValue?: string | number) => boolean> = {
+const fieldValidatorRunners: Record<
+    FieldValidatorTypeEnum,
+    (value: unknown, configValue?: string | number) => boolean
+> = {
     [FieldValidatorTypeEnum.Required]: (value) => checkRequired(value),
     [FieldValidatorTypeEnum.MinLength]: (value, configValue) => checkMinLength(value, configValue as number),
     [FieldValidatorTypeEnum.MaxLength]: (value, configValue) => checkMaxLength(value, configValue as number),

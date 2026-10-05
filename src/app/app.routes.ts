@@ -13,7 +13,13 @@ export const routes: Routes = [
             { path: '', data: { permissions: [] }, canActivate: [authGuard, permissionGuard], component: Dashboard },
             {
                 path: 'forms/:id/edit',
-                data: { permissions: [UserPermissionEnum.FormCreate, UserPermissionEnum.FormEdit, UserPermissionEnum.FormDelete] },
+                data: {
+                    permissions: [
+                        UserPermissionEnum.FormCreate,
+                        UserPermissionEnum.FormEdit,
+                        UserPermissionEnum.FormDelete
+                    ]
+                },
                 canActivate: [authGuard, permissionGuard],
                 loadComponent: () => import('@features/form-designer/form-designer').then((m) => m.FormDesigner)
             },

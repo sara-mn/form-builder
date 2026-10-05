@@ -1,6 +1,14 @@
 import { describe, it, expect } from 'vitest';
 import { UpdateFormUseCase } from './update-form.use-case';
-import { createMockFormRepository, createMockSubmissionRepository, createFakeForm, createFakeSubmission, createFakeField, createFakePage, createFakeFieldValidator } from '../test-utils';
+import {
+    createMockFormRepository,
+    createMockSubmissionRepository,
+    createFakeForm,
+    createFakeSubmission,
+    createFakeField,
+    createFakePage,
+    createFakeFieldValidator
+} from '../test-utils';
 import { FieldValidatorTypeEnum, FieldTypeEnum } from '@app/domain';
 
 describe('UpdateFormUseCase', () => {
@@ -48,7 +56,9 @@ describe('UpdateFormUseCase', () => {
         const page = createFakePage({
             fields: [
                 createFakeField({
-                    validators: [createFakeFieldValidator({ type: FieldValidatorTypeEnum.Pattern, value: '(unclosed[' })]
+                    validators: [
+                        createFakeFieldValidator({ type: FieldValidatorTypeEnum.Pattern, value: '(unclosed[' })
+                    ]
                 })
             ]
         });

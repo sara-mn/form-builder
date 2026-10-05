@@ -1,7 +1,13 @@
-<div class="mb-4 gap-1.5 flex flex-col">
-    <label [for]="field().name" class="text-sm font-semibold text-surface-700 dark:text-surface-300">{{ field().label }}</label>
+<div class="mb-4 flex flex-col gap-1.5">
+    <label [for]="field().name" class="text-sm font-semibold text-surface-700 dark:text-surface-300">{{
+        field().label
+    }}</label>
     <textarea pTextarea [id]="field().name" rows="3" [formControl]="control()" class="w-full"></textarea>
     @if (control().invalid && control().touched) {
-    <span class="text-red-600 dark:text-red-400 text-[13px]"> @for (error of control().errors | keyvalue; track error.key) { {{ error.value }} } </span>
+        <span class="text-[13px] text-red-600 dark:text-red-400">
+            @for (error of control().errors | keyvalue; track error.key) {
+                {{ error.value }}
+            }
+        </span>
     }
 </div>

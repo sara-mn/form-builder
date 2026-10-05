@@ -1,5 +1,5 @@
 export interface FormAdapter<F, D> {
-  toDomain(form: F): D;
+    toDomain(form: F): D;
 
-  fromDomain?(domain: D): F;
+    fromDomain?(domain: D): F;
 }

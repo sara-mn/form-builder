@@ -67,7 +67,9 @@ describe('NavItem', () => {
         });
         await setup(parent);
 
-        const button: HTMLButtonElement = fixture.nativeElement.querySelector(':scope > button[aria-label="Toggle Settings submenu"]');
+        const button: HTMLButtonElement = fixture.nativeElement.querySelector(
+            ':scope > button[aria-label="Toggle Settings submenu"]'
+        );
         expect(button.getAttribute('aria-expanded')).toBe('false');
     });
 
@@ -78,7 +80,9 @@ describe('NavItem', () => {
         });
         await setup(parent);
 
-        const button: HTMLButtonElement = fixture.nativeElement.querySelector(':scope > button[aria-label="Toggle Settings submenu"]');
+        const button: HTMLButtonElement = fixture.nativeElement.querySelector(
+            ':scope > button[aria-label="Toggle Settings submenu"]'
+        );
         button.click();
         fixture.detectChanges();
 
@@ -92,7 +96,9 @@ describe('NavItem', () => {
         });
         await setup(parent);
 
-        const button: HTMLButtonElement = fixture.nativeElement.querySelector(':scope > button[aria-label="Toggle Settings submenu"]');
+        const button: HTMLButtonElement = fixture.nativeElement.querySelector(
+            ':scope > button[aria-label="Toggle Settings submenu"]'
+        );
         button.click();
         fixture.detectChanges();
         button.click();

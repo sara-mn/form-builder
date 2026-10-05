@@ -16,7 +16,16 @@ export class SubmissionsChart {
         const sorted = [...this.items()].sort((a, b) => b.submissionCount - a.submissionCount);
         return {
             labels: sorted.map((i) => i.form.title),
-            datasets: [{ label: 'Submissions', data: sorted.map((i) => i.submissionCount), backgroundColor: 'rgba(99, 102, 241, 0.6)', borderColor: 'rgb(99, 102, 241)', borderWidth: 1, borderRadius: 6 }]
+            datasets: [
+                {
+                    label: 'Submissions',
+                    data: sorted.map((i) => i.submissionCount),
+                    backgroundColor: 'rgba(99, 102, 241, 0.6)',
+                    borderColor: 'rgb(99, 102, 241)',
+                    borderWidth: 1,
+                    borderRadius: 6
+                }
+            ]
         };
     });
 

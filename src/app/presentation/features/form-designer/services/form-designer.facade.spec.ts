@@ -329,7 +329,11 @@ describe('FormDesignerFacade', () => {
                 targetFieldId: 'unrelated',
                 dependsOnFieldId: 'other'
             };
-            const page1 = makePage({ id: 'p1', fields: [targetField, unrelatedField, otherField], validators: [unrelatedValidator] });
+            const page1 = makePage({
+                id: 'p1',
+                fields: [targetField, unrelatedField, otherField],
+                validators: [unrelatedValidator]
+            });
             getFormByIdUseCase.execute.mockResolvedValue(makeForm([page1]));
             getSubmissionsByFormId.execute.mockResolvedValue([]);
             await service.loadForm('f1');

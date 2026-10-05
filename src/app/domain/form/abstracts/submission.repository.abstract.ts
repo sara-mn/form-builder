@@ -5,5 +5,7 @@ export abstract class SubmissionRepository {
     abstract getSubmission(formId: Guid, userId: Guid): Promise<FormSubmissionModel | null>;
     abstract getAllSubmissions(): Promise<FormSubmissionModel[]>;
     abstract getSubmissionsByFormId(formId: Guid): Promise<FormSubmissionModel[]>;
-    abstract createSubmission(submission: Omit<FormSubmissionModel, 'id' | 'submittedAt'>): Promise<FormSubmissionModel>;
+    abstract createSubmission(
+        submission: Omit<FormSubmissionModel, 'id' | 'submittedAt'>
+    ): Promise<FormSubmissionModel>;
 }
