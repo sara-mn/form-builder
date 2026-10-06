@@ -13,7 +13,6 @@
     "test": "ng test",
     "mock-server": "node server/index.js",
     "start:server": "node server/index.js",
-    "deploy-gh": "npx angular-cli-ghpages --dir=dist/form-builder/browser",
     "lint": "ng lint"
   },
   "private": true,
@@ -51,7 +50,6 @@
     "@angular/compiler-cli": "^22.2.0",
     "@eslint/js": "^10.0.1",
     "@vitest/browser-playwright": "^4.1.10",
-    "angular-cli-ghpages": "^3.1.0",
     "angular-eslint": "22.5.0",
     "body-parser": "^2.3.0",
     "eslint": "^10.9.1",
