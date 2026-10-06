@@ -86,7 +86,7 @@
           "defaultConfiguration": "development"
         },
         "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n"
+          "builder": "@angular/build:extract-i18n"
         },
         "test": {
           "builder": "@angular/build:unit-test",
@@ -96,9 +96,6 @@
             "browsers": ["chromium"],
             "buildTarget": "::development"
           }
-        },
-        "deploy": {
-          "builder": "angular-cli-ghpages:deploy"
         },
         "lint": {
           "builder": "@angular-eslint/builder:lint",

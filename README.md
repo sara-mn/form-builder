@@ -117,7 +117,7 @@ npm run build-prod
 
 ## Deployment
 
-- **Frontend**: GitHub Pages, via `npm run deploy-gh` (wraps `angular-cli-ghpages`). Production builds (`npm run build-prod`) resolve the API URL from `src/environments/environment.production.ts`, wired in via `angular.json`'s `production` `fileReplacements`.
+- **Frontend**: GitHub Pages, deployed automatically by the `deploy-frontend` job in `.github/workflows/ci.yml` after a green pipeline on `main`. Production builds (`npm run build-prod`) resolve the API URL from `src/environments/environment.production.ts`, wired in via `fileReplacements`.
 - **Backend**: Render (Node web service). Required environment variables, set in Render's dashboard (never committed):
 
 | Variable | Purpose |

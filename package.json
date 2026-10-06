@@ -13,20 +13,19 @@
     "test": "ng test",
     "mock-server": "node server/index.js",
     "start:server": "node server/index.js",
-    "deploy-gh": "npx angular-cli-ghpages --dir=dist/form-builder/browser",
     "lint": "ng lint"
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "^22.2.0",
+    "@angular/animations": "^22.2.1",
     "@angular/cdk": "^22.0.3",
-    "@angular/common": "^22.2.0",
-    "@angular/compiler": "^22.2.0",
-    "@angular/core": "^22.2.0",
-    "@angular/forms": "^22.2.0",
-    "@angular/platform-browser": "^22.2.0",
-    "@angular/platform-browser-dynamic": "^22.2.0",
-    "@angular/router": "^22.2.0",
+    "@angular/common": "^22.2.1",
+    "@angular/compiler": "^22.2.1",
+    "@angular/core": "^22.2.1",
+    "@angular/forms": "^22.2.1",
+    "@angular/platform-browser": "^22.2.1",
+    "@angular/platform-browser-dynamic": "^22.2.1",
+    "@angular/router": "^22.2.1",
     "@primeicons/angular": "^8.0.0",
     "@primeuix/themes": "^3.0.0-rc.1",
     "@tailwindcss/postcss": "^4.1.4",
@@ -46,12 +45,11 @@
     "tslib": "^2.3.0"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^22.0.5",
-    "@angular/cli": "^22.2.0",
-    "@angular/compiler-cli": "^22.2.0",
+    "@angular/build": "^22.2.1",
+    "@angular/cli": "^22.2.1",
+    "@angular/compiler-cli": "^22.2.1",
     "@eslint/js": "^10.0.1",
     "@vitest/browser-playwright": "^4.1.10",
-    "angular-cli-ghpages": "^3.1.0",
     "angular-eslint": "22.5.0",
     "body-parser": "^2.3.0",
     "eslint": "^10.9.1",
@@ -64,11 +62,10 @@
     "vitest": "^4.1.10"
   },
   "allowScripts": {
-    "esbuild@0.28.1": true,
     "msgpackr-extract@3.0.4": true,
-    "@parcel/watcher@2.5.6": true,
-    "lmdb@3.5.4": true,
-    "esbuild@0.27.7": true
+    "@parcel/watcher@2.6.0": true,
+    "esbuild@0.28.2": true,
+    "lmdb@3.5.6": true
   },
   "engines": {
     "node": "24.x"

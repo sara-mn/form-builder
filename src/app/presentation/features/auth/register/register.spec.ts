@@ -30,6 +30,7 @@ describe('Register', () => {
         fixture = TestBed.createComponent(Register);
         component = fixture.componentInstance;
         router = TestBed.inject(Router);
+        vi.spyOn(router, 'navigate').mockResolvedValue(true);
         fixture.detectChanges();
     });
 
@@ -107,14 +108,13 @@ describe('Register', () => {
 
     it('should navigate to "/login" after a successful registration', async () => {
         (authFacade.register as ReturnType<typeof vi.fn>).mockResolvedValue(undefined);
-        const navigateSpy = vi.spyOn(router, 'navigate').mockResolvedValue(true);
         component.form.setValue(validValue);
 
         component.onSubmit();
         await Promise.resolve();
         await Promise.resolve();
 
-        expect(navigateSpy).toHaveBeenCalledWith(['/login']);
+        expect(router.navigate).toHaveBeenCalledWith(['/login']);
     });
 
     it('should require a minimum password length of 6', () => {
