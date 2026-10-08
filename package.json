@@ -11,8 +11,7 @@
     "format": "prettier --write \"**/*.{js,mjs,ts,mts,d.ts,html,scss,css,json}\" --cache",
     "format:check": "prettier --check \"**/*.{js,mjs,ts,mts,d.ts,html,scss,css,json}\"",
     "test": "ng test",
-    "mock-server": "node server/index.js",
-    "start:server": "node server/index.js",
+    "start:server": "npm --prefix server start",
     "lint": "ng lint"
   },
   "private": true,
