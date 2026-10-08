@@ -1,9 +1,9 @@
 <div class="mb-4 flex flex-col gap-1.5">
     <div class="flex items-center gap-2">
         <p-checkbox [inputId]="field().name" [binary]="true" [formControl]="control()" />
-        <label [for]="field().name" class="text-sm font-semibold text-surface-700 dark:text-surface-300">{{
-            field().label
-        }}</label>
+        <label [for]="field().name" class="text-sm font-semibold text-surface-700 dark:text-surface-300">
+            {{ field().label }}
+        </label>
     </div>
     @if (control().invalid && control().touched) {
         <span class="text-[13px] text-red-600 dark:text-red-400">
