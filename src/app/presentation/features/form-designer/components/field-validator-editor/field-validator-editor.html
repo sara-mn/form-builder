@@ -7,9 +7,9 @@
                 <li
                     class="flex items-center gap-2 rounded-md bg-surface-50 px-2.5 py-1.5 text-[13px] dark:bg-surface-800"
                 >
-                    <span class="font-semibold text-surface-900 capitalize dark:text-surface-0">{{
-                        validator.type
-                    }}</span>
+                    <span class="font-semibold text-surface-900 capitalize dark:text-surface-0">
+                        {{ validator.type }}
+                    </span>
                     @if (validator.value !== undefined) {
                         <span class="text-surface-500 dark:text-surface-400">({{ validator.value }})</span>
                     }
