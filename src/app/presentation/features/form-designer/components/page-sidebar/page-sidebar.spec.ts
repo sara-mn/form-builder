@@ -80,19 +80,10 @@ describe('PageSidebar', () => {
             const confirmSpy = vi.spyOn(confirmationService, 'confirm');
             const emitSpy = vi.fn();
             component.pageDeleted.subscribe(emitSpy);
-
-            const fakeEvent = { stopPropagation: vi.fn() } as unknown as Event;
-            component.onDelete('p1', fakeEvent);
+            component.onDelete('p1');
 
             expect(confirmSpy).toHaveBeenCalled();
             expect(emitSpy).not.toHaveBeenCalled();
-        });
-
-        it('should stop event propagation to avoid triggering page selection', () => {
-            setup();
-            const fakeEvent = { stopPropagation: vi.fn() } as unknown as Event;
-            component.onDelete('p1', fakeEvent);
-            expect(fakeEvent.stopPropagation).toHaveBeenCalled();
         });
 
         it('should emit pageDeleted only after the user accepts the confirmation', () => {
@@ -101,9 +92,7 @@ describe('PageSidebar', () => {
             const confirmSpy = vi.spyOn(confirmationService, 'confirm');
             const emitSpy = vi.fn();
             component.pageDeleted.subscribe(emitSpy);
-
-            const fakeEvent = { stopPropagation: vi.fn() } as unknown as Event;
-            component.onDelete('p1', fakeEvent);
+            component.onDelete('p1');
 
             const acceptCallback = confirmSpy.mock.calls[0][0].accept;
             acceptCallback?.();
