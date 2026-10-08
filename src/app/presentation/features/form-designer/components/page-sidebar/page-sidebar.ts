@@ -31,8 +31,7 @@ export class PageSidebar {
         this.pageAdded.emit();
     }
 
-    onDelete(pageId: Guid, event: Event): void {
-        event.stopPropagation();
+    onDelete(pageId: Guid): void {
         this.confirmationService.confirm({
             message: 'Delete this page and all its fields?',
             header: 'Confirm Deletion',
