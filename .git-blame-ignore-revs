@@ -1,2 +1,5 @@
 # Format entire codebase with Prettier
 30215250f64d9aca3c7e1deda4db5d456218755f
+
+# Reformat templates with htmlWhitespaceSensitivity ignore
+21ba6f01b32e31943386f6a72febc2c1e6c84d27
