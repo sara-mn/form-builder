@@ -1,7 +1,7 @@
 <div class="mb-4 flex flex-col gap-1.5">
-    <label [for]="field().name" class="text-sm font-semibold text-surface-700 dark:text-surface-300">{{
-        field().label
-    }}</label>
+    <label [for]="field().name" class="text-sm font-semibold text-surface-700 dark:text-surface-300">
+        {{ field().label }}
+    </label>
     <p-select
         [inputId]="field().name"
         [options]="options()"
