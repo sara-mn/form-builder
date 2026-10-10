@@ -77,6 +77,7 @@ Field-level and cross-field validation rules live in `domain/form/validation/` a
 git clone https://github.com/sara-mn/form-builder.git
 cd form-builder
 npm install
+npm --prefix server install
 ```
 
 ### Configure the backend
@@ -84,7 +85,7 @@ npm install
 The mock API server needs two JWT secrets. Copy the example file and fill in your own values:
 
 ```bash
-cp .env.example .env
+cp server/.env.example server/.env
 ```
 
 ### Run
@@ -92,7 +93,7 @@ cp .env.example .env
 Two processes run side by side in development — the Angular dev server and the mock API:
 
 ```bash
-npm run mock-server   # Express + json-server, http://localhost:3000
+npm run start:server   # Express + json-server, http://localhost:3000
 npm start              # Angular dev server, http://localhost:4200
 ```
 
@@ -126,7 +127,7 @@ npm run build-prod
 | `FRONTEND_URL` | Builds the password-reset link logged server-side; must include the `/form-builder` base path |
 | `NODE_ENV=production` | Switches the refresh-token cookie to `sameSite: 'none'; secure: true` — required for it to survive a cross-site request between GitHub Pages and Render. Without it, the browser silently drops the cookie and session restore fails. |
 
-Worth noting for anyone reproducing this setup: this project's backend runtime dependencies (`express`, `cors`, `cookie-parser`, `json-server`, `jsonwebtoken`, `bcryptjs`, `dotenv`) were originally listed under `devDependencies`. `npm install` skips `devDependencies` when `NODE_ENV=production`, which broke the first deploy with `Cannot find package 'dotenv'` — they're now correctly under `dependencies`.
+Worth noting for anyone reproducing this setup: the backend's runtime dependencies (`express`, `cors`, `cookie-parser`, `json-server`, `jsonwebtoken`, `bcryptjs`, `dotenv`) were originally listed under `devDependencies` of the root package. `npm install` skips `devDependencies` when `NODE_ENV=production`, which broke the first deploy with `Cannot find package 'dotenv'`. The backend now has its own `server/package.json`, so its dependencies are installed independently of the frontend's.
 
 ## Project status
 

@@ -61,7 +61,7 @@ export default function createAuthRouter(db, isProduction = false) {
         if (!user) {
             return res.status(400).json({ message: 'Invalid credentials' });
         }
-
+        //
         // Check the password
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
