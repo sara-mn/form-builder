@@ -1,6 +1,7 @@
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import { Module } from 'node:module';
+import { existsSync, mkdirSync, copyFileSync } from 'fs';
 import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
@@ -27,7 +28,18 @@ app.use(
 
 // app.use(express.json());
 app.use(cookieParser());
-const jsonServerRouter = jsonServer.router(join(__dirname, 'db.json'));
+
+const seedPath = join(__dirname, 'db.json');
+const dbPath = process.env.DB_PATH ?? seedPath;
+
+if (!existsSync(dbPath)) {
+    mkdirSync(dirname(dbPath), { recursive: true });
+    copyFileSync(seedPath, dbPath);
+    console.log(`Seeded database at ${dbPath}`);
+}
+
+const jsonServerRouter = jsonServer.router(dbPath);
+
 const db = jsonServerRouter.db; // lowdb instance — shared with auth routes
 
 app.use('/api/auth', express.json(), createAuthRouter(db, isProduction));
