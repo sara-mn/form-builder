@@ -1,0 +1,21 @@
+services:
+  api:
+    build: ./server
+    env_file: ./server/.env
+    environment:
+      DB_PATH: /app/data/db.json
+    volumes:
+      - api-data:/app/data
+    init: true
+    restart: unless-stopped
+
+  web:
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - api
+    restart: unless-stopped
+
+volumes:
+  api-data:
