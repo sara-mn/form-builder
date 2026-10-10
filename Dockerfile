@@ -6,7 +6,7 @@ COPY package.json package-lock.json ./
 RUN npm ci
 
 COPY . .
-RUN npx ng build --configuration production --base-href /
+RUN npx ng build --configuration production,docker --base-href /
 
 # ---------- Stage 2: serve ----------
 FROM nginxinc/nginx-unprivileged:alpine

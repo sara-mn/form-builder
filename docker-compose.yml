@@ -1,0 +1,14 @@
+services:
+  api:
+    build: ./server
+    env_file: ./server/.env
+    init: true
+    restart: unless-stopped
+
+  web:
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - api
+    restart: unless-stopped
