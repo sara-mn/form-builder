@@ -63,13 +63,16 @@ Field-level and cross-field validation rules live in `domain/form/validation/` a
 | **Forms** | Reactive Forms (form-renderer, to integrate with the custom validation engine); plain signal-bound inputs elsewhere |
 | **Testing** | Vitest + `@angular/build:unit-test`, happy-dom, Playwright Chromium |
 | **Backend** | Custom Express server (ESM) for JWT auth (`jsonwebtoken`, `bcryptjs`, httpOnly refresh cookie) + `json-server` for CRUD |
+| **Code quality** | Prettier (enforced in CI) and ESLint via `angular-eslint`, including template accessibility rules |
+| **CI/CD** | GitHub Actions — format check, lint, unit tests, production build, Docker smoke test; automated deploys gated on a green pipeline |
+| **Containers** | Docker (multi-stage frontend image on `nginx-unprivileged`, non-root backend image), Docker Compose for the full local stack |
 
 ## Getting started
 
 ### Prerequisites
 
-- Node.js (LTS)
-- Angular CLI
+- Node.js 24 (see `.nvmrc`)
+- Docker Desktop — optional, only needed for the containerized setup below
 
 ### Install
 
@@ -116,18 +119,43 @@ npm test
 npm run build-prod
 ```
 
+## Running with Docker
+
+The whole stack (Angular frontend + Express API) can also run in containers with a single command — no local Node.js installation needed:
+
+```bash
+cp server/.env.example server/.env
+docker compose up --build
+```
+
+Then open http://localhost:8080 and sign in with one of the seeded accounts above.
+
+### How it fits together
+
+```
+browser ──► localhost:8080 ──► web (nginx)
+                                 ├── /api/*  ──► api:3000 (Express + json-server)
+                                 └── /*      ──► Angular app (SPA fallback to index.html)
+```
+
+- **Frontend image** — multi-stage build: a Node stage builds the Angular app, and the final image is `nginx-unprivileged` serving only the static output (~95 MB, runs as non-root). Build tooling and `node_modules` never reach the final image.
+- **Reverse proxy** — nginx forwards `/api/*` to the API container and strips the prefix, so the browser talks to a single origin and CORS is not involved. The API container exposes no host port; it is reachable only through nginx.
+- **Build configuration** — the Docker build uses a dedicated Angular `docker` configuration (`--configuration production,docker`) whose only difference from `production` is a relative API URL (`/api`).
+- **Persistent data** — the API stores its data in a named volume (`api-data`), seeded from `server/db.json` on first start. Data survives `docker compose down`; `docker compose down -v` resets it to the seed data.
+- **Secrets** — `server/.env` is injected at runtime via `env_file` and is excluded from the image by `.dockerignore`.
+
 ## Deployment
 
 - **Frontend**: GitHub Pages, deployed automatically by the `deploy-frontend` job in `.github/workflows/ci.yml` after a green pipeline on `main`. Production builds (`npm run build-prod`) resolve the API URL from `src/environments/environment.production.ts`, wired in via `fileReplacements`.
-- **Backend**: Render (Node web service). Required environment variables, set in Render's dashboard (never committed):
+- **Backend**: Render (Docker web service), built from `server/Dockerfile` — the same image definition that runs locally under Docker Compose and is smoke-tested in CI. Render deploys only after all CI checks pass. Required environment variables, set in Render's dashboard (never committed):
 
 | Variable | Purpose |
 |---|---|
 | `JWT_ACCESS_SECRET` / `JWT_REFRESH_SECRET` | JWT signing secrets |
 | `FRONTEND_URL` | Builds the password-reset link logged server-side; must include the `/form-builder` base path |
-| `NODE_ENV=production` | Switches the refresh-token cookie to `sameSite: 'none'; secure: true` — required for it to survive a cross-site request between GitHub Pages and Render. Without it, the browser silently drops the cookie and session restore fails. |
+| `NODE_ENV=production` | Switches the refresh-token cookie to `sameSite: 'none'; secure: true` — required for it to survive a cross-site request between GitHub Pages and Render. Without it, the browser silently drops the cookie and session restore fails. (Also set in the backend image itself.) |
 
-Worth noting for anyone reproducing this setup: the backend's runtime dependencies (`express`, `cors`, `cookie-parser`, `json-server`, `jsonwebtoken`, `bcryptjs`, `dotenv`) were originally listed under `devDependencies` of the root package. `npm install` skips `devDependencies` when `NODE_ENV=production`, which broke the first deploy with `Cannot find package 'dotenv'`. The backend now has its own `server/package.json`, so its dependencies are installed independently of the frontend's.
+Worth noting for anyone reproducing this setup: the backend's runtime dependencies (`express`, `cors`, `cookie-parser`, `json-server`, `jsonwebtoken`, `bcryptjs`, `dotenv`) were originally listed under `devDependencies` of the root package. `npm install` skips `devDependencies` when `NODE_ENV=production`, which broke the first deploy with `Cannot find package 'dotenv'`. The backend now has its own `server/package.json`, so its dependencies are installed independently of the frontend's (and `dotenv` has since been replaced by Node's built-in `--env-file-if-exists`).
 
 ## Project status
 
@@ -136,12 +164,13 @@ Actively developed in phases, each scoped and closed before the next begins:
 - ✅ JWT + RBAC authentication
 - ✅ Standalone shell, Tailwind styling, dark mode
 - ✅ Form persistence, multi-page domain model, validation engine
-- ✅ Full test coverage across all layers — domain, application, infrastructure, and every presentation-layer component/facade (93 spec files, ~700 tests)
+- ✅ Full test coverage across all layers — domain, application, infrastructure, and every presentation-layer component/facade (95 spec files, 700+ tests)
 - ✅ Architecture cleanup, accessibility fixes, visual pass, dashboard
 - ✅ Account management: profile editing, change password, forgot/reset password
 - ✅ Backend deployed to Render, frontend to GitHub Pages, authenticated end-to-end across origins
-- ⬜ `npm audit` review (moderate/high advisories flagged, not yet triaged)
-- ⬜ `allowScripts` allowlist update for bumped `lmdb`/`esbuild` versions
+- ✅ Dependency security triage (`npm audit` reviewed by production relevance) and `allowScripts` allowlist
+- ✅ CI/CD with GitHub Actions, Prettier and ESLint enforced in the pipeline
+- ✅ Docker: containerized backend on Render, full local stack via Docker Compose, smoke-tested in CI
 
 ## Timeline
 
