@@ -1,0 +1,36 @@
+# dependencies & build output (rebuilt inside the image)
+
+node_modules
+dist
+.angular
+
+# VCS, CI, editor
+
+.git
+.github
+.vscode
+
+# separate service with its own image
+
+server
+
+# docker
+
+Dockerfile
+.dockerignore
+
+# tooling not needed for the build
+
+tsconfig.spec.json
+eslint.config.js
+.prettierrc.json
+.prettierignore
+.editorconfig
+.git*
+.nvmrc
+
+# docs, logs, secrets
+
+*.md
+_.log
+.env_
