@@ -76,7 +76,6 @@ describe('AuthState', () => {
             expect(perms).toContain(UserPermissionEnum.FormCreate);
             expect(perms).toContain(UserPermissionEnum.FormEdit);
             expect(perms).toContain(UserPermissionEnum.FormDelete);
-            expect(perms).toContain(UserPermissionEnum.FormGenerate);
             expect(perms).toContain(UserPermissionEnum.UserManage);
             expect(perms).toContain(UserPermissionEnum.SubmissionCreate);
         });
