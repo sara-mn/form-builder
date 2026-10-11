@@ -14,32 +14,35 @@ describe('app routes', () => {
         }
     });
 
-    it('should require FormCreate, FormEdit, or FormDelete permissions for the form designer route', () => {
+    it('should require FormEdit for the form designer route', () => {
         const designerRoute = children.find((r) => r.path === 'forms/:id/edit');
-        expect(designerRoute?.data?.['permissions']).toEqual(
-            expect.arrayContaining([
-                UserPermissionEnum.FormCreate,
-                UserPermissionEnum.FormEdit,
-                UserPermissionEnum.FormDelete
-            ])
-        );
+        expect(designerRoute?.data?.['permissions']).toEqual([UserPermissionEnum.FormEdit]);
     });
 
-    it('should require FormGenerate or FormCreate permissions for the form renderer route', () => {
+    it('should require SubmissionCreate for the form renderer route', () => {
         const rendererRoute = children.find((r) => r.path === 'forms/:id/fill');
-        expect(rendererRoute?.data?.['permissions']).toEqual(
-            expect.arrayContaining([UserPermissionEnum.FormGenerate, UserPermissionEnum.FormCreate])
-        );
+        expect(rendererRoute?.data?.['permissions']).toEqual([UserPermissionEnum.SubmissionCreate]);
     });
 
-    it('should require no specific permissions for the dashboard route (any authenticated user)', () => {
+    it('should require FormView for the dashboard route', () => {
         const dashboardRoute = children.find((r) => r.path === '');
-        expect(dashboardRoute?.data?.['permissions']).toEqual([]);
+        expect(dashboardRoute?.data?.['permissions']).toEqual([UserPermissionEnum.FormView]);
     });
 
-    it('should require no specific permissions for the form-list route (any authenticated user)', () => {
+    it('should require FormView for the form-list route', () => {
         const listRoute = children.find((r) => r.path === 'form-list');
-        expect(listRoute?.data?.['permissions']).toEqual([]);
+        expect(listRoute?.data?.['permissions']).toEqual([UserPermissionEnum.FormView]);
+    });
+
+    it('should require SubmissionView for the submissions route', () => {
+        const submissionsRoute = children.find((r) => r.path === 'forms/:id/submissions');
+        expect(submissionsRoute?.data?.['permissions']).toEqual([UserPermissionEnum.SubmissionView]);
+    });
+
+    it('should name at most one permission per route, so "all of" versus "any of" never matters', () => {
+        for (const child of children) {
+            expect((child.data?.['permissions'] as UserPermissionEnum[]).length).toBeLessThanOrEqual(1);
+        }
     });
 
     it('should have public routes for login, register, and unauthorized without guards', () => {
