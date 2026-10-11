@@ -7,7 +7,7 @@
             @for (item of recent(); track item.form.id) {
                 <li>
                     <a
-                        [routerLink]="['/form-designer', item.form.id]"
+                        [routerLink]="['/forms', item.form.id, 'edit']"
                         class="-mx-2 flex items-center justify-between gap-4 rounded-lg px-2 py-3 no-underline transition-colors hover:bg-surface-50 dark:hover:bg-surface-800"
                     >
                         <div class="min-w-0">

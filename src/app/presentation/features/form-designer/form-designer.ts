@@ -28,6 +28,7 @@ export class FormDesigner {
     editingField = signal<FieldConfigModel | null>(null);
     isCloning = signal<boolean>(false);
     isSaving = signal<boolean>(false);
+    saveError = signal<string | null>(null);
 
     constructor() {
         effect(() => {
@@ -50,8 +51,12 @@ export class FormDesigner {
 
     async onSave(): Promise<void> {
         this.isSaving.set(true);
+        this.saveError.set(null);
         try {
             await this.facade.saveForm();
+            await this.router.navigate(['/form-list']);
+        } catch (error) {
+            this.saveError.set(error instanceof Error ? error.message : 'Failed to save the form. Please try again.');
         } finally {
             this.isSaving.set(false);
         }
