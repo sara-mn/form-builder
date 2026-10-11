@@ -29,7 +29,7 @@ export default function createAuthRouter(db, isProduction = false) {
     };
 
     router.post('/register', async (req, res) => {
-        const { email, password, name, mobile, roles } = req.body;
+        const { email, password, name, mobile } = req.body;
 
         if (!email || !password) {
             return res.status(400).json({ message: 'Email and password are required' });
@@ -45,7 +45,7 @@ export default function createAuthRouter(db, isProduction = false) {
             email,
             password: hashedPassword,
             name: name || email,
-            roles: roles || ['viewer'],
+            roles: ['viewer'],
             profile: { avatarUrl: '', bio: '', mobile: mobile || '' }
         };
 
