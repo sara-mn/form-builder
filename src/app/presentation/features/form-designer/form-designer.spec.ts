@@ -7,7 +7,7 @@ import { FormModel } from '@app/domain/form/models/form.model';
 import { FormPageModel } from '@app/domain/form/models/form-page.model';
 import { FieldConfigModel, FormStatusEnum } from '@app/domain';
 import { FieldTypeEnum } from '@domain/form/enums/field-type.enum';
-
+import { By } from '@angular/platform-browser';
 describe('FormDesigner', () => {
     let component: FormDesigner;
     let fixture: ComponentFixture<FormDesigner>;
@@ -150,13 +150,41 @@ describe('FormDesigner', () => {
     });
 
     describe('onSave', () => {
-        it('should call facade.saveForm and toggle isSaving', async () => {
+        it('should save, toggle isSaving and navigate to the form list', async () => {
             await setup();
+            const navigateSpy = vi.spyOn(router, 'navigate').mockResolvedValue(true);
+
             const savePromise = component.onSave();
             expect(component.isSaving()).toBe(true);
             await savePromise;
+
             expect(facade.saveForm).toHaveBeenCalled();
+            expect(navigateSpy).toHaveBeenCalledWith(['/form-list']);
             expect(component.isSaving()).toBe(false);
+        });
+
+        it('should stay on the page and show the error when saving fails', async () => {
+            await setup();
+            (facade.saveForm as ReturnType<typeof vi.fn>).mockRejectedValue(new Error('Form is locked'));
+            const navigateSpy = vi.spyOn(router, 'navigate').mockResolvedValue(true);
+
+            await component.onSave();
+            fixture.detectChanges();
+
+            expect(navigateSpy).not.toHaveBeenCalled();
+            expect(component.isSaving()).toBe(false);
+            const errorEl = fixture.debugElement.query(By.css('[data-testid="save-error-message"]'));
+            expect((errorEl.nativeElement as HTMLElement).textContent).toContain('Form is locked');
+        });
+
+        it('should show a generic message when the failure is not an Error', async () => {
+            await setup();
+            (facade.saveForm as ReturnType<typeof vi.fn>).mockRejectedValue({ status: 500 });
+            vi.spyOn(router, 'navigate').mockResolvedValue(true);
+
+            await component.onSave();
+
+            expect(component.saveError()).toBe('Failed to save the form. Please try again.');
         });
     });
 

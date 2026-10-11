@@ -24,6 +24,10 @@
             </button>
         </div>
 
+        @if (saveError(); as message) {
+            <p class="mb-4 text-sm text-red-500" role="alert" data-testid="save-error-message">{{ message }}</p>
+        }
+
         <div class="flex gap-6">
             <app-page-sidebar
                 [pages]="currentForm.pages"
