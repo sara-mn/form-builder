@@ -43,6 +43,15 @@ const jsonServerRouter = jsonServer.router(dbPath);
 const db = jsonServerRouter.db; // lowdb instance — shared with auth routes
 
 app.use('/api/auth', express.json(), createAuthRouter(db, isProduction));
+
+// User records (password hashes, reset tokens) must never be served by the generic
+// json-server router; they are reachable only through the /api/auth routes.
+// '/db' is json-server's built-in full-database dump, which includes the users.
+const blockedJsonServerPaths = ['/users', '/db'];
+app.use(blockedJsonServerPaths, (_req, res) => {
+    res.status(404).json({ message: 'Not found' });
+});
+
 app.use(jsonServerRouter);
 
 const port = process.env.PORT || 3000;
