@@ -53,4 +53,13 @@ describe('StatsWidget', () => {
             .nativeElement as HTMLElement;
         expect(el.textContent).toContain('27');
     });
+
+    it('should hide submission-based tiles when showSubmissionStats is false', () => {
+        fixture.componentRef.setInput('showSubmissionStats', false);
+        fixture.detectChanges();
+
+        expect(fixture.debugElement.query(By.css('[data-testid="stats-locked-forms"]'))).toBeNull();
+        expect(fixture.debugElement.query(By.css('[data-testid="stats-total-submissions"]'))).toBeNull();
+        expect(fixture.debugElement.query(By.css('[data-testid="stats-total-forms"]'))).not.toBeNull();
+    });
 });
