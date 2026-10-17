@@ -63,4 +63,12 @@ describe('DashboardFacade', () => {
 
         expect(facade.stats().lockedForms).toBe(1);
     });
+
+    it('should pass the current user permissions to the use case', async () => {
+        (useCase.execute as ReturnType<typeof vi.fn>).mockResolvedValue([]);
+
+        await facade.loadStats();
+
+        expect(useCase.execute).toHaveBeenCalledWith([]);
+    });
 });

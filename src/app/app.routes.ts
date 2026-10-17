@@ -10,28 +10,29 @@ export const routes: Routes = [
         path: '',
         component: Shell,
         children: [
-            { path: '', data: { permissions: [] }, canActivate: [authGuard, permissionGuard], component: Dashboard },
+            {
+                path: '',
+                data: { permissions: [UserPermissionEnum.FormView] },
+                canActivate: [authGuard, permissionGuard],
+                component: Dashboard
+            },
             {
                 path: 'forms/:id/edit',
                 data: {
-                    permissions: [
-                        UserPermissionEnum.FormCreate,
-                        UserPermissionEnum.FormEdit,
-                        UserPermissionEnum.FormDelete
-                    ]
+                    permissions: [UserPermissionEnum.FormEdit]
                 },
                 canActivate: [authGuard, permissionGuard],
                 loadComponent: () => import('@features/form-designer/form-designer').then((m) => m.FormDesigner)
             },
             {
                 path: 'form-list',
-                data: { permissions: [] },
+                data: { permissions: [UserPermissionEnum.FormView] },
                 canActivate: [authGuard, permissionGuard],
                 loadComponent: () => import('@features/form-list/form-list').then((m) => m.FormList)
             },
             {
                 path: 'forms/:id/fill',
-                data: { permissions: [UserPermissionEnum.FormGenerate, UserPermissionEnum.FormCreate] },
+                data: { permissions: [UserPermissionEnum.SubmissionCreate] },
                 canActivate: [authGuard, permissionGuard],
                 loadComponent: () => import('@features/form-renderer/form-renderer').then((m) => m.FormRenderer)
             },

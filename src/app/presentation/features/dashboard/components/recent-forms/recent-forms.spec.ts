@@ -36,7 +36,7 @@ describe('RecentForms', () => {
         fixture.componentRef.setInput('items', [buildItem('f1', '2025-01-01T00:00:00.000Z')]);
         fixture.detectChanges();
 
-        const link = fixture.debugElement.query(By.css('a')).nativeElement as HTMLAnchorElement;
+        const link = fixture.debugElement.query(By.css('li a')).nativeElement as HTMLAnchorElement;
         expect(link.getAttribute('href')).toBe('/forms/f1/edit');
     });
 
@@ -45,8 +45,33 @@ describe('RecentForms', () => {
         fixture.componentRef.setInput('items', items);
         fixture.detectChanges();
 
-        const links = fixture.debugElement.queryAll(By.css('a'));
+        const links = fixture.debugElement.queryAll(By.css('li a'));
         expect(links.length).toBe(5);
         expect((links[0].nativeElement as HTMLAnchorElement).getAttribute('href')).toBe('/forms/f6/edit');
+    });
+
+    it('should link rows to the fill page when the user cannot edit', () => {
+        fixture.componentRef.setInput('items', [buildItem('f1', '2025-01-01T00:00:00.000Z')]);
+        fixture.componentRef.setInput('canEdit', false);
+        fixture.detectChanges();
+
+        const link = fixture.debugElement.query(By.css('li a')).nativeElement as HTMLAnchorElement;
+        expect(link.getAttribute('href')).toBe('/forms/f1/fill');
+    });
+
+    it('should hide submission counts when showSubmissionCounts is false', () => {
+        fixture.componentRef.setInput('items', [buildItem('f1', '2025-01-01T00:00:00.000Z')]);
+        fixture.componentRef.setInput('showSubmissionCounts', false);
+        fixture.detectChanges();
+
+        expect((fixture.nativeElement as HTMLElement).textContent).not.toContain('submissions');
+    });
+
+    it('should link to the full form list', () => {
+        fixture.componentRef.setInput('items', []);
+        fixture.detectChanges();
+
+        const viewAll = fixture.debugElement.query(By.css('a[href="/form-list"]'));
+        expect(viewAll).not.toBeNull();
     });
 });

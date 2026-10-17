@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { Guid } from '@app/domain/shared/types/guid.type';
 import { TableModule } from 'primeng/table';
@@ -22,9 +22,13 @@ export class FormList implements OnInit {
     private facade = inject(FormListFacade);
     private router = inject(Router);
     private confirmationService = inject(ConfirmationService);
-    readonly authState = inject(AuthState);
+    private readonly authState = inject(AuthState);
     readonly FormStatusEnum = FormStatusEnum;
-    readonly userPermissionEnum = UserPermissionEnum;
+    readonly canCreate = computed(() => this.authState.hasPermission(UserPermissionEnum.FormCreate));
+    readonly canEdit = computed(() => this.authState.hasPermission(UserPermissionEnum.FormEdit));
+    readonly canDelete = computed(() => this.authState.hasPermission(UserPermissionEnum.FormDelete));
+    readonly canFill = computed(() => this.authState.hasPermission(UserPermissionEnum.SubmissionCreate));
+    readonly canViewSubmissions = computed(() => this.authState.hasPermission(UserPermissionEnum.SubmissionView));
     items = this.facade.formListItems;
 
     isNewFormDialogOpen = signal<boolean>(false);

@@ -162,37 +162,80 @@ describe('FormList', () => {
         });
     });
 
-    describe('delete permission', () => {
-        it('disables the Delete button when the user lacks FormDelete permission', () => {
-            setup([mockItem]);
+    describe('permission gating', () => {
+        const lockedPublishedItem: FormListItem = {
+            form: { ...mockForm, status: FormStatusEnum.Published },
+            submissionCount: 2
+        };
+
+        function loginAs(role: UserRoleEnum): void {
             const authState = fixture.debugElement.injector.get(AuthState);
             authState.setUser({
                 id: 'u1',
-                email: 'viewer@example.com',
-                name: 'Viewer',
-                roles: [UserRoleEnum.Viewer],
+                email: 'user@example.com',
+                name: 'User',
+                roles: [role],
                 profile: { avatarUrl: '', bio: '' }
             });
             fixture.detectChanges();
+        }
 
-            const deleteButton = fixture.nativeElement.querySelector('button[severity="danger"]') as HTMLButtonElement;
-            expect(deleteButton.disabled).toBe(true);
+        function buttonLabels(): string[] {
+            const buttons = fixture.nativeElement.querySelectorAll('button') as NodeListOf<HTMLButtonElement>;
+            return Array.from(buttons).map((button) => (button.textContent ?? '').trim());
+        }
+
+        function headerLabels(): string[] {
+            const headers = fixture.nativeElement.querySelectorAll('th') as NodeListOf<HTMLElement>;
+            return Array.from(headers).map((header) => (header.textContent ?? '').trim());
+        }
+
+        it('shows a Viewer only the Fill action', () => {
+            setup([lockedPublishedItem]);
+            loginAs(UserRoleEnum.Viewer);
+
+            const labels = buttonLabels();
+            expect(labels).toContain('Fill');
+            for (const hidden of ['+ New Form', 'Edit', 'Submissions', 'Clone', 'Delete']) {
+                expect(labels).not.toContain(hidden);
+            }
         });
 
-        it('enables the Delete button when the user has FormDelete permission', () => {
-            setup([mockItem]);
-            const authState = fixture.debugElement.injector.get(AuthState);
-            authState.setUser({
-                id: 'u1',
-                email: 'admin@example.com',
-                name: 'Admin',
-                roles: [UserRoleEnum.Admin],
-                profile: { avatarUrl: '', bio: '' }
-            });
-            fixture.detectChanges();
+        it('shows an Editor every action except Delete', () => {
+            setup([lockedPublishedItem]);
+            loginAs(UserRoleEnum.Editor);
 
-            const deleteButton = fixture.nativeElement.querySelector('button[severity="danger"]') as HTMLButtonElement;
-            expect(deleteButton.disabled).toBe(false);
+            const labels = buttonLabels();
+            for (const visible of ['+ New Form', 'Edit', 'Submissions', 'Clone', 'Fill']) {
+                expect(labels).toContain(visible);
+            }
+            expect(labels).not.toContain('Delete');
+        });
+
+        it('shows an Admin every action', () => {
+            setup([lockedPublishedItem]);
+            loginAs(UserRoleEnum.Admin);
+
+            const labels = buttonLabels();
+            for (const visible of ['+ New Form', 'Edit', 'Submissions', 'Clone', 'Fill', 'Delete']) {
+                expect(labels).toContain(visible);
+            }
+        });
+
+        it('hides submission counts and the Locked badge from a Viewer', () => {
+            setup([lockedPublishedItem]);
+            loginAs(UserRoleEnum.Viewer);
+
+            expect(headerLabels()).not.toContain('Submissions');
+            expect(fixture.nativeElement.textContent).not.toContain('Locked');
+        });
+
+        it('shows submission counts and the Locked badge to an Admin', () => {
+            setup([lockedPublishedItem]);
+            loginAs(UserRoleEnum.Admin);
+
+            expect(headerLabels()).toContain('Submissions');
+            expect(fixture.nativeElement.textContent).toContain('Locked');
         });
     });
 

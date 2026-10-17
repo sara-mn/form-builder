@@ -10,6 +10,7 @@ interface StatTile {
     icon: string;
     colorClasses: string;
     testId: string;
+    requiresSubmissionView: boolean;
 }
 
 @Component({
@@ -21,17 +22,19 @@ interface StatTile {
 })
 export class StatsWidget {
     readonly stats = input.required<DashboardStats>();
+    readonly showSubmissionStats = input<boolean>(true);
 
     protected readonly tiles = computed<StatTile[]>(() => {
         const s = this.stats();
-        return [
+        const tiles: StatTile[] = [
             {
                 label: 'Total Forms',
                 value: s.totalForms,
                 sublabel: `${s.draftForms} draft`,
                 icon: 'file',
                 colorClasses: '...',
-                testId: 'stats-total-forms'
+                testId: 'stats-total-forms',
+                requiresSubmissionView: false
             },
             {
                 label: 'Published',
@@ -39,7 +42,8 @@ export class StatsWidget {
                 sublabel: 'visible to viewers',
                 icon: 'check-circle',
                 colorClasses: '...',
-                testId: 'stats-published-forms'
+                testId: 'stats-published-forms',
+                requiresSubmissionView: false
             },
             {
                 label: 'Locked',
@@ -47,7 +51,8 @@ export class StatsWidget {
                 sublabel: 'have submissions',
                 icon: 'lock',
                 colorClasses: '...',
-                testId: 'stats-locked-forms'
+                testId: 'stats-locked-forms',
+                requiresSubmissionView: true
             },
             {
                 label: 'Submissions',
@@ -55,8 +60,10 @@ export class StatsWidget {
                 sublabel: 'across all forms',
                 icon: 'inbox',
                 colorClasses: '...',
-                testId: 'stats-total-submissions'
+                testId: 'stats-total-submissions',
+                requiresSubmissionView: true
             }
         ];
+        return tiles.filter((tile) => this.showSubmissionStats() || !tile.requiresSubmissionView);
     });
 }
