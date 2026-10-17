@@ -105,6 +105,7 @@ Seeded accounts:
 | Email | Password | Role |
 |---|---|---|
 | admin@example.com | admin123 | Admin |
+| editor@example.com | editor123 | Editor |
 | user@example.com | user123 | Viewer |
 
 ### Test
