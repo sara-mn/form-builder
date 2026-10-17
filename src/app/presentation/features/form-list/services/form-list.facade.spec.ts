@@ -9,7 +9,7 @@ import { DeleteFormUseCase } from '@app/application/form/delete-form.use-case';
 import { CloneFormUseCase } from '@app/application/form/clone-form.use-case';
 import { AuthState } from '@app/presentation/core/services/auth-state';
 import { FormModel } from '@app/domain/form/models/form.model';
-import { FormStatusEnum } from '@app/domain';
+import { FormStatusEnum, UserRoleEnum } from '@app/domain';
 import { User } from '@app/domain/user/models/user.model';
 
 describe('FormListFacade', () => {
@@ -77,7 +77,7 @@ describe('FormListFacade', () => {
         });
 
         it('should create the form with the current owner id and reload the list', async () => {
-            authState.setUser({ id: 'user1' } as User);
+            authState.setUser({ id: 'user1', roles: [] } as unknown as User);
             createFormUseCase.execute.mockResolvedValue(mockForm);
             getFormsWithSubmissionCountsUseCase.execute.mockResolvedValue([mockListItem]);
 
@@ -110,7 +110,7 @@ describe('FormListFacade', () => {
         });
 
         it('should clone the form with current owner id and reload the list', async () => {
-            authState.setUser({ id: 'user1' } as User);
+            authState.setUser({ id: 'user1', roles: [] } as unknown as User);
             const clonedForm = { ...mockForm, id: 'f2' };
             cloneFormUseCase.execute.mockResolvedValue(clonedForm);
             getFormsWithSubmissionCountsUseCase.execute.mockResolvedValue([
@@ -124,5 +124,13 @@ describe('FormListFacade', () => {
             expect(getFormsWithSubmissionCountsUseCase.execute).toHaveBeenCalledTimes(1);
             expect(result).toEqual(clonedForm);
         });
+    });
+    it('should pass the current user permissions to the use case', async () => {
+        getFormsWithSubmissionCountsUseCase.execute.mockResolvedValue([]);
+        authState.setUser({ id: 'user1', roles: [UserRoleEnum.Viewer] } as unknown as User);
+
+        await service.loadForms();
+
+        expect(getFormsWithSubmissionCountsUseCase.execute).toHaveBeenCalledWith(authState.permissions());
     });
 });

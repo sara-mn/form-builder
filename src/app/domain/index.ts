@@ -47,3 +47,6 @@ export * from './form/validation/cross-field-validators';
 export * from './form/validation/field-validator-runner';
 export * from './form/validation/field-validators';
 export * from './form/validation/form-validation.service';
+
+//rules
+export * from './form/rules/form-visibility';

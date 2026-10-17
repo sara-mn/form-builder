@@ -22,7 +22,7 @@ export class FormListFacade {
     readonly formListItems: Signal<FormListItem[]> = this._formListItems.asReadonly();
 
     async loadForms(): Promise<void> {
-        const items = await this.getFormsWithSubmissionCountsUseCase.execute();
+        const items = await this.getFormsWithSubmissionCountsUseCase.execute(this.authState.permissions());
         this._formListItems.set(items);
     }
 

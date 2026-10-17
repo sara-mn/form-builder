@@ -6,6 +6,10 @@ import {
     createFakeForm,
     createFakeSubmission
 } from '../test-utils';
+import { FormStatusEnum, UserPermissionEnum } from '@app/domain';
+
+const canEdit = [UserPermissionEnum.FormEdit];
+const cannotEdit = [UserPermissionEnum.FormView];
 
 describe('GetFormsWithSubmissionCountsUseCase', () => {
     function setup() {
@@ -28,7 +32,7 @@ describe('GetFormsWithSubmissionCountsUseCase', () => {
             createFakeSubmission({ id: 's3', formId: 'form-b' })
         ]);
 
-        const result = await useCase.execute();
+        const result = await useCase.execute(canEdit);
 
         expect(result).toEqual([
             { form: formA, submissionCount: 2 },
@@ -43,7 +47,7 @@ describe('GetFormsWithSubmissionCountsUseCase', () => {
         formRepository.getAllForms.mockResolvedValue([form]);
         submissionRepository.getAllSubmissions.mockResolvedValue([]);
 
-        const result = await useCase.execute();
+        const result = await useCase.execute(canEdit);
 
         expect(result).toEqual([{ form, submissionCount: 0 }]);
     });
@@ -53,9 +57,32 @@ describe('GetFormsWithSubmissionCountsUseCase', () => {
         formRepository.getAllForms.mockResolvedValue([]);
         submissionRepository.getAllSubmissions.mockResolvedValue([]);
 
-        await useCase.execute();
+        await useCase.execute(canEdit);
 
         expect(formRepository.getAllForms).toHaveBeenCalledTimes(1);
         expect(submissionRepository.getAllSubmissions).toHaveBeenCalledTimes(1);
+    });
+
+    it('hides draft forms from a user who cannot edit forms', async () => {
+        const { useCase, formRepository, submissionRepository } = setup();
+        const draft = createFakeForm({ id: 'draft', status: FormStatusEnum.Draft });
+        const published = createFakeForm({ id: 'published', status: FormStatusEnum.Published });
+        formRepository.getAllForms.mockResolvedValue([draft, published]);
+        submissionRepository.getAllSubmissions.mockResolvedValue([]);
+
+        const result = await useCase.execute(cannotEdit);
+
+        expect(result).toEqual([{ form: published, submissionCount: 0 }]);
+    });
+
+    it('shows draft forms to a user who can edit forms', async () => {
+        const { useCase, formRepository, submissionRepository } = setup();
+        const draft = createFakeForm({ id: 'draft', status: FormStatusEnum.Draft });
+        formRepository.getAllForms.mockResolvedValue([draft]);
+        submissionRepository.getAllSubmissions.mockResolvedValue([]);
+
+        const result = await useCase.execute(canEdit);
+
+        expect(result).toEqual([{ form: draft, submissionCount: 0 }]);
     });
 });

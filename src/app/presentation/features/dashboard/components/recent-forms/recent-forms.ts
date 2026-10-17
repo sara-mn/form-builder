@@ -12,6 +12,12 @@ import { FormStatusEnum } from '@app/domain';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RecentForms {
+    readonly canEdit = input<boolean>(true);
+    readonly showSubmissionCounts = input<boolean>(true);
+
+    protected linkFor(formId: string): string[] {
+        return this.canEdit() ? ['/forms', formId, 'edit'] : ['/forms', formId, 'fill'];
+    }
     readonly items = input.required<FormListItem[]>();
     protected readonly formStatusEnum = FormStatusEnum;
 

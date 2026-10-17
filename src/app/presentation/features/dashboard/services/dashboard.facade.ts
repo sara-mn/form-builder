@@ -4,6 +4,7 @@ import {
     GetFormsWithSubmissionCountsUseCase
 } from '@app/application/form/get-forms-with-submission-counts.use-case';
 import { FormStatusEnum } from '@app/domain';
+import { AuthState } from '@app/presentation/core/services/auth-state';
 
 export interface DashboardStats {
     totalForms: number;
@@ -16,7 +17,7 @@ export interface DashboardStats {
 @Service()
 export class DashboardFacade {
     private getFormsWithSubmissionCountsUseCase = inject(GetFormsWithSubmissionCountsUseCase);
-
+    private authState = inject(AuthState);
     private readonly _formListItems = signal<FormListItem[]>([]);
     readonly formListItems: Signal<FormListItem[]> = this._formListItems.asReadonly();
 
@@ -32,7 +33,7 @@ export class DashboardFacade {
     });
 
     async loadStats(): Promise<void> {
-        const items = await this.getFormsWithSubmissionCountsUseCase.execute();
+        const items = await this.getFormsWithSubmissionCountsUseCase.execute(this.authState.permissions());
         this._formListItems.set(items);
     }
 }

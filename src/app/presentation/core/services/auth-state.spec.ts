@@ -76,8 +76,8 @@ describe('AuthState', () => {
             expect(perms).toContain(UserPermissionEnum.FormCreate);
             expect(perms).toContain(UserPermissionEnum.FormEdit);
             expect(perms).toContain(UserPermissionEnum.FormDelete);
-            expect(perms).toContain(UserPermissionEnum.FormGenerate);
             expect(perms).toContain(UserPermissionEnum.UserManage);
+            expect(perms).toContain(UserPermissionEnum.SubmissionCreate);
         });
 
         it('should return limited permissions for the Editor role', () => {
@@ -87,12 +87,13 @@ describe('AuthState', () => {
             expect(perms).toContain(UserPermissionEnum.FormCreate);
             expect(perms).not.toContain(UserPermissionEnum.FormDelete);
             expect(perms).not.toContain(UserPermissionEnum.UserManage);
+            expect(perms).toContain(UserPermissionEnum.SubmissionCreate);
         });
 
-        it('should return only FormView for the Viewer role', () => {
+        it('should return FormView and SubmissionCreate for the Viewer role', () => {
             service.setUser(makeUser([UserRoleEnum.Viewer]));
 
-            expect(service.permissions()).toEqual([UserPermissionEnum.FormView]);
+            expect(service.permissions()).toEqual([UserPermissionEnum.FormView, UserPermissionEnum.SubmissionCreate]);
         });
 
         it('should merge permissions across multiple roles without duplicates', () => {
