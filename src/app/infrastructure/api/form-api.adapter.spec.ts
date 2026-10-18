@@ -76,14 +76,14 @@ describe('FormApiAdapter', () => {
         expect(result).toEqual(createdForm);
     });
 
-    it('should PUT a partial update and return the updated form', async () => {
+    it('should PATCH a form with a partial update', async () => {
         const partialUpdate = { title: 'Updated Title' };
         const updatedForm = createFakeForm({ id: 'f1', title: 'Updated Title' });
 
         const resultPromise = adapter.updateForm('f1', partialUpdate);
 
         const req = httpMock.expectOne(`${formsUrl}/f1`);
-        expect(req.request.method).toBe('PUT');
+        expect(req.request.method).toBe('PATCH');
         expect(req.request.body).toEqual(partialUpdate);
 
         req.flush(updatedForm);
