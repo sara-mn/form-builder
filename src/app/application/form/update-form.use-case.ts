@@ -7,13 +7,17 @@ export class UpdateFormUseCase {
         private submissionRepository: SubmissionRepository
     ) {}
 
-    async execute(formId: string, changes: Partial<FormModel>): Promise<FormModel> {
+    async execute(formId: string, changes: Omit<Partial<FormModel>, 'status'>): Promise<FormModel> {
         const submissions = await this.submissionRepository.getSubmissionsByFormId(formId);
         if (submissions.length > 0) {
             throw new Error('Form is locked: cannot be edited after receiving submissions. Clone it instead.');
         }
 
-        const changedFields: FieldConfigModel[] = changes.pages?.flatMap((page) => page.fields) || [];
+        // The designer passes the whole form; status is stripped at runtime because the type alone
+        // cannot stop a FormModel object carrying it. Status changes go through Publish/UnpublishFormUseCase.
+        const { status: _status, ...structuralChanges } = changes as Partial<FormModel>;
+
+        const changedFields: FieldConfigModel[] = structuralChanges.pages?.flatMap((page) => page.fields) || [];
         const allValidators = changedFields.flatMap((field) => field.validators);
         allValidators.forEach((validator) => {
             const error = getValidatorConfigError(validator.type, validator.value);
@@ -22,6 +26,6 @@ export class UpdateFormUseCase {
             }
         });
 
-        return this.formRepository.updateForm(formId, changes);
+        return this.formRepository.updateForm(formId, structuralChanges);
     }
 }

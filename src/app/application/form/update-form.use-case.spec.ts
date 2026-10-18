@@ -9,7 +9,7 @@ import {
     createFakePage,
     createFakeFieldValidator
 } from '../test-utils';
-import { FieldValidatorTypeEnum, FieldTypeEnum } from '@app/domain';
+import { FieldValidatorTypeEnum, FieldTypeEnum, FormStatusEnum } from '@app/domain';
 
 describe('UpdateFormUseCase', () => {
     function setup() {
@@ -101,5 +101,18 @@ describe('UpdateFormUseCase', () => {
 
         expect(formRepository.updateForm).toHaveBeenCalledWith('f1', changes);
         expect(result.id).toBe('f1');
+    });
+
+    it('never changes the status: publishing has its own use cases', async () => {
+        const { useCase, formRepository, submissionRepository } = setup();
+        submissionRepository.getSubmissionsByFormId.mockResolvedValue([]);
+        formRepository.updateForm.mockResolvedValue(createFakeForm({ id: 'f1' }));
+        const wholeForm = createFakeForm({ id: 'f1', title: 'Edited', status: FormStatusEnum.Published });
+
+        await useCase.execute('f1', wholeForm);
+
+        const sentChanges = formRepository.updateForm.mock.calls[0][1];
+        expect(sentChanges).not.toHaveProperty('status');
+        expect(sentChanges).toHaveProperty('title', 'Edited');
     });
 });
