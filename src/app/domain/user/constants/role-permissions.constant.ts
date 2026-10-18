@@ -7,6 +7,7 @@ export const ROLE_PERMISSIONS: Record<UserRoleEnum, UserPermissionEnum[]> = {
         UserPermissionEnum.FormCreate,
         UserPermissionEnum.FormEdit,
         UserPermissionEnum.FormDelete,
+        UserPermissionEnum.FormPublish,
         UserPermissionEnum.SubmissionCreate,
         UserPermissionEnum.SubmissionView,
         UserPermissionEnum.UserManage
@@ -15,6 +16,7 @@ export const ROLE_PERMISSIONS: Record<UserRoleEnum, UserPermissionEnum[]> = {
         UserPermissionEnum.FormView,
         UserPermissionEnum.FormCreate,
         UserPermissionEnum.FormEdit,
+        UserPermissionEnum.FormPublish,
         UserPermissionEnum.SubmissionCreate,
         UserPermissionEnum.SubmissionView
     ],
