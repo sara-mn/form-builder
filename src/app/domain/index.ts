@@ -50,3 +50,4 @@ export * from './form/validation/form-validation.service';
 
 //rules
 export * from './form/rules/form-visibility';
+export * from './form/rules/form-publishing';
