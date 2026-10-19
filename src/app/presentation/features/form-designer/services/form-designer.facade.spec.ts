@@ -12,6 +12,8 @@ import { FieldConfigModel, FormStatusEnum } from '@app/domain';
 import { FieldTypeEnum } from '@domain/form/enums/field-type.enum';
 import { FieldValidatorTypeEnum, CrossFieldValidatorTypeEnum } from '@app/domain';
 import { User } from '@app/domain/user/models/user.model';
+import { UnpublishFormUseCase } from '@app/application/form/unpublish-form.use-case';
+import { PublishFormUseCase } from '@app/application/form/publish-form.use-case';
 
 describe('FormDesignerFacade', () => {
     let service: FormDesignerFacade;
@@ -21,6 +23,8 @@ describe('FormDesignerFacade', () => {
     let cloneFormUseCase: { execute: ReturnType<typeof vi.fn> };
     let getSubmissionsByFormId: { execute: ReturnType<typeof vi.fn> };
     let authState: AuthState;
+    let publishFormUseCase: { execute: ReturnType<typeof vi.fn> };
+    let unpublishFormUseCase: { execute: ReturnType<typeof vi.fn> };
 
     function makeField(overrides: Partial<FieldConfigModel> = {}): FieldConfigModel {
         return {
@@ -65,6 +69,8 @@ describe('FormDesignerFacade', () => {
         deleteFormUseCase = { execute: vi.fn() };
         cloneFormUseCase = { execute: vi.fn() };
         getSubmissionsByFormId = { execute: vi.fn() };
+        publishFormUseCase = { execute: vi.fn() };
+        unpublishFormUseCase = { execute: vi.fn() };
 
         TestBed.configureTestingModule({
             providers: [
@@ -72,7 +78,9 @@ describe('FormDesignerFacade', () => {
                 { provide: UpdateFormUseCase, useValue: updateFormUseCase },
                 { provide: DeleteFormUseCase, useValue: deleteFormUseCase },
                 { provide: CloneFormUseCase, useValue: cloneFormUseCase },
-                { provide: GetSubmissionsByFormIdUseCase, useValue: getSubmissionsByFormId }
+                { provide: GetSubmissionsByFormIdUseCase, useValue: getSubmissionsByFormId },
+                { provide: PublishFormUseCase, useValue: publishFormUseCase },
+                { provide: UnpublishFormUseCase, useValue: unpublishFormUseCase }
             ]
         });
         service = TestBed.inject(FormDesignerFacade);
@@ -371,6 +379,50 @@ describe('FormDesignerFacade', () => {
             service.removeFieldValidator('p1', 'field1', 'v1');
 
             expect(service.form()!.pages[0].fields[0].validators).toEqual([]);
+        });
+    });
+
+    describe('publishForm / unpublishForm', () => {
+        it('saves pending edits before publishing an editable form', async () => {
+            const form = makeForm([makePage({ fields: [makeField()] })]);
+            getFormByIdUseCase.execute.mockResolvedValue(form);
+            getSubmissionsByFormId.execute.mockResolvedValue([]);
+            await service.loadForm('f1');
+            updateFormUseCase.execute.mockResolvedValue(form);
+            const published = { ...form, status: FormStatusEnum.Published };
+            publishFormUseCase.execute.mockResolvedValue(published);
+
+            await service.publishForm();
+
+            expect(updateFormUseCase.execute).toHaveBeenCalledWith('f1', form);
+            expect(publishFormUseCase.execute).toHaveBeenCalledWith('f1');
+            expect(updateFormUseCase.execute.mock.invocationCallOrder[0]).toBeLessThan(
+                publishFormUseCase.execute.mock.invocationCallOrder[0]
+            );
+            expect(service.form()).toEqual(published);
+        });
+
+        it('does not publish when saving fails', async () => {
+            getFormByIdUseCase.execute.mockResolvedValue(makeForm([makePage({ fields: [makeField()] })]));
+            getSubmissionsByFormId.execute.mockResolvedValue([]);
+            await service.loadForm('f1');
+            updateFormUseCase.execute.mockRejectedValue(new Error('save failed'));
+
+            await expect(service.publishForm()).rejects.toThrow('save failed');
+            expect(publishFormUseCase.execute).not.toHaveBeenCalled();
+        });
+
+        it('only changes the status of a locked form', async () => {
+            const form = { ...makeForm(), status: FormStatusEnum.Published };
+            getFormByIdUseCase.execute.mockResolvedValue(form);
+            getSubmissionsByFormId.execute.mockResolvedValue([{ id: 's1' }]);
+            await service.loadForm('f1');
+            unpublishFormUseCase.execute.mockResolvedValue({ ...form, status: FormStatusEnum.Draft });
+
+            await service.unpublishForm();
+
+            expect(updateFormUseCase.execute).not.toHaveBeenCalled();
+            expect(unpublishFormUseCase.execute).toHaveBeenCalledWith('f1');
         });
     });
 });

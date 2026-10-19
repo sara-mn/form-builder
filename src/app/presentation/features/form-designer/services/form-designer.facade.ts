@@ -3,6 +3,8 @@ import { CloneFormUseCase } from '@app/application/form/clone-form.use-case';
 import { DeleteFormUseCase } from '@app/application/form/delete-form.use-case';
 import { GetFormByIdUseCase } from '@app/application/form/get-form-by-id.use-case';
 import { GetSubmissionsByFormIdUseCase } from '@app/application/form/get-submissions-by-form-id.use-case';
+import { PublishFormUseCase } from '@app/application/form/publish-form.use-case';
+import { UnpublishFormUseCase } from '@app/application/form/unpublish-form.use-case';
 import { UpdateFormUseCase } from '@app/application/form/update-form.use-case';
 import { FieldConfigModel, FieldValidatorConfigModel, FormModel, Guid } from '@app/domain';
 import { AuthState } from '@app/presentation/core/services/auth-state';
@@ -21,7 +23,27 @@ export class FormDesignerFacade {
     private authState = inject(AuthState);
     private cloneFormUseCase = inject(CloneFormUseCase);
     private getSubmissionsByFormId = inject(GetSubmissionsByFormIdUseCase);
+    private publishFormUseCase = inject(PublishFormUseCase);
+    private unpublishFormUseCase = inject(UnpublishFormUseCase);
 
+    /** Saves pending edits first while the form is still editable, then publishes. */
+    async publishForm(): Promise<void> {
+        await this.changeStatus((formId) => this.publishFormUseCase.execute(formId));
+    }
+
+    /** Saves pending edits first while the form is still editable, then unpublishes. */
+    async unpublishForm(): Promise<void> {
+        await this.changeStatus((formId) => this.unpublishFormUseCase.execute(formId));
+    }
+
+    private async changeStatus(change: (formId: Guid) => Promise<FormModel>): Promise<void> {
+        const form = this._form();
+        if (!form) return;
+        if (!this.isLocked()) {
+            await this.saveForm();
+        }
+        this._form.set(await change(form.id));
+    }
     async loadForm(formId: Guid): Promise<void> {
         const form = await this.getFormByIdUseCase.execute(formId);
         this._form.set(form);
