@@ -118,6 +118,14 @@ describe('FormRenderer', () => {
         expect(fixture.nativeElement.textContent).toContain('Please fill this out');
     });
 
+    it('should show a closed message instead of the form when it is not published', async () => {
+        await setup({ ...mockForm, status: FormStatusEnum.Draft });
+
+        const element = fixture.nativeElement as HTMLElement;
+        expect(element.querySelector('[data-testid="form-closed-message"]')).not.toBeNull();
+        expect(element.querySelector('p-stepper')).toBeNull();
+    });
+
     describe('isLastStep', () => {
         it('should be false when activeStep is not the last page', async () => {
             await setup();

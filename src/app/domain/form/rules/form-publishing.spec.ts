@@ -1,7 +1,8 @@
 import { describe, it, expect } from 'vitest';
 import { FormPageModel } from '../models/form-page.model';
 import { FieldConfigModel } from '../models/field-config.model';
-import { getPublishError } from './form-publishing';
+import { getPublishError, isOpenForSubmissions } from './form-publishing';
+import { FormStatusEnum } from '../enums/form-status.enum';
 
 describe('getPublishError', () => {
     const page = (fieldCount: number): FormPageModel => ({
@@ -22,5 +23,14 @@ describe('getPublishError', () => {
 
     it('should accept a form with a field on any page', () => {
         expect(getPublishError({ pages: [page(0), page(1)] })).toBeNull();
+    });
+});
+describe('isOpenForSubmissions', () => {
+    it('should accept submissions for a published form', () => {
+        expect(isOpenForSubmissions({ status: FormStatusEnum.Published })).toBe(true);
+    });
+
+    it('should reject submissions for a draft', () => {
+        expect(isOpenForSubmissions({ status: FormStatusEnum.Draft })).toBe(false);
     });
 });
