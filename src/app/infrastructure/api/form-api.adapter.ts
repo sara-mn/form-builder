@@ -25,10 +25,12 @@ export class FormApiAdapter implements FormRepository {
         const $res: Observable<FormModel> = this.httpClient.post<FormModel>(this.formsUrl, form);
         return lastValueFrom($res);
     }
+
     updateForm(formId: Guid, form: Partial<FormModel>): Promise<FormModel> {
-        const $res: Observable<FormModel> = this.httpClient.put<FormModel>(`${this.formsUrl}/${formId}`, form);
+        const $res: Observable<FormModel> = this.httpClient.patch<FormModel>(`${this.formsUrl}/${formId}`, form);
         return lastValueFrom($res);
     }
+
     deleteForm(formId: Guid): Promise<void> {
         const $res: Observable<void> = this.httpClient.delete<void>(`${this.formsUrl}/${formId}`);
         return lastValueFrom($res);

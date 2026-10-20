@@ -9,7 +9,7 @@ import {
     createFakeFieldValidator,
     createFakeSubmission
 } from '../test-utils';
-import { FormValidationService } from '@app/domain';
+import { FormStatusEnum, FormValidationService } from '@app/domain';
 import { FieldValidatorTypeEnum } from '@app/domain';
 
 describe('SubmitFormUseCase', () => {
@@ -38,7 +38,10 @@ describe('SubmitFormUseCase', () => {
                 createFakeFieldValidator({ type: FieldValidatorTypeEnum.Required, message: 'Email is required' })
             ]
         });
-        const form = createFakeForm({ pages: [createFakePage({ fields: [requiredField] })] });
+        const form = createFakeForm({
+            status: FormStatusEnum.Published,
+            pages: [createFakePage({ fields: [requiredField] })]
+        });
         formRepository.getFormById.mockResolvedValue(form);
 
         await expect(useCase.execute('f1', 'user-1', { email: '' })).rejects.toThrow('Email is required');
@@ -55,7 +58,10 @@ describe('SubmitFormUseCase', () => {
                 createFakeFieldValidator({ type: FieldValidatorTypeEnum.Required, message: 'Email is required' })
             ]
         });
-        const form = createFakeForm({ pages: [createFakePage({ fields: [requiredField] })] });
+        const form = createFakeForm({
+            status: FormStatusEnum.Published,
+            pages: [createFakePage({ fields: [requiredField] })]
+        });
         formRepository.getFormById.mockResolvedValue(form);
         submissionRepository.createSubmission.mockResolvedValue(createFakeSubmission({ id: 's1' }));
 
@@ -67,5 +73,14 @@ describe('SubmitFormUseCase', () => {
             answers: { email: 'test@example.com' }
         });
         expect(result.id).toBe('s1');
+    });
+
+    it('throws and does not persist when the form is not published', async () => {
+        const { useCase, formRepository, submissionRepository } = setup();
+        submissionRepository.getSubmission.mockResolvedValue(null);
+        formRepository.getFormById.mockResolvedValue(createFakeForm({ status: FormStatusEnum.Draft }));
+
+        await expect(useCase.execute('f1', 'user-1', {})).rejects.toThrow('This form is not accepting submissions.');
+        expect(submissionRepository.createSubmission).not.toHaveBeenCalled();
     });
 });

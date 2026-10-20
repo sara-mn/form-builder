@@ -72,6 +72,7 @@ describe('AuthState', () => {
             service.setUser(makeUser([UserRoleEnum.Admin]));
 
             const perms = service.permissions();
+            expect(perms).toContain(UserPermissionEnum.FormPublish);
             expect(perms).toContain(UserPermissionEnum.FormView);
             expect(perms).toContain(UserPermissionEnum.FormCreate);
             expect(perms).toContain(UserPermissionEnum.FormEdit);
@@ -84,6 +85,7 @@ describe('AuthState', () => {
             service.setUser(makeUser([UserRoleEnum.Editor]));
 
             const perms = service.permissions();
+            expect(perms).toContain(UserPermissionEnum.FormPublish);
             expect(perms).toContain(UserPermissionEnum.FormCreate);
             expect(perms).not.toContain(UserPermissionEnum.FormDelete);
             expect(perms).not.toContain(UserPermissionEnum.UserManage);

@@ -5,9 +5,10 @@ import { FormDesigner } from './form-designer';
 import { FormDesignerFacade } from './services/form-designer.facade';
 import { FormModel } from '@app/domain/form/models/form.model';
 import { FormPageModel } from '@app/domain/form/models/form-page.model';
-import { FieldConfigModel, FormStatusEnum } from '@app/domain';
+import { FieldConfigModel, FormStatusEnum, User, UserRoleEnum } from '@app/domain';
 import { FieldTypeEnum } from '@domain/form/enums/field-type.enum';
 import { By } from '@angular/platform-browser';
+import { AuthState } from '@app/presentation/core/services/auth-state';
 describe('FormDesigner', () => {
     let component: FormDesigner;
     let fixture: ComponentFixture<FormDesigner>;
@@ -24,6 +25,8 @@ describe('FormDesigner', () => {
         | 'addField'
         | 'updateField'
         | 'deleteField'
+        | 'publishForm'
+        | 'unpublishForm'
     >;
     let router: Router;
     let formSignal: WritableSignal<FormModel | null>;
@@ -73,6 +76,8 @@ describe('FormDesigner', () => {
             loadForm: vi.fn().mockReturnValue(loadFormPromise),
             saveForm: vi.fn().mockResolvedValue(undefined),
             cloneForm: vi.fn(),
+            publishForm: vi.fn().mockResolvedValue(undefined),
+            unpublishForm: vi.fn().mockResolvedValue(undefined),
             updateMetadata: vi.fn().mockImplementation((title: string, description: string) => {
                 const current = formSignal();
                 if (current) formSignal.set({ ...current, title, description });
@@ -319,6 +324,57 @@ describe('FormDesigner', () => {
             component.selectedPageId.set(null);
             component.onFieldDeleteRequested(mockField);
             expect(facade.deleteField).not.toHaveBeenCalled();
+        });
+    });
+
+    describe('publish actions', () => {
+        const formWithField: FormModel = { ...mockForm, pages: [{ ...page1, fields: [mockField] }] };
+
+        function loginAsAdmin(): void {
+            TestBed.inject(AuthState).setUser({ id: 'u1', roles: [UserRoleEnum.Admin] } as unknown as User);
+            fixture.detectChanges();
+        }
+
+        function statusButton(): HTMLButtonElement | null {
+            return (fixture.nativeElement as HTMLElement).querySelector('[data-testid="status-action"]');
+        }
+
+        it('hides the publish action from users without FormPublish', async () => {
+            await setup(formWithField);
+            expect(statusButton()).toBeNull();
+        });
+
+        it('offers Save and publish on an editable draft and returns to the list', async () => {
+            await setup(formWithField);
+            loginAsAdmin();
+            const navigateSpy = vi.spyOn(router, 'navigate').mockResolvedValue(true);
+
+            expect(statusButton()?.textContent?.trim()).toBe('Save and publish');
+            await component.onStatusAction();
+
+            expect(facade.publishForm).toHaveBeenCalled();
+            expect(navigateSpy).toHaveBeenCalledWith(['/form-list']);
+        });
+
+        it('disables publishing and explains why when the form has no fields', async () => {
+            await setup(mockForm);
+            loginAsAdmin();
+
+            expect(statusButton()?.disabled).toBe(true);
+            expect((fixture.nativeElement as HTMLElement).textContent).toContain(
+                'Add at least one field before publishing.'
+            );
+        });
+
+        it('offers only Unpublish on a locked published form', async () => {
+            await setup({ ...formWithField, status: FormStatusEnum.Published }, true);
+            loginAsAdmin();
+            vi.spyOn(router, 'navigate').mockResolvedValue(true);
+
+            expect(statusButton()?.textContent?.trim()).toBe('Unpublish');
+            await component.onStatusAction();
+
+            expect(facade.unpublishForm).toHaveBeenCalled();
         });
     });
 });

@@ -4,7 +4,7 @@ import { StepperModule } from 'primeng/stepper';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { AlreadySubmittedBanner } from './components/already-submitted-banner/already-submitted-banner';
 import { DynamicField } from './components/dynamic-field/dynamic-field';
-import { Guid } from '@app/domain';
+import { Guid, isOpenForSubmissions } from '@app/domain';
 import { FormRendererFacade } from './services/form-renderer.facade';
 import { DynamicFormBuilderService } from './services/dynamic-form-builder.service';
 
@@ -28,7 +28,10 @@ export class FormRenderer {
     submitError = signal<string | null>(null);
 
     isLastStep = computed(() => this.activeStep() === this.pageGroups().length);
-
+    isOpen = computed(() => {
+        const form = this.form();
+        return !!form && isOpenForSubmissions(form);
+    });
     constructor() {
         effect(() => {
             const formId = this.id();

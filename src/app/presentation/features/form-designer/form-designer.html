@@ -12,16 +12,36 @@
                 [disabled]="isLocked()"
                 (metadataChanged)="onMetadataChanged($event)"
             />
-            <button
-                pButton
-                type="button"
-                severity="success"
-                class="whitespace-nowrap"
-                [disabled]="isLocked() || isSaving()"
-                (click)="onSave()"
-            >
-                {{ isSaving() ? 'Saving...' : 'Save' }}
-            </button>
+            <div class="flex flex-col items-end gap-2">
+                <div class="flex gap-2">
+                    <button
+                        pButton
+                        type="button"
+                        severity="success"
+                        class="whitespace-nowrap"
+                        [disabled]="isLocked() || isSaving() || isChangingStatus()"
+                        (click)="onSave()"
+                    >
+                        {{ isSaving() ? 'Saving...' : 'Save' }}
+                    </button>
+                    @if (canPublish()) {
+                        <button
+                            pButton
+                            type="button"
+                            class="whitespace-nowrap"
+                            [outlined]="true"
+                            data-testid="status-action"
+                            [disabled]="isSaving() || isChangingStatus() || !!publishBlockedReason()"
+                            (click)="onStatusAction()"
+                        >
+                            {{ isChangingStatus() ? 'Saving...' : statusActionLabel() }}
+                        </button>
+                    }
+                </div>
+                @if (canPublish() && publishBlockedReason(); as reason) {
+                    <small class="text-muted-color" data-testid="publish-blocked-reason">{{ reason }}</small>
+                }
+            </div>
         </div>
 
         @if (saveError(); as message) {
