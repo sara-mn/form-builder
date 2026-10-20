@@ -1,13 +1,21 @@
-import { Component, effect, inject, input, signal } from '@angular/core';
+import { Component, computed, effect, inject, input, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { LockBanner } from './components/lock-banner/lock-banner';
 import { FormMetadataPanel, MetadataChange } from './components/form-metadata-panel/form-metadata-panel';
 import { PageSidebar } from './components/page-sidebar/page-sidebar';
 import { FieldList } from './components/field-list/field-list';
 import { FieldEditorDialog } from './components/field-editor-dialog/field-editor-dialog';
-import { FieldConfigModel, FormPageModel, Guid } from '@app/domain';
+import {
+    FieldConfigModel,
+    FormPageModel,
+    FormStatusEnum,
+    getPublishError,
+    Guid,
+    UserPermissionEnum
+} from '@app/domain';
 import { FormDesignerFacade } from './services/form-designer.facade';
 import { ButtonModule } from 'primeng/button';
+import { AuthState } from '@app/presentation/core/services/auth-state';
 
 @Component({
     selector: 'app-form-designer',
@@ -29,7 +37,25 @@ export class FormDesigner {
     isCloning = signal<boolean>(false);
     isSaving = signal<boolean>(false);
     saveError = signal<string | null>(null);
+    private authState = inject(AuthState);
 
+    isChangingStatus = signal<boolean>(false);
+
+    canPublish = computed(() => this.authState.hasPermission(UserPermissionEnum.FormPublish));
+    isPublished = computed(() => this.form()?.status === FormStatusEnum.Published);
+
+    /** Why publishing is blocked right now; null when it is allowed or the form is already published. */
+    publishBlockedReason = computed(() => {
+        const form = this.form();
+        return form && !this.isPublished() ? getPublishError(form) : null;
+    });
+
+    statusActionLabel = computed(() => {
+        if (this.isLocked()) {
+            return this.isPublished() ? 'Unpublish' : 'Publish';
+        }
+        return this.isPublished() ? 'Save and unpublish' : 'Save and publish';
+    });
     constructor() {
         effect(() => {
             const formId = this.id();
@@ -127,5 +153,24 @@ export class FormDesigner {
 
         this.isDialogOpen.set(false);
         this.editingField.set(null);
+    }
+
+    async onStatusAction(): Promise<void> {
+        this.isChangingStatus.set(true);
+        this.saveError.set(null);
+        try {
+            if (this.isPublished()) {
+                await this.facade.unpublishForm();
+            } else {
+                await this.facade.publishForm();
+            }
+            await this.router.navigate(['/form-list']);
+        } catch (error) {
+            this.saveError.set(
+                error instanceof Error ? error.message : 'Failed to change the form status. Please try again.'
+            );
+        } finally {
+            this.isChangingStatus.set(false);
+        }
     }
 }

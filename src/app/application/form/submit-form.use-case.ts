@@ -2,6 +2,7 @@ import {
     FormRepository,
     FormSubmissionModel,
     FormValidationService,
+    isOpenForSubmissions,
     SubmissionRepository,
     ValidationResult
 } from '@app/domain';
@@ -20,6 +21,9 @@ export class SubmitFormUseCase {
         }
 
         const form = await this.formRepository.getFormById(formId);
+        if (!isOpenForSubmissions(form)) {
+            throw new Error('This form is not accepting submissions.');
+        }
         const validationResult: ValidationResult = this.formValidationService.validateForm(form, answers);
 
         if (!validationResult.isValid) {
