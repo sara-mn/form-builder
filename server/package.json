@@ -7,7 +7,8 @@
     "node": "24.x"
   },
   "scripts": {
-    "start": "node --env-file-if-exists=.env index.js"
+    "start": "node --env-file-if-exists=.env index.js",
+    "test": "node --test \"test/**/*.test.js\""
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",
@@ -16,5 +17,8 @@
     "express": "^5.2.1",
     "json-server": "^0.17.4",
     "jsonwebtoken": "^9.0.3"
+  },
+  "devDependencies": {
+    "supertest": "7.3.1"
   }
 }
