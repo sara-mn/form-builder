@@ -18,7 +18,7 @@ export const accounts = {
     viewer: { username: 'user@example.com', password: 'user123' }
 };
 
-export async function bearer(app, account) {
+export async function login(app, account) {
     const res = await request(app).post('/api/auth/login').send(account).expect(200);
-    return `Bearer ${res.body.accessToken}`;
+    return { bearer: `Bearer ${res.body.accessToken}`, userId: res.body.user.id };
 }
