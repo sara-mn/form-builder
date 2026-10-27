@@ -55,9 +55,13 @@ describe('API contract used by the client', () => {
 
         assert.equal(res.body.title, 'form-test');
         assert.ok(res.body.id);
+        assert.ok(res.body.createdAt, 'the server must set createdAt');
+        assert.equal(res.body.updatedAt, res.body.createdAt);
     });
 
     it('PATCH /forms/form-4', async () => {
+        const before = await request(app).get('/forms/form-4').set('Authorization', auth).expect(200);
+
         const res = await request(app)
             .patch('/forms/form-4')
             .send({ title: 'form-title-changed' })
@@ -65,8 +69,9 @@ describe('API contract used by the client', () => {
             .expect(200);
 
         assert.equal(res.body.title, 'form-title-changed');
-        assert.ok(Array.isArray(res.body.pages));
         assert.ok(res.body.pages.some((page) => page.id === 'form-4-page-1'));
+        assert.notEqual(res.body.updatedAt, before.body.updatedAt, 'the server must refresh updatedAt');
+        assert.equal(res.body.createdAt, before.body.createdAt);
     });
 
     it('GET /submissions?formId=...&submittedBy=...', async () => {
@@ -79,5 +84,10 @@ describe('API contract used by the client', () => {
         assert.ok(Array.isArray(res.body));
         assert.equal(res.body.length, 1);
         assert.ok(res.body.every((sub) => sub.submittedBy === userId && sub.formId === 'form-2'));
+    });
+
+    it('deletes a form', async () => {
+        await request(app).delete('/forms/form-4').set('Authorization', auth).expect(200);
+        await request(app).get('/forms/form-4').set('Authorization', auth).expect(404);
     });
 });
