@@ -90,4 +90,15 @@ describe('API contract used by the client', () => {
         await request(app).delete('/forms/form-4').set('Authorization', auth).expect(200);
         await request(app).get('/forms/form-4').set('Authorization', auth).expect(404);
     });
+
+    it('creates a submission', async () => {
+        const submission = { formId: 'form-6', submittedBy: userId, answers: { 'form-6-p1-f1': 'italian' } };
+
+        const res = await request(app).post('/submissions').send(submission).set('Authorization', auth).expect(201);
+
+        assert.ok(res.body.id);
+        assert.equal(res.body.formId, 'form-6');
+        assert.equal(res.body.submittedBy, userId);
+        assert.ok(res.body.submittedAt, 'the server must set submittedAt');
+    });
 });

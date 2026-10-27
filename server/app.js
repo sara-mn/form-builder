@@ -4,6 +4,7 @@ import cookieParser from 'cookie-parser';
 import jsonServer from 'json-server';
 import createAuthRouter from './routes/auth.js';
 import createFormsRouter from './routes/forms.js';
+import createSubmissionsRouter from './routes/submissions.js';
 
 export default function createApp({ dbPath, isProduction }) {
     const app = express();
@@ -25,6 +26,7 @@ export default function createApp({ dbPath, isProduction }) {
     const db = jsonServerRouter.db;
     app.use('/api/auth', express.json(), createAuthRouter(db, isProduction));
     app.use('/forms', createFormsRouter(db));
+    app.use('/submissions', createSubmissionsRouter(db));
 
     const blockedJsonServerPaths = ['/users', '/db'];
     app.use(blockedJsonServerPaths, (_req, res) => {
