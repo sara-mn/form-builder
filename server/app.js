@@ -28,12 +28,9 @@ export default function createApp({ dbPath, isProduction }) {
     app.use('/forms', createFormsRouter(db));
     app.use('/submissions', createSubmissionsRouter(db));
 
-    const blockedJsonServerPaths = ['/users', '/db'];
-    app.use(blockedJsonServerPaths, (_req, res) => {
+    app.use((_req, res) => {
         res.status(404).json({ message: 'Not found' });
     });
-
-    app.use(jsonServerRouter);
 
     return app;
 }
