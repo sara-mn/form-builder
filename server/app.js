@@ -28,6 +28,11 @@ export default function createApp({ dbPath, isProduction }) {
     app.use('/forms', createFormsRouter(db));
     app.use('/submissions', createSubmissionsRouter(db));
 
+    // Public: used by the CI smoke test and by hosting health checks, no data exposed.
+    app.get('/health', (_req, res) => {
+        res.json({ status: 'ok' });
+    });
+
     app.use((_req, res) => {
         res.status(404).json({ message: 'Not found' });
     });

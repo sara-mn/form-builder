@@ -16,6 +16,11 @@ describe('API contract used by the client', () => {
         userId = loginRes.userId;
     });
 
+    it('serves a public health check', async () => {
+        const res = await request(app).get('/health').expect(200);
+        assert.equal(res.body.status, 'ok');
+    });
+
     it('lists forms', async () => {
         const res = await request(app).get('/forms').set('Authorization', auth).expect(200);
 
