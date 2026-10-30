@@ -5,6 +5,7 @@ import jsonServer from 'json-server';
 import createAuthRouter from './routes/auth.js';
 import createFormsRouter from './routes/forms.js';
 import createSubmissionsRouter from './routes/submissions.js';
+import authenticate from './middleware/authenticate.js';
 
 export default function createApp({ dbPath, isProduction }) {
     const app = express();
@@ -25,8 +26,8 @@ export default function createApp({ dbPath, isProduction }) {
 
     const db = jsonServerRouter.db;
     app.use('/api/auth', express.json(), createAuthRouter(db, isProduction));
-    app.use('/forms', createFormsRouter(db));
-    app.use('/submissions', createSubmissionsRouter(db));
+    app.use('/forms', authenticate, createFormsRouter(db));
+    app.use('/submissions', authenticate, createSubmissionsRouter(db));
 
     // Public: used by the CI smoke test and by hosting health checks, no data exposed.
     app.get('/health', (_req, res) => {
