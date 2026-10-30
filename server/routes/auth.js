@@ -2,16 +2,9 @@ import express from 'express';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import crypto from 'crypto';
+import { ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET, FRONTEND_URL } from '../config.js';
+import authenticate from '../middleware/authenticate.js';
 
-const ACCESS_TOKEN_SECRET = process.env.JWT_ACCESS_SECRET || 'dev-only-access-secret-change-me';
-const REFRESH_TOKEN_SECRET = process.env.JWT_REFRESH_SECRET || 'dev-only-refresh-secret-change-me';
-const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:4200';
-
-if (!process.env.JWT_ACCESS_SECRET || !process.env.JWT_REFRESH_SECRET) {
-    console.warn(
-        '[auth] Using fallback dev secrets — set JWT_ACCESS_SECRET and JWT_REFRESH_SECRET env vars for anything beyond local dev.'
-    );
-}
 export default function createAuthRouter(db, isProduction = false) {
     const router = express.Router();
 
@@ -103,22 +96,6 @@ export default function createAuthRouter(db, isProduction = false) {
         res.clearCookie('refreshToken', cookieOptions);
         res.status(200).json({ message: 'Logged out successfully' });
     });
-
-    const authenticate = (req, res, next) => {
-        const authHeader = req.headers['authorization'];
-        const accessToken = authHeader && authHeader.startsWith('Bearer ') ? authHeader.slice(7) : null;
-
-        if (!accessToken) {
-            return res.status(401).json({ message: 'No access token provided' });
-        }
-
-        try {
-            req.user = jwt.verify(accessToken, ACCESS_TOKEN_SECRET);
-            next();
-        } catch (error) {
-            return res.status(401).json({ message: 'Invalid or expired access token' });
-        }
-    };
 
     router.post('/reset-password/request', async (req, res) => {
         const { email } = req.body;
