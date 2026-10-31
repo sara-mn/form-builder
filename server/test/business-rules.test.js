@@ -128,3 +128,68 @@ describe('submission rules', () => {
         assert.ok(res.body.some((s) => s.submittedBy !== viewerId));
     });
 });
+describe('submission rules', () => {
+    let app;
+    let editor;
+    let viewer;
+    let viewerId;
+
+    beforeEach(async () => {
+        app = createTestApp();
+        editor = (await login(app, accounts.editor)).bearer;
+        const viewerSession = await login(app, accounts.viewer);
+        viewer = viewerSession.bearer;
+        viewerId = viewerSession.userId;
+    });
+
+    const answers = { 'form-6-p1-f1': 'italian' };
+
+    it('rejects submissions to a form that is not published', async () => {
+        await request(app)
+            .post('/submissions')
+            .set('Authorization', viewer)
+            .send({ formId: 'form-4', answers })
+            .expect(409);
+    });
+
+    it('rejects a second submission by the same user', async () => {
+        await request(app)
+            .post('/submissions')
+            .set('Authorization', viewer)
+            .send({ formId: 'form-6', answers })
+            .expect(201);
+        await request(app)
+            .post('/submissions')
+            .set('Authorization', viewer)
+            .send({ formId: 'form-6', answers })
+            .expect(409);
+    });
+
+    it('takes submittedBy from the token, never from the body', async () => {
+        const res = await request(app)
+            .post('/submissions')
+            .set('Authorization', viewer)
+            .send({ formId: 'form-6', answers, submittedBy: 'someone-else' })
+            .expect(201);
+        assert.equal(res.body.submittedBy, viewerId);
+    });
+
+    it('returns 404 for an unknown form', async () => {
+        await request(app)
+            .post('/submissions')
+            .set('Authorization', viewer)
+            .send({ formId: 'nope', answers })
+            .expect(404);
+    });
+
+    it('shows a user without SubmissionView only their own submissions', async () => {
+        const res = await request(app).get('/submissions').set('Authorization', viewer).expect(200);
+        assert.ok(res.body.length >= 1);
+        assert.ok(res.body.every((s) => s.submittedBy === viewerId));
+    });
+
+    it('shows all submissions to a user with SubmissionView', async () => {
+        const res = await request(app).get('/submissions').set('Authorization', editor).expect(200);
+        assert.ok(res.body.some((s) => s.submittedBy !== viewerId));
+    });
+});
