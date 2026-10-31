@@ -1,5 +1,7 @@
 import express from 'express';
 import { randomUUID } from 'crypto';
+import { Permission, hasPermission } from '../permissions.js';
+import requirePermission from '../middleware/require-permission.js';
 
 export default function createFormsRouter(db) {
     const router = express.Router();
@@ -8,17 +10,28 @@ export default function createFormsRouter(db) {
     const getForms = () => db.get('forms');
     const findForm = (id) => getForms().find({ id }).value();
 
-    router.get('/', (_req, res) => {
+    // Changing status is publishing; changing anything else is editing. A body that does both needs both.
+    const requirePatchPermissions = (req, res, next) => {
+        const keys = Object.keys(req.body ?? {});
+        const needed = [];
+        if (keys.includes('status')) needed.push(Permission.FormPublish);
+        if (keys.length === 0 || keys.some((key) => key !== 'status')) needed.push(Permission.FormEdit);
+
+        const allowed = needed.every((permission) => hasPermission(req.user, permission));
+        return allowed ? next() : res.status(403).json({ message: 'Forbidden' });
+    };
+
+    router.get('/', requirePermission(Permission.FormView), (_req, res) => {
         res.json(getForms().value());
     });
 
-    router.get('/:id', (req, res) => {
+    router.get('/:id', requirePermission(Permission.FormView), (req, res) => {
         const form = findForm(req.params.id);
         if (!form) return res.status(404).json({ message: 'Form not found' });
         res.json(form);
     });
 
-    router.post('/', (req, res) => {
+    router.post('/', requirePermission(Permission.FormCreate), (req, res) => {
         const now = new Date().toISOString();
         // id and timestamps are set last, so values sent in the body can never win
         const form = { ...req.body, id: randomUUID(), createdAt: now, updatedAt: now };
@@ -26,7 +39,7 @@ export default function createFormsRouter(db) {
         res.status(201).json(form);
     });
 
-    router.patch('/:id', (req, res) => {
+    router.patch('/:id', requirePatchPermissions, (req, res) => {
         const { id } = req.params;
         if (!findForm(id)) return res.status(404).json({ message: 'Form not found' });
 
@@ -39,7 +52,7 @@ export default function createFormsRouter(db) {
         res.json(findForm(id));
     });
 
-    router.delete('/:id', (req, res) => {
+    router.delete('/:id', requirePermission(Permission.FormDelete), (req, res) => {
         const { id } = req.params;
         if (!findForm(id)) return res.status(404).json({ message: 'Form not found' });
 

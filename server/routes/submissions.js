@@ -1,5 +1,7 @@
 import express from 'express';
 import { randomUUID } from 'crypto';
+import { Permission } from '../permissions.js';
+import requirePermission from '../middleware/require-permission.js';
 
 export default function createSubmissionsRouter(db) {
     const router = express.Router();
@@ -16,7 +18,7 @@ export default function createSubmissionsRouter(db) {
         res.json(submissions);
     });
 
-    router.post('/', (req, res) => {
+    router.post('/', requirePermission(Permission.SubmissionCreate), (req, res) => {
         // id and submittedAt are set last: the server's clock is the reference, not the browser's.
         const submission = { ...req.body, id: randomUUID(), submittedAt: new Date().toISOString() };
         getSubmissions().push(submission).write();
