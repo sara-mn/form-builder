@@ -41,6 +41,23 @@ src/app/
 
 Why split Domain and Application from Angular entirely: the business rules — what makes a form valid, when a form locks, how cloning regenerates IDs — don't depend on any UI framework. Keeping them framework-agnostic means they're portable and testable without a TestBed, and it forces a real boundary between "what the business needs" and "how Angular happens to render it."
 
+## API security
+
+The server does not trust the client. Every rule the UI enforces is enforced again on the API:
+
+- **Authentication** — every `/forms` and `/submissions` route requires a valid access token (401 otherwise). Only `/health` and the auth endpoints are public.
+- **Authorization** — each route checks one permission from the same role → permission map the client uses (403 otherwise).
+- **Business rules** — drafts are hidden from users who cannot edit forms; a form with submissions is locked against edits and deletion (409); publishing requires at least one field (422); submissions are accepted only for published forms, once per user (409); `submittedBy` always comes from the token; users without `SubmissionView` only ever receive their own submissions.
+- **Closed by default** — the API exposes only explicit routes; anything else is 404. The users collection is never exposed.
+
+These rules are covered by integration tests in `server/test/` (`node:test` + `supertest`, each test on a throwaway copy of the seed database), which run in CI.
+
+### Known trade-offs
+
+- **Duplicated rules.** `server/permissions.js` and `server/rules.js` mirror the Angular domain rules. The server image is built from `server/` alone, so it cannot import them; both copies must change together.
+- **Answers are not re-validated on the server.** Field validators (`required`, `pattern`, …) run only in the client. Re-running them server-side would mean porting the whole validation engine.
+- **Role changes apply on the next token refresh.** Roles are read from the access token, so a changed role takes effect within the token's 1-hour lifetime, not immediately.
+
 ## Business rules
 
 - **Lock rule:** a form is editable until it receives its first submission; after that, its structure and metadata are frozen. Enforced server-side in `UpdateFormUseCase`, not just hidden in the UI.
