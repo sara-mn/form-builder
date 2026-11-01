@@ -1,7 +1,7 @@
 # Form Builder
 [![CI](https://github.com/sara-mn/form-builder/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/sara-mn/form-builder/actions/workflows/ci.yml)
 
-A form-building application built with Angular 22 (Zoneless, Signals) and PrimeNG v22, structured around Clean Architecture and Domain-Driven Design. Admins design multi-page forms with field-level and cross-field validation rules; viewers fill and submit them. Built as a portfolio project targeting the German frontend job market — every architectural decision below is deliberate and documented as a trade-off, not a default.
+A form-building application built with Angular 22 (Zoneless, Signals) and PrimeNG v22, structured around Clean Architecture and Domain-Driven Design. Admins and editors design multi-page forms with field-level and cross-field validation rules; viewers fill and submit them. Built as a portfolio project targeting the German frontend job market — every architectural decision below is deliberate and documented as a trade-off, not a default.
 
 **Live demo**: https://sara-mn.github.io/form-builder — frontend on GitHub Pages, backend on Render (free tier). Login and API calls work end-to-end. A few honest caveats:
 
@@ -60,14 +60,14 @@ These rules are covered by integration tests in `server/test/` (`node:test` + `s
 
 ## Business rules
 
-- **Lock rule:** a form is editable until it receives its first submission; after that, its structure and metadata are frozen. Enforced server-side in `UpdateFormUseCase`, not just hidden in the UI.
+- **Lock rule:** a form is editable until it receives its first submission; after that, its structure and metadata are frozen. Enforced in `UpdateFormUseCase` and again by the API (409), not just hidden in the UI.
 - **Clone-to-edit:** cloning a locked form produces a new Draft with fresh IDs on every page, field, and validator — except field name values, which are left untouched since they're semantic identifiers, not technical ones.
-- **One submission per user per form:** enforced as a pre-check in `SubmitFormUseCase`, not as a database constraint.
+- **One submission per user per form:** checked in `SubmitFormUseCase` and enforced by the API (409), not as a database constraint.
 - **Cascade-delete:** removing a field also strips any cross-field validator (on any page) that referenced it via `targetFieldId` or `dependsOnFieldId`, so validators never point at a field that no longer exists.
 
 ## Validation engine
 
-Field-level and cross-field validation rules live in `domain/form/validation/` as pure functions, dispatched through `Record<EnumType, fn>` lookup tables instead of switch statements — this gives compile-time exhaustiveness checking; adding a new validator type without handling it in every dispatch table fails to compile. `FormValidationService` (a Domain Service, not a Use Case) validates a whole form against submitted answers and is the authoritative check inside `SubmitFormUseCase`. Presentation-layer adapters bridge these same pure rules into Angular's `ValidatorFn` for real-time feedback in the form-renderer, so the validation logic is written once and used both live in the browser and as the server-side source of truth.
+Field-level and cross-field validation rules live in `domain/form/validation/` as pure functions, dispatched through `Record<EnumType, fn>` lookup tables instead of switch statements — this gives compile-time exhaustiveness checking; adding a new validator type without handling it in every dispatch table fails to compile. `FormValidationService` (a Domain Service, not a Use Case) validates a whole form against submitted answers and is the authoritative check inside `SubmitFormUseCase`. Presentation-layer adapters bridge these same pure rules into Angular's `ValidatorFn` for real-time feedback in the form-renderer, so the validation logic is written once and used both for live feedback and for the authoritative check at submit time. Both run in the browser — the API does not re-validate answers (see [Known trade-offs](#known-trade-offs)).
 
 **Known scope limit:** real-time cross-page validation isn't wired into the renderer, since a page's `FormGroup` can't see other pages' controls. `SubmitFormUseCase` remains the authoritative check for those rules at submit time.
 
@@ -78,10 +78,10 @@ Field-level and cross-field validation rules live in `domain/form/validation/` a
 | **Framework** | Angular 22 — standalone components, Zoneless change detection, Signals, `@Service()` + `inject()` |
 | **UI** | PrimeNG v22 (Aura theme) + Tailwind v4 via `tailwindcss-primeui` |
 | **Forms** | Reactive Forms (form-renderer, to integrate with the custom validation engine); plain signal-bound inputs elsewhere |
-| **Testing** | Vitest + `@angular/build:unit-test`, happy-dom, Playwright Chromium |
-| **Backend** | Custom Express server (ESM) for JWT auth (`jsonwebtoken`, `bcryptjs`, httpOnly refresh cookie) + `json-server` for CRUD |
+| **Testing** | Vitest + `@angular/build:unit-test`, happy-dom, Playwright Chromium; server integration tests with `node:test` + `supertest` |
+| **Backend** | Express (ESM): JWT auth (`jsonwebtoken`, `bcryptjs`, httpOnly refresh cookie) and explicit `/forms` and `/submissions` routers with per-route permissions, over a JSON file database (lowdb via `json-server`) |
 | **Code quality** | Prettier (enforced in CI) and ESLint via `angular-eslint`, including template accessibility rules |
-| **CI/CD** | GitHub Actions — format check, lint, unit tests, production build, Docker smoke test; automated deploys gated on a green pipeline |
+| **CI/CD** | GitHub Actions — format check, lint, unit tests, server tests, production build, Docker smoke test; automated deploys gated on a green pipeline |
 | **Containers** | Docker (multi-stage frontend image on `nginx-unprivileged`, non-root backend image), Docker Compose for the full local stack |
 
 ## Getting started
@@ -102,7 +102,7 @@ npm --prefix server install
 
 ### Configure the backend
 
-The mock API server needs two JWT secrets. Copy the example file and fill in your own values:
+The API server needs two JWT secrets. Copy the example file and fill in your own values:
 
 ```bash
 cp server/.env.example server/.env
@@ -110,10 +110,10 @@ cp server/.env.example server/.env
 
 ### Run
 
-Two processes run side by side in development — the Angular dev server and the mock API:
+Two processes run side by side in development — the Angular dev server and the API server:
 
 ```bash
-npm run start:server   # Express + json-server, http://localhost:3000
+npm run start:server   # Express API, http://localhost:3000
 npm start              # Angular dev server, http://localhost:4200
 ```
 
@@ -128,7 +128,9 @@ Seeded accounts:
 ### Test
 
 ```bash
-npm test
+npm test                  # Angular unit tests
+npm --prefix server test  # API integration tests
+npm run verify            # everything CI checks: format, lint, both test suites, production build
 ```
 
 ### Build
@@ -152,7 +154,7 @@ Then open http://localhost:8080 and sign in with one of the seeded accounts abov
 
 ```
 browser ──► localhost:8080 ──► web (nginx)
-                                 ├── /api/*  ──► api:3000 (Express + json-server)
+                                 ├── /api/*  ──► api:3000 (Express API)
                                  └── /*      ──► Angular app (SPA fallback to index.html)
 ```
 
@@ -182,13 +184,14 @@ Actively developed in phases, each scoped and closed before the next begins:
 - ✅ JWT + RBAC authentication
 - ✅ Standalone shell, Tailwind styling, dark mode
 - ✅ Form persistence, multi-page domain model, validation engine
-- ✅ Full test coverage across all layers — domain, application, infrastructure, and every presentation-layer component/facade (95 spec files, 700+ tests)
+- ✅ Full test coverage across all layers — domain, application, infrastructure, and every presentation-layer component/facade (100 spec files, 740+ tests)
 - ✅ Architecture cleanup, accessibility fixes, visual pass, dashboard
 - ✅ Account management: profile editing, change password, forgot/reset password
 - ✅ Backend deployed to Render, frontend to GitHub Pages, authenticated end-to-end across origins
 - ✅ Dependency security triage (`npm audit` reviewed by production relevance) and `allowScripts` allowlist
 - ✅ CI/CD with GitHub Actions, Prettier and ESLint enforced in the pipeline
 - ✅ Docker: containerized backend on Render, full local stack via Docker Compose, smoke-tested in CI
+- ✅ API hardening: authentication, per-route RBAC, and business rules enforced server-side, covered by integration tests
 
 ## Timeline
 
