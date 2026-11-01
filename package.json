@@ -12,7 +12,8 @@
     "format:check": "prettier --check \"**/*.{js,mjs,ts,mts,d.ts,html,scss,css,json}\"",
     "test": "ng test",
     "start:server": "npm --prefix server start",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "verify": "npm run format:check && npm run lint && ng test --watch=false && npm --prefix server test && npm run build-prod"
   },
   "private": true,
   "dependencies": {
