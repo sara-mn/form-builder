@@ -1,35 +1,13 @@
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
-import { Module } from 'node:module';
 import { existsSync, mkdirSync, copyFileSync } from 'fs';
-import express from 'express';
-import cors from 'cors';
-import cookieParser from 'cookie-parser';
-import jsonServer from 'json-server';
-import createAuthRouter from './routes/auth.js';
+import createApp from './app.js';
 
-export const require = Module.createRequire(import.meta.url);
-export const __filename = fileURLToPath(import.meta.url);
-export const __dirname = dirname(__filename);
-
-const app = express();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const seedPath = join(__dirname, 'db.json');
 
 const isProduction = process.env.NODE_ENV === 'production';
-
-const allowedOrigins = ['http://localhost:4200', 'https://sara-mn.github.io'];
-
-app.use(
-    cors({
-        origin: allowedOrigins,
-        credentials: true,
-        methods: ['GET', 'POST', 'DELETE', 'PUT', 'PATCH']
-    })
-);
-
-// app.use(express.json());
-app.use(cookieParser());
-
-const seedPath = join(__dirname, 'db.json');
 const dbPath = process.env.DB_PATH ?? seedPath;
 
 if (!existsSync(dbPath)) {
@@ -38,21 +16,7 @@ if (!existsSync(dbPath)) {
     console.log(`Seeded database at ${dbPath}`);
 }
 
-const jsonServerRouter = jsonServer.router(dbPath);
-
-const db = jsonServerRouter.db; // lowdb instance — shared with auth routes
-
-app.use('/api/auth', express.json(), createAuthRouter(db, isProduction));
-
-// User records (password hashes, reset tokens) must never be served by the generic
-// json-server router; they are reachable only through the /api/auth routes.
-// '/db' is json-server's built-in full-database dump, which includes the users.
-const blockedJsonServerPaths = ['/users', '/db'];
-app.use(blockedJsonServerPaths, (_req, res) => {
-    res.status(404).json({ message: 'Not found' });
-});
-
-app.use(jsonServerRouter);
+const app = createApp({ dbPath, isProduction });
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
