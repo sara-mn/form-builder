@@ -46,3 +46,5 @@ or moving code between layers.
 
 ## After you finish
 Update `docs/status.md` in the same commit as the code change.
+If you made an architectural decision, add an ADR in `docs/decisions/`
+(copy `0000-template.md`). Never edit an accepted ADR – write a new one that supersedes it.
