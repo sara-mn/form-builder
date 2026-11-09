@@ -31,7 +31,7 @@ src/app/
 │                       framework-agnostic.
 ├── infrastructure/     *ApiAdapter classes implement the Domain's
 │                       abstract ports, converting HTTP Observables to
-││                      Promises via lastValueFrom.
+│                       Promises via lastValueFrom.
 └── presentation/       Angular. Facades (signal-based) expose Application
                         use cases to components. Routed components live at
                         each feature's root; presentational children live
