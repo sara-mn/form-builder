@@ -41,7 +41,8 @@ Backend: Express (ES modules) in `server/` with JWT auth and lowdb storage.
    break the code once and confirm the test fails.
 
 ## Before you start
-Read `docs/status.md`.
+Read `docs/status.md`. Read `docs/architecture.md` before adding a feature
+or moving code between layers.
 
 ## After you finish
 Update `docs/status.md` in the same commit as the code change.
