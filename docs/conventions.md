@@ -68,6 +68,13 @@ or `presentation/shared/` (reusable forms and validator utilities).
 - `npm run verify` before every commit.
 - Merge into `develop` with `--no-ff`, then `develop` into `main`.
 
+### Before merging into develop
+- [ ] `npm run verify` is green
+- [ ] `docs/status.md` is updated
+- [ ] An ADR exists for every architectural decision in the branch
+- [ ] Server or Docker changed: `docker compose down -v`, `docker compose up --build`,
+      manual check with all three roles on http://localhost:8080
+
 ## Dependencies
 - `@angular/*` packages are updated together with `ng update`, never with `npm audit fix`.
 - Triage `npm audit` by what ships (browser bundle, deployed server) versus dev-only tooling.

@@ -28,8 +28,7 @@ Backend: Express (ES modules) in `server/` with JWT auth and lowdb storage.
    Use cases never call each other.
 3. Angular: standalone components, `OnPush`, `signal()` / `computed()` / `input()` / `output()` / `model()`,
    built-in control flow. Services use `@Service()` + `inject()`, not `@Injectable` or constructor injection.
-4. File names have no type suffix (`dashboard.ts`). Routed component at the feature root,
-   children under `components/`, facades under `services/`.
+4. Naming, folder structure, imports, tests and git: follow `docs/conventions.md`.
 5. PrimeNG 22: named templates (`<ng-template #body>`), not `pTemplate`; `(click)`, not `(onClick)`;
    `type="button"` inside forms; static icons as `<svg data-p-icon="trash">` plus the icon component import.
 6. RBAC: one permission per route (the guard requires all listed permissions).

@@ -31,7 +31,7 @@ src/app/
 │                       framework-agnostic.
 ├── infrastructure/     *ApiAdapter classes implement the Domain's
 │                       abstract ports, converting HTTP Observables to
-│                       Promises via firstValueFrom.
+││                      Promises via lastValueFrom.
 └── presentation/       Angular. Facades (signal-based) expose Application
                         use cases to components. Routed components live at
                         each feature's root; presentational children live
@@ -40,6 +40,14 @@ src/app/
 ```
 
 Why split Domain and Application from Angular entirely: the business rules — what makes a form valid, when a form locks, how cloning regenerates IDs — don't depend on any UI framework. Keeping them framework-agnostic means they're portable and testable without a TestBed, and it forces a real boundary between "what the business needs" and "how Angular happens to render it."
+
+## Documentation
+
+- [Architecture](docs/architecture.md) – layers, domain model, RBAC, runtime topology
+- [Conventions](docs/conventions.md) – development flow, naming, imports, testing, git
+- [Decisions](docs/decisions/) – architecture decision records (ADRs)
+- [Status](docs/status.md) – current phase and next steps
+- [AGENTS.md](AGENTS.md) – instructions for AI coding assistants
 
 ## API security
 
