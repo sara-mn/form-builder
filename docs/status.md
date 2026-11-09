@@ -16,7 +16,7 @@ Slice 4 (response access + public fill link) in progress on `feature/public-form
 1. Slice 4 – three response-access modes (public, public with email, logged-in only),
    public fill page, two anonymous API endpoints
 2. Slice 5 – user management (list users, change role) – or defer
-3. Slice 6 – wrap-up: README, phase summary
+3. Slice 6 – wrap-up: README (shorten the architecture section and link to `docs/architecture.md`), phase summary
 4. Phase 10 – E2E tests (Playwright) and accessibility checks (axe-core)
 
 ## Open questions (slice 4)
