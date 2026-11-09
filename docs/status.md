@@ -28,5 +28,6 @@ Slice 4 (response access + public fill link) in progress on `feature/public-form
 ## Known issues
 - Triple refresh request on page reload (no in-flight deduplication)
 - "Already submitted" banner appears only after submitting, not on page load
-- Mixed import path styles (`@domain/`, `@app/domain/`, relative) – pick one and document it in conventions
+- About 116 imports still use the old aliases (`@domain/`, `@application/`, `@features/`, …)
+  instead of `@app/` (see `docs/conventions.md`); remove the unused aliases from `tsconfig.json` afterwards
 - `TokenStorageService` implements `StorageGateway` but does not follow the `*Adapter` naming
