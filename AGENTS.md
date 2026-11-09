@@ -39,3 +39,9 @@ Backend: Express (ES modules) in `server/` with JWT auth and lowdb storage.
    and in `server/permissions.js` / `server/rules.js` – change both in the same commit.
 8. Every new component, facade and use case gets a spec. After writing a test,
    break the code once and confirm the test fails.
+
+## Before you start
+Read `docs/status.md`.
+
+## After you finish
+Update `docs/status.md` in the same commit as the code change.
